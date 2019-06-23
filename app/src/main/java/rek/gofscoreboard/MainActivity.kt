@@ -22,12 +22,12 @@ class MainActivity : AppCompatActivity() {
 
     fun onStartGame(view: View) {
 
-        fun getDefaultPlayerName(index: Int) = "Player $index"
+        fun getPlayerName(editTextPlayerName: EditText, index: Int): String {
+            fun getDefaultPlayerName(index: Int) = "Player $index"
 
-        fun getPlayerName(editTextPlayerName: EditText, index: Int) =
-            if (editTextPlayerName.text.toString() == "") editTextPlayerName.text.toString()
+            return if (editTextPlayerName.text.toString() == "") editTextPlayerName.text.toString()
             else getDefaultPlayerName(index)
-
+        }
 
         val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)
 
