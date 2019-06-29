@@ -2,6 +2,7 @@ package rek.gofscoreboard
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_scoreboard.*
 
 class ScoreboardActivity : AppCompatActivity() {
@@ -21,13 +22,30 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        fun setValuesFromPreviousActivity() {
+            nbPlayerValue = intent.getIntExtra(NB_PLAYERS, 0)
+            playerOneName = intent.getStringExtra(PLAYER_ONE_NAME)
+            playerTwoName = intent.getStringExtra(PLAYER_TWO_NAME)
+            playerThreeName = intent.getStringExtra(PLAYER_THREE_NAME)
+            playerFourName = intent.getStringExtra(PLAYER_FOUR_NAME)
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scoreboard)
 
-        nbPlayerValue = intent.getIntExtra(NB_PLAYERS, 0)
-        playerOneName = intent.getStringExtra(PLAYER_ONE_NAME)
-        playerTwoName = intent.getStringExtra(PLAYER_TWO_NAME)
-        playerThreeName = intent.getStringExtra(PLAYER_THREE_NAME)
-        playerFourName = intent.getStringExtra(PLAYER_FOUR_NAME)
+        setValuesFromPreviousActivity()
+
+        listScores.setHasFixedSize(true)
+
+        val scoreGridColumnsCount = if (nbPlayerValue == 3) 4 else 5
+        listScores.layoutManager = GridLayoutManager(this, scoreGridColumnsCount,
+            GridLayoutManager.VERTICAL, false)
+
+        // Test
+        val test = arrayOf("Test1", "Test2", "Test3", "Test4", "Test5"
+                         , "Test6", "Test7", "Test8", "Test9", "Test10")
+        val adapterScore = ScoresListAdapter(test)
+        listScores.adapter = adapterScore
     }
 }

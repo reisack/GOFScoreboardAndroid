@@ -23,10 +23,8 @@ class MainActivity : AppCompatActivity() {
     fun onStartGame(view: View) {
 
         fun getPlayerName(editTextPlayerName: EditText, index: Int): String {
-            fun getDefaultPlayerName(index: Int) = "Player $index"
-
-            return if (editTextPlayerName.text.toString() == "") editTextPlayerName.text.toString()
-            else getDefaultPlayerName(index)
+            return if (editTextPlayerName.text.toString() == "") "P$index"
+            else editTextPlayerName.text.toString()
         }
 
         val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)
@@ -53,6 +51,5 @@ class MainActivity : AppCompatActivity() {
         labelPlayerFourName.visibility = playerFourVisible
         editPlayerFourName.visibility = playerFourVisible
     }
-
 
 }
