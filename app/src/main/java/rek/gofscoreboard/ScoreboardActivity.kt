@@ -3,6 +3,7 @@ package rek.gofscoreboard
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.view.View
 import kotlinx.android.synthetic.main.activity_scoreboard.*
 
 class ScoreboardActivity : AppCompatActivity() {
@@ -19,6 +20,8 @@ class ScoreboardActivity : AppCompatActivity() {
         lateinit var playerTwoName: String
         lateinit var playerThreeName: String
         lateinit var playerFourName: String
+
+        val scoresList: MutableList<String> = mutableListOf()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +44,15 @@ class ScoreboardActivity : AppCompatActivity() {
         val scoreGridColumnsCount = if (nbPlayerValue == 3) 4 else 5
         listScores.layoutManager = GridLayoutManager(this, scoreGridColumnsCount,
             GridLayoutManager.VERTICAL, false)
+    }
 
-        // Test
-        val test = arrayOf("Test1", "Test2", "Test3", "Test4", "Test5"
-                         , "Test6", "Test7", "Test8", "Test9", "Test10")
-        val adapterScore = ScoresListAdapter(test)
+    fun onAddScore(view: View) {
+        scoresList.add("Test1")
+        scoresList.add("Test2")
+        scoresList.add("Test3")
+        scoresList.add("Test4")
+        scoresList.add("Test5")
+        val adapterScore = ScoresListAdapter(scoresList.toTypedArray())
         listScores.adapter = adapterScore
     }
 }

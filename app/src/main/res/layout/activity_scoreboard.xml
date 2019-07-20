@@ -13,14 +13,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/labelNewScoreText"
-            app:layout_constraintVertical_bias="0.01999998"
             android:fontFamily="sans-serif-medium"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/labelPlayerOneScore"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
 
     <TextView
             android:text="WWWWW"
@@ -28,13 +26,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/labelPlayerOneScore"
-            app:layout_constraintHorizontal_bias="0.07"
-            app:layout_constraintVertical_bias="0.10"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/editPlayerOneScore"
+            app:layout_constraintTop_toBottomOf="@+id/labelNewScoreText"
+            app:layout_constraintBottom_toTopOf="@+id/labelPlayerThreeScore" android:layout_marginStart="24dp"
+            android:layout_marginEnd="8dp"/>
 
     <EditText
             android:layout_width="wrap_content"
@@ -42,13 +39,10 @@
             android:inputType="number"
             android:ems="2"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.30"
-            app:layout_constraintVertical_bias="0.08"
-            android:id="@+id/editPlayerOneScore"/>
+            android:id="@+id/editPlayerOneScore"
+            app:layout_constraintStart_toEndOf="@+id/labelPlayerOneScore" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/labelPlayerTwoScore"
+            app:layout_constraintBottom_toBottomOf="@+id/labelPlayerOneScore"/>
 
     <TextView
             android:text="WWWWW"
@@ -56,13 +50,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/labelPlayerTwoScore"
-            app:layout_constraintHorizontal_bias="0.07"
-            app:layout_constraintVertical_bias="0.15"/>
+            app:layout_constraintStart_toEndOf="@+id/editPlayerOneScore" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/editPlayerTwoScore"
+            app:layout_constraintBottom_toBottomOf="@+id/editPlayerOneScore" android:layout_marginStart="24dp"
+            android:layout_marginEnd="8dp"/>
 
     <EditText
             android:layout_width="wrap_content"
@@ -70,13 +62,10 @@
             android:inputType="number"
             android:ems="2"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.30"
-            app:layout_constraintVertical_bias="0.13"
-            android:id="@+id/editPlayerTwoScore"/>
+            android:id="@+id/editPlayerTwoScore"
+            app:layout_constraintStart_toEndOf="@+id/labelPlayerTwoScore" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/labelPlayerTwoScore" android:layout_marginEnd="24dp"/>
 
     <TextView
             android:text="WWWWW"
@@ -84,13 +73,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/labelPlayerThreeScore"
-            app:layout_constraintHorizontal_bias="0.07"
-            app:layout_constraintVertical_bias="0.20"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/editPlayerThreeScore"
+            app:layout_constraintTop_toBottomOf="@+id/labelPlayerOneScore"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddScore" android:layout_marginStart="24dp"
+            android:layout_marginEnd="8dp"/>
 
     <EditText
             android:layout_width="wrap_content"
@@ -98,13 +86,10 @@
             android:inputType="number"
             android:ems="2"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.30"
-            app:layout_constraintVertical_bias="0.18"
-            android:id="@+id/editPlayerThreeScore"/>
+            android:id="@+id/editPlayerThreeScore"
+            app:layout_constraintStart_toEndOf="@+id/labelPlayerThreeScore" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/labelPlayerFourScore"
+            app:layout_constraintBottom_toBottomOf="@+id/labelPlayerThreeScore"/>
 
     <TextView
             android:text="WWWWW"
@@ -112,13 +97,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/labelPlayerFourScore"
-            app:layout_constraintHorizontal_bias="0.07"
-            app:layout_constraintVertical_bias="0.25"/>
+            app:layout_constraintStart_toEndOf="@+id/editPlayerThreeScore" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/editPlayerFourScore"
+            app:layout_constraintBottom_toBottomOf="@+id/editPlayerThreeScore" android:layout_marginStart="24dp"
+            android:layout_marginEnd="8dp"/>
 
     <EditText
             android:layout_width="wrap_content"
@@ -126,48 +109,42 @@
             android:inputType="number"
             android:ems="2"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.30"
-            app:layout_constraintVertical_bias="0.23"
-            android:id="@+id/editPlayerFourScore"/>
+            android:id="@+id/editPlayerFourScore"
+            app:layout_constraintStart_toEndOf="@+id/labelPlayerFourScore" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/labelPlayerFourScore" android:layout_marginEnd="24dp"/>
 
     <Button
             android:text="Valider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.07"
-            app:layout_constraintVertical_bias="0.33"
-            android:id="@+id/btnAddScore"/>
+            android:id="@+id/btnAddScore"
+            android:onClick="onAddScore"
+            app:layout_constraintTop_toBottomOf="@+id/labelPlayerThreeScore"
+            app:layout_constraintBottom_toTopOf="@+id/listScores" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/btnDeletePreviousScore" android:layout_marginEnd="16dp"
+            android:layout_marginStart="32dp"/>
 
     <Button
             android:text="Supprimer les scores\n du dernier tour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.87"
-            app:layout_constraintVertical_bias="0.33"
-            android:id="@+id/btnDeletePreviousScore"/>
+            android:id="@+id/btnDeletePreviousScore"
+            app:layout_constraintBottom_toBottomOf="@+id/btnAddScore"
+            app:layout_constraintStart_toEndOf="@+id/btnAddScore" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginEnd="32dp"/>
 
     <android.support.v7.widget.RecyclerView
-            android:layout_width="371dp"
-            android:layout_height="423dp"
+            android:layout_width="0dp"
+            android:layout_height="350dp"
             android:scrollbars="vertical"
+            android:id="@+id/listScores"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.949"
-            android:id="@+id/listScores"/>
+            app:layout_constraintTop_toBottomOf="@+id/btnAddScore" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -10,7 +10,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".ScoreboardActivity"
-                  android:screenOrientation="portrait">
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustNothing">
         </activity>
         <activity android:name=".MainActivity"
                   android:screenOrientation="portrait">
