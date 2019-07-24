@@ -1,12 +1,15 @@
 package rek.gofscoreboard
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
+import android.util.AttributeSet
 import android.view.View
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_scoreboard.*
 
 class ScoreboardActivity : AppCompatActivity() {
+    private lateinit var viewModel: ScoreboardViewModel
 
     companion object {
         const val NB_PLAYERS = "NB_PLAYERS"
@@ -22,6 +25,11 @@ class ScoreboardActivity : AppCompatActivity() {
         lateinit var playerFourName: String
 
         val scoresList: MutableList<String> = mutableListOf()
+    }
+
+    override fun onCreateView(name: String?, context: Context?, attrs: AttributeSet?): View? {
+        viewModel = ViewModelProviders.of(this).get(ScoreboardViewModel::class.java)
+        return super.onCreateView(name, context, attrs)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
