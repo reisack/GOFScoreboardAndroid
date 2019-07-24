@@ -1,8 +1,8 @@
 package rek.gofscoreboard
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import android.view.View
 import kotlinx.android.synthetic.main.activity_scoreboard.*
 
@@ -42,8 +42,10 @@ class ScoreboardActivity : AppCompatActivity() {
         listScores.setHasFixedSize(true)
 
         val scoreGridColumnsCount = if (nbPlayerValue == 3) 4 else 5
-        listScores.layoutManager = GridLayoutManager(this, scoreGridColumnsCount,
-            GridLayoutManager.VERTICAL, false)
+        listScores.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
+            this, scoreGridColumnsCount,
+            androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false
+        )
     }
 
     fun onAddScore(view: View) {
