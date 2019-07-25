@@ -1,14 +1,15 @@
 package rek.gofscoreboard
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
+import android.os.PersistableBundle
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.activity_scoreboard.*
+import rek.gofscoreboard.databinding.ActivityScoreboardBinding
 
 class ScoreboardActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityScoreboardBinding
     private lateinit var viewModel: ScoreboardViewModel
 
     companion object {
@@ -17,52 +18,31 @@ class ScoreboardActivity : AppCompatActivity() {
         const val PLAYER_TWO_NAME = "PLAYER2_NAME"
         const val PLAYER_THREE_NAME = "PLAYER3_NAME"
         const val PLAYER_FOUR_NAME = "PLAYER4_NAME"
-
-        var nbPlayerValue: Int? = null
-        lateinit var playerOneName: String
-        lateinit var playerTwoName: String
-        lateinit var playerThreeName: String
-        lateinit var playerFourName: String
-
-        val scoresList: MutableList<String> = mutableListOf()
-    }
-
-    override fun onCreateView(name: String?, context: Context?, attrs: AttributeSet?): View? {
-        viewModel = ViewModelProviders.of(this).get(ScoreboardViewModel::class.java)
-        return super.onCreateView(name, context, attrs)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_scoreboard)
+        setContentView(binding.root)
 
-        fun setValuesFromPreviousActivity() {
-            nbPlayerValue = intent.getIntExtra(NB_PLAYERS, 0)
-            playerOneName = intent.getStringExtra(PLAYER_ONE_NAME)
-            playerTwoName = intent.getStringExtra(PLAYER_TWO_NAME)
-            playerThreeName = intent.getStringExtra(PLAYER_THREE_NAME)
-            playerFourName = intent.getStringExtra(PLAYER_FOUR_NAME)
-        }
+        viewModel = ViewModelProviders.of(this).get(ScoreboardViewModel::class.java)
+        viewModel.nbPlayerValue = intent.getIntExtra(NB_PLAYERS, 0)
+        viewModel.playerOneName = intent.getStringExtra(PLAYER_ONE_NAME)
+        viewModel.playerTwoName = intent.getStringExtra(PLAYER_TWO_NAME)
+        viewModel.playerThreeName = intent.getStringExtra(PLAYER_THREE_NAME)
+        viewModel.playerFourName = intent.getStringExtra(PLAYER_FOUR_NAME)
 
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scoreboard)
-
-        setValuesFromPreviousActivity()
-
-        listScores.setHasFixedSize(true)
-
-        val scoreGridColumnsCount = if (nbPlayerValue == 3) 4 else 5
-        listScores.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
+        binding.listScores.setHasFixedSize(true)
+        val scoreGridColumnsCount = if (viewModel.nbPlayerValue == 3) 4 else 5
+        binding.listScores.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
             this, scoreGridColumnsCount,
             androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false
         )
+
+        super.onCreate(savedInstanceState)
     }
 
     fun onAddScore(view: View) {
-        scoresList.add("Test1")
-        scoresList.add("Test2")
-        scoresList.add("Test3")
-        scoresList.add("Test4")
-        scoresList.add("Test5")
-        val adapterScore = ScoresListAdapter(scoresList.toTypedArray())
-        listScores.adapter = adapterScore
+        viewModel.addScoresRound("10", "5", "0", "100")
+        binding.listScores.adapter = viewModel.getAdapterScoresList()
     }
 }

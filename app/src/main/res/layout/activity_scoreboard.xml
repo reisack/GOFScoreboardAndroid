@@ -1,150 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ScoreboardActivity"
-        android:background="#D2D2D2">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ScoreboardActivity"
+            android:background="#D2D2D2">
 
-    <TextView
-            android:text="Veuillez saisir le nombre de cartes restantes à la fin de chaque tour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:id="@+id/labelNewScoreText"
-            android:fontFamily="sans-serif-medium"
-            android:textAlignment="center"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/labelPlayerOneScore"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
+        <TextView
+                android:text="Veuillez saisir le nombre de cartes restantes à la fin de chaque tour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:id="@+id/labelNewScoreText"
+                android:fontFamily="sans-serif-medium"
+                android:textAlignment="center"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/labelPlayerOneScore"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
 
-    <TextView
-            android:text="WWWWW"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:id="@+id/labelPlayerOneScore"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/editPlayerOneScore"
-            app:layout_constraintTop_toBottomOf="@+id/labelNewScoreText"
-            app:layout_constraintBottom_toTopOf="@+id/labelPlayerThreeScore" android:layout_marginStart="24dp"
-            android:layout_marginEnd="8dp"/>
+        <TextView
+                android:text="WWWWW"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:id="@+id/labelPlayerOneScore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/editPlayerOneScore"
+                app:layout_constraintTop_toBottomOf="@+id/labelNewScoreText"
+                app:layout_constraintBottom_toTopOf="@+id/labelPlayerThreeScore" android:layout_marginStart="24dp"
+                android:layout_marginEnd="8dp"/>
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="2"
-            android:textSize="16sp"
-            android:id="@+id/editPlayerOneScore"
-            app:layout_constraintStart_toEndOf="@+id/labelPlayerOneScore" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/labelPlayerTwoScore"
-            app:layout_constraintBottom_toBottomOf="@+id/labelPlayerOneScore"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="2"
+                android:textSize="16sp"
+                android:id="@+id/editPlayerOneScore"
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerOneScore" app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/labelPlayerTwoScore"
+                app:layout_constraintBottom_toBottomOf="@+id/labelPlayerOneScore"/>
 
-    <TextView
-            android:text="WWWWW"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:id="@+id/labelPlayerTwoScore"
-            app:layout_constraintStart_toEndOf="@+id/editPlayerOneScore" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/editPlayerTwoScore"
-            app:layout_constraintBottom_toBottomOf="@+id/editPlayerOneScore" android:layout_marginStart="24dp"
-            android:layout_marginEnd="8dp"/>
+        <TextView
+                android:text="WWWWW"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:id="@+id/labelPlayerTwoScore"
+                app:layout_constraintStart_toEndOf="@+id/editPlayerOneScore" app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/editPlayerTwoScore"
+                app:layout_constraintBottom_toBottomOf="@+id/editPlayerOneScore" android:layout_marginStart="24dp"
+                android:layout_marginEnd="8dp"/>
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="2"
-            android:textSize="16sp"
-            android:id="@+id/editPlayerTwoScore"
-            app:layout_constraintStart_toEndOf="@+id/labelPlayerTwoScore" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/labelPlayerTwoScore" android:layout_marginEnd="24dp"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="2"
+                android:textSize="16sp"
+                android:id="@+id/editPlayerTwoScore"
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerTwoScore" app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/labelPlayerTwoScore" android:layout_marginEnd="24dp"/>
 
-    <TextView
-            android:text="WWWWW"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:id="@+id/labelPlayerThreeScore"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/editPlayerThreeScore"
-            app:layout_constraintTop_toBottomOf="@+id/labelPlayerOneScore"
-            app:layout_constraintBottom_toTopOf="@+id/btnAddScore" android:layout_marginStart="24dp"
-            android:layout_marginEnd="8dp"/>
+        <TextView
+                android:text="WWWWW"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:id="@+id/labelPlayerThreeScore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/editPlayerThreeScore"
+                app:layout_constraintTop_toBottomOf="@+id/labelPlayerOneScore"
+                app:layout_constraintBottom_toTopOf="@+id/btnAddScore" android:layout_marginStart="24dp"
+                android:layout_marginEnd="8dp"/>
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="2"
-            android:textSize="16sp"
-            android:id="@+id/editPlayerThreeScore"
-            app:layout_constraintStart_toEndOf="@+id/labelPlayerThreeScore" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/labelPlayerFourScore"
-            app:layout_constraintBottom_toBottomOf="@+id/labelPlayerThreeScore"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="2"
+                android:textSize="16sp"
+                android:id="@+id/editPlayerThreeScore"
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerThreeScore"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/labelPlayerFourScore"
+                app:layout_constraintBottom_toBottomOf="@+id/labelPlayerThreeScore"/>
 
-    <TextView
-            android:text="WWWWW"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:id="@+id/labelPlayerFourScore"
-            app:layout_constraintStart_toEndOf="@+id/editPlayerThreeScore" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/editPlayerFourScore"
-            app:layout_constraintBottom_toBottomOf="@+id/editPlayerThreeScore" android:layout_marginStart="24dp"
-            android:layout_marginEnd="8dp"/>
+        <TextView
+                android:text="WWWWW"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:id="@+id/labelPlayerFourScore"
+                app:layout_constraintStart_toEndOf="@+id/editPlayerThreeScore"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/editPlayerFourScore"
+                app:layout_constraintBottom_toBottomOf="@+id/editPlayerThreeScore" android:layout_marginStart="24dp"
+                android:layout_marginEnd="8dp"/>
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="2"
-            android:textSize="16sp"
-            android:id="@+id/editPlayerFourScore"
-            app:layout_constraintStart_toEndOf="@+id/labelPlayerFourScore" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/labelPlayerFourScore" android:layout_marginEnd="24dp"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="2"
+                android:textSize="16sp"
+                android:id="@+id/editPlayerFourScore"
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerFourScore"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/labelPlayerFourScore" android:layout_marginEnd="24dp"/>
 
-    <Button
-            android:text="Valider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnAddScore"
-            android:onClick="onAddScore"
-            app:layout_constraintTop_toBottomOf="@+id/labelPlayerThreeScore"
-            app:layout_constraintBottom_toTopOf="@+id/listScores" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/btnDeletePreviousScore" android:layout_marginEnd="16dp"
-            android:layout_marginStart="32dp"/>
+        <Button
+                android:text="Valider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAddScore"
+                android:onClick="onAddScore"
+                app:layout_constraintTop_toBottomOf="@+id/labelPlayerThreeScore"
+                app:layout_constraintBottom_toTopOf="@+id/listScores" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/btnDeletePreviousScore" android:layout_marginEnd="16dp"
+                android:layout_marginStart="32dp"/>
 
-    <Button
-            android:text="Supprimer les scores\n du dernier tour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-            android:id="@+id/btnDeletePreviousScore"
-            app:layout_constraintBottom_toBottomOf="@+id/btnAddScore"
-            app:layout_constraintStart_toEndOf="@+id/btnAddScore" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
-            android:layout_marginEnd="32dp"/>
+        <Button
+                android:text="Supprimer les scores\n du dernier tour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:id="@+id/btnDeletePreviousScore"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAddScore"
+                app:layout_constraintStart_toEndOf="@+id/btnAddScore" app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
+                android:layout_marginEnd="32dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="350dp"
-            android:scrollbars="vertical"
-            android:id="@+id/listScores"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnAddScore" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="16dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="0dp"
+                android:layout_height="350dp"
+                android:scrollbars="vertical"
+                android:id="@+id/listScores"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnAddScore" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
