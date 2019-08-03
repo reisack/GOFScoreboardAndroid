@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 
 class ScoreboardViewModel : ViewModel() {
-    var nbPlayerValue: Int? = 4
+    var nbPlayerValue: Int = 4
     lateinit var playerOneName: String
     lateinit var playerTwoName: String
     lateinit var playerThreeName: String
