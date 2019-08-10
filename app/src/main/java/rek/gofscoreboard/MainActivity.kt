@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import rek.gofscoreboard.databinding.ActivityMainBinding
@@ -24,14 +25,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onStartGame(view: View) {
-        val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)
+        if (viewModel.canStartGame()) {
+            val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)
 
-        scoreboardIntent.putExtra(ScoreboardActivity.NB_PLAYERS, viewModel.nbPlayer.value)
-        scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_ONE_NAME, viewModel.playerOneName.value)
-        scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_TWO_NAME, viewModel.playerTwoName.value)
-        scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_THREE_NAME, viewModel.playerThreeName.value)
-        scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_FOUR_NAME, viewModel.playerFourName.value)
+            scoreboardIntent.putExtra(ScoreboardActivity.NB_PLAYERS, viewModel.nbPlayer.value)
+            scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_ONE_NAME, viewModel.playerOneName.value)
+            scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_TWO_NAME, viewModel.playerTwoName.value)
+            scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_THREE_NAME, viewModel.playerThreeName.value)
+            scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_FOUR_NAME, viewModel.playerFourName.value)
 
-        startActivity(scoreboardIntent)
+            startActivity(scoreboardIntent)
+        }
+        else {
+            Toast.makeText(this, "Veuillez saisir les noms des joueurs", Toast.LENGTH_LONG).show()
+        }
     }
 }

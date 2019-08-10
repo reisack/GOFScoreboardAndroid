@@ -27,4 +27,11 @@ class MainViewModel : ViewModel() {
         nbPlayer.value = newNbPlayer
         playerFourVisibility.value = if (nbPlayer.value == 3) View.INVISIBLE else View.VISIBLE
     }
+
+    fun canStartGame(): Boolean {
+        return !playerOneName.value.isNullOrEmpty()
+                && !playerTwoName.value.isNullOrEmpty()
+                && !playerThreeName.value.isNullOrEmpty()
+                && (nbPlayer.value == 3 || !playerFourName.value.isNullOrEmpty())
+    }
 }
