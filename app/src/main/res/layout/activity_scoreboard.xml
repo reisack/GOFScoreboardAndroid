@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable name="scoreboardViewModel"
+                  type="rek.gofscoreboard.ScoreboardViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,9 +28,9 @@
                 android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
 
         <TextView
-                android:text="WWWWW"
+                android:text="@{scoreboardViewModel.playerOneName}"
                 android:textSize="16sp"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:id="@+id/labelPlayerOneScore"
@@ -39,15 +46,16 @@
                 android:inputType="number"
                 android:ems="2"
                 android:textSize="16sp"
+                android:text="@={scoreboardViewModel.playerOneScoreText}"
                 android:id="@+id/editPlayerOneScore"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerOneScore" app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toStartOf="@+id/labelPlayerTwoScore"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerOneScore"/>
 
         <TextView
-                android:text="WWWWW"
+                android:text="@{scoreboardViewModel.playerTwoName}"
                 android:textSize="16sp"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:id="@+id/labelPlayerTwoScore"
@@ -62,15 +70,16 @@
                 android:inputType="number"
                 android:ems="2"
                 android:textSize="16sp"
+                android:text="@={scoreboardViewModel.playerTwoScoreText}"
                 android:id="@+id/editPlayerTwoScore"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerTwoScore" app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerTwoScore" android:layout_marginEnd="24dp"/>
 
         <TextView
-                android:text="WWWWW"
+                android:text="@{scoreboardViewModel.playerThreeName}"
                 android:textSize="16sp"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:id="@+id/labelPlayerThreeScore"
@@ -87,6 +96,7 @@
                 android:inputType="number"
                 android:ems="2"
                 android:textSize="16sp"
+                android:text="@={scoreboardViewModel.playerThreeScoreText}"
                 android:id="@+id/editPlayerThreeScore"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerThreeScore"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -94,9 +104,9 @@
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerThreeScore"/>
 
         <TextView
-                android:text="WWWWW"
+                android:text="@{scoreboardViewModel.playerFourName}"
                 android:textSize="16sp"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:id="@+id/labelPlayerFourScore"
@@ -112,6 +122,7 @@
                 android:inputType="number"
                 android:ems="2"
                 android:textSize="16sp"
+                android:text="@={scoreboardViewModel.playerFourScoreText}"
                 android:id="@+id/editPlayerFourScore"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerFourScore"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -136,6 +147,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
                 android:id="@+id/btnDeletePreviousScore"
+                android:onClick="onRemovePreviousScore"
                 app:layout_constraintBottom_toBottomOf="@+id/btnAddScore"
                 app:layout_constraintStart_toEndOf="@+id/btnAddScore" app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
