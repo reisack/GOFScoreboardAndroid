@@ -29,16 +29,20 @@ class ScoreboardViewModel : ViewModel() {
         if (canAddScoresRound()) {
             invertedTurn = !invertedTurn
 
-            scoresList.add(if (invertedTurn) "<=" else "=>")
-            scoresList.add(playerOneScoreText.value.toString())
-            scoresList.add(playerTwoScoreText.value.toString())
-            scoresList.add(playerThreeScoreText.value.toString())
-            scoresList.add(if (nbPlayer == 4) playerFourScoreText.value.toString() else "")
+            playerOneTotalScore += calculateScore(playerOneScoreText.value!!.toInt())
+            playerTwoTotalScore += calculateScore(playerTwoScoreText.value!!.toInt())
+            playerThreeTotalScore += calculateScore(playerThreeScoreText.value!!.toInt())
+            if (nbPlayer == 4) {
+                playerFourTotalScore += calculateScore(playerFourScoreText.value!!.toInt())
+            }
 
-            playerOneTotalScore += playerOneScoreText.value!!.toInt()
-            playerTwoTotalScore += playerTwoScoreText.value!!.toInt()
-            playerThreeTotalScore += playerThreeScoreText.value!!.toInt()
-            playerFourTotalScore += playerFourScoreText.value!!.toInt()
+            scoresList.add(if (invertedTurn) "<=" else "=>")
+            scoresList.add(playerOneTotalScore.toString())
+            scoresList.add(playerTwoTotalScore.toString())
+            scoresList.add(playerThreeTotalScore.toString())
+            if (nbPlayer == 4) {
+                scoresList.add(playerOneTotalScore.toString())
+            }
 
             playerOneScoreText.value = ""
             playerTwoScoreText.value = ""
@@ -52,20 +56,52 @@ class ScoreboardViewModel : ViewModel() {
         if (scoresList.size >= 5) {
             invertedTurn = !invertedTurn
 
-            playerFourTotalScore -= scoresList.removeAt(scoresList.size - 1).toInt()
-            playerThreeTotalScore -= scoresList.removeAt(scoresList.size - 1).toInt()
-            playerTwoTotalScore -= scoresList.removeAt(scoresList.size - 1).toInt()
-            playerOneTotalScore -= scoresList.removeAt(scoresList.size - 1).toInt()
+            if (nbPlayer == 4) {
+                scoresList.removeAt(scoresList.size - 1).toInt() // Remove Score player 4
+            }
 
-            // Remove the turn direction
-            scoresList.removeAt(scoresList.size - 1)
+            scoresList.removeAt(scoresList.size - 1).toInt() // Remove Score player 3
+            scoresList.removeAt(scoresList.size - 1).toInt() // Remove Score player 2
+            scoresList.removeAt(scoresList.size - 1).toInt() // Remove Score player 1
+            scoresList.removeAt(scoresList.size - 1) // Remove the turn direction
+
+            if (scoresList.size >= 5) {
+                if (nbPlayer == 4) {
+                    playerFourTotalScore = scoresList[scoresList.size - 1].toInt()
+                    playerThreeTotalScore = scoresList[scoresList.size - 2].toInt()
+                    playerTwoTotalScore = scoresList[scoresList.size - 3].toInt()
+                    playerOneTotalScore = scoresList[scoresList.size - 4].toInt()
+                }
+                else {
+                    playerThreeTotalScore = scoresList[scoresList.size - 1].toInt()
+                    playerTwoTotalScore = scoresList[scoresList.size - 2].toInt()
+                    playerOneTotalScore = scoresList[scoresList.size - 3].toInt()
+                }
+            }
+            else {
+                playerOneTotalScore = 0
+                playerTwoTotalScore = 0
+                playerThreeTotalScore = 0
+                playerFourTotalScore = 0
+            }
         }
     }
 
-    fun canAddScoresRound(): Boolean {
+    private fun canAddScoresRound(): Boolean {
         return !playerOneScoreText.value.isNullOrEmpty()
                 && !playerTwoScoreText.value.isNullOrEmpty()
                 && !playerThreeScoreText.value.isNullOrEmpty()
                 && (nbPlayer == 3 || !playerFourScoreText.value.isNullOrEmpty())
+    }
+
+    private fun calculateScore(nbCardsLeft: Int) : Int {
+        return when (nbCardsLeft) {
+            in 1..7 -> nbCardsLeft
+            in 8..10 -> nbCardsLeft * 2
+            in 11..13 -> nbCardsLeft * 3
+            14, 15 -> nbCardsLeft * 4
+            16 -> 80
+            else -> 0
+        }
     }
 }
