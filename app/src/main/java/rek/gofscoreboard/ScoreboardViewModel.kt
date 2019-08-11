@@ -69,42 +69,41 @@ class ScoreboardViewModel : ViewModel() {
         }
     }
 
-    fun removePreviousScoresRound() {
+    fun canRemovePreviousScoresRound(): Boolean {
         val minimumScoreboardSize = if (nbPlayers == 4) 10 else 8
-        if (scoreboard.size >= minimumScoreboardSize) {
-            invertedTurn = !invertedTurn
+        return scoreboard.size >= minimumScoreboardSize
+    }
 
+    fun removePreviousScoresRound() {
+        invertedTurn = !invertedTurn
+
+        if (nbPlayers == 4) {
+            scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 4
+        }
+
+        scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 3
+        scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 2
+        scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 1
+        scoreboard.removeAt(scoreboard.size - 1) // Remove the turn direction
+
+        if (canRemovePreviousScoresRound()) {
             if (nbPlayers == 4) {
-                scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 4
-            }
-
-            scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 3
-            scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 2
-            scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 1
-            scoreboard.removeAt(scoreboard.size - 1) // Remove the turn direction
-
-            if (scoreboard.size >= minimumScoreboardSize) {
-                if (nbPlayers == 4) {
-                    playerFourTotalScore = scoreboard[scoreboard.size - 1].toInt()
-                    playerThreeTotalScore = scoreboard[scoreboard.size - 2].toInt()
-                    playerTwoTotalScore = scoreboard[scoreboard.size - 3].toInt()
-                    playerOneTotalScore = scoreboard[scoreboard.size - 4].toInt()
-                }
-                else {
-                    playerThreeTotalScore = scoreboard[scoreboard.size - 1].toInt()
-                    playerTwoTotalScore = scoreboard[scoreboard.size - 2].toInt()
-                    playerOneTotalScore = scoreboard[scoreboard.size - 3].toInt()
-                }
+                playerFourTotalScore = scoreboard[scoreboard.size - 1].toInt()
+                playerThreeTotalScore = scoreboard[scoreboard.size - 2].toInt()
+                playerTwoTotalScore = scoreboard[scoreboard.size - 3].toInt()
+                playerOneTotalScore = scoreboard[scoreboard.size - 4].toInt()
             }
             else {
-                playerOneTotalScore = 0
-                playerTwoTotalScore = 0
-                playerThreeTotalScore = 0
-                playerFourTotalScore = 0
+                playerThreeTotalScore = scoreboard[scoreboard.size - 1].toInt()
+                playerTwoTotalScore = scoreboard[scoreboard.size - 2].toInt()
+                playerOneTotalScore = scoreboard[scoreboard.size - 3].toInt()
             }
         }
         else {
-            toastMessage.value = R.string.no_score_to_delete
+            playerOneTotalScore = 0
+            playerTwoTotalScore = 0
+            playerThreeTotalScore = 0
+            playerFourTotalScore = 0
         }
     }
 

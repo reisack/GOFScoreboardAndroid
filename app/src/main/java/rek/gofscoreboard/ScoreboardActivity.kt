@@ -1,9 +1,11 @@
 package rek.gofscoreboard
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -37,14 +39,38 @@ class ScoreboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onBackPressed() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.back_to_main_screen_dialog_title)
+            .setMessage(R.string.back_to_main_screen_dialog_message)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                // Return to main activity
+                super.onBackPressed()
+            }
+            .setNegativeButton(R.string.no, null)
+            .show()
+    }
+
     fun onAddScore(view: View) {
         viewModel.addScoresRound()
         refreshScoreboard()
     }
 
     fun onRemovePreviousScore(view: View) {
-        viewModel.removePreviousScoresRound()
-        refreshScoreboard()
+        if (viewModel.canRemovePreviousScoresRound()) {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.delete_score_dialog_title)
+                .setMessage(R.string.delete_score_dialog_message)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    viewModel.removePreviousScoresRound()
+                    refreshScoreboard()
+                }
+                .setNegativeButton(R.string.no, null)
+                .show()
+        }
+        else {
+            Toast.makeText(this, R.string.no_score_to_delete, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun initPlayersInformations() {
