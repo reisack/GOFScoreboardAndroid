@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(scoreboardIntent)
         }
         else {
-            Toast.makeText(this, "Veuillez saisir les noms des joueurs", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, R.string.enter_players_names, Toast.LENGTH_LONG).show()
         }
     }
 }

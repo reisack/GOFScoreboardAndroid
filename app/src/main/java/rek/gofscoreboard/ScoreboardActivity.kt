@@ -3,6 +3,7 @@ package rek.gofscoreboard
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import rek.gofscoreboard.databinding.ActivityScoreboardBinding
@@ -51,8 +52,16 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     fun onAddScore(view: View) {
-        viewModel.addScoresRound()
-        refreshScoreboard()
+        if (!viewModel.canAddScoresRound()) {
+            Toast.makeText(this, R.string.enter_players_scores, Toast.LENGTH_LONG).show()
+        }
+        else if (!viewModel.areScoresValid()) {
+            Toast.makeText(this, R.string.enter_valid_players_scores, Toast.LENGTH_LONG).show()
+        }
+        else {
+            viewModel.addScoresRound()
+            refreshScoreboard()
+        }
     }
 
     fun onRemovePreviousScore(view: View) {

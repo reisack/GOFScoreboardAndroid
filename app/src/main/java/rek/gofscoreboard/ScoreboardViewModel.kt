@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ScoreboardViewModel : ViewModel() {
+    val toastMessage = MutableLiveData<Int>()
+
     var nbPlayer: Int = 4
     lateinit var playerOneName: String
     lateinit var playerTwoName: String
@@ -36,30 +38,27 @@ class ScoreboardViewModel : ViewModel() {
     }
 
     fun addScoresRound() {
-        if (canAddScoresRound()) {
-            invertedTurn = !invertedTurn
+        invertedTurn = !invertedTurn
 
-            playerOneTotalScore += calculateScore(playerOneScoreText.value!!.toInt())
-            playerTwoTotalScore += calculateScore(playerTwoScoreText.value!!.toInt())
-            playerThreeTotalScore += calculateScore(playerThreeScoreText.value!!.toInt())
-            if (nbPlayer == 4) {
-                playerFourTotalScore += calculateScore(playerFourScoreText.value!!.toInt())
-            }
-
-            scoreboard.add(if (invertedTurn) "<=" else "=>")
-            scoreboard.add(playerOneTotalScore.toString())
-            scoreboard.add(playerTwoTotalScore.toString())
-            scoreboard.add(playerThreeTotalScore.toString())
-            if (nbPlayer == 4) {
-                scoreboard.add(playerFourTotalScore.toString())
-            }
-
-            playerOneScoreText.value = ""
-            playerTwoScoreText.value = ""
-            playerThreeScoreText.value = ""
-            playerFourScoreText.value = ""
+        playerOneTotalScore += calculateScore(playerOneScoreText.value!!.toInt())
+        playerTwoTotalScore += calculateScore(playerTwoScoreText.value!!.toInt())
+        playerThreeTotalScore += calculateScore(playerThreeScoreText.value!!.toInt())
+        if (nbPlayer == 4) {
+            playerFourTotalScore += calculateScore(playerFourScoreText.value!!.toInt())
         }
 
+        scoreboard.add(if (invertedTurn) "<=" else "=>")
+        scoreboard.add(playerOneTotalScore.toString())
+        scoreboard.add(playerTwoTotalScore.toString())
+        scoreboard.add(playerThreeTotalScore.toString())
+        if (nbPlayer == 4) {
+            scoreboard.add(playerFourTotalScore.toString())
+        }
+
+        playerOneScoreText.value = ""
+        playerTwoScoreText.value = ""
+        playerThreeScoreText.value = ""
+        playerFourScoreText.value = ""
     }
 
     fun removePreviousScoresRound() {
@@ -98,11 +97,17 @@ class ScoreboardViewModel : ViewModel() {
         }
     }
 
-    private fun canAddScoresRound(): Boolean =
+    fun canAddScoresRound(): Boolean =
         !playerOneScoreText.value.isNullOrEmpty()
         && !playerTwoScoreText.value.isNullOrEmpty()
         && !playerThreeScoreText.value.isNullOrEmpty()
         && (nbPlayer == 3 || !playerFourScoreText.value.isNullOrEmpty())
+
+    fun areScoresValid(): Boolean =
+        playerOneScoreText.value!!.toInt() in 0..16
+        && playerTwoScoreText.value!!.toInt() in 0..16
+        && playerThreeScoreText.value!!.toInt() in 0..16
+        && (nbPlayer == 3 || playerFourScoreText.value!!.toInt() in 0..16)
 
     private fun calculateScore(nbCardsLeft: Int) : Int =
         when (nbCardsLeft) {

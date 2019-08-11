@@ -18,7 +18,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre de joueurs"
+                android:text="@string/number_of_players"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="38sp"
                 android:height="50dp"
@@ -39,7 +39,7 @@
                 android:layout_marginStart="96dp" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="96dp">
             <RadioButton
-                    android:text="3"
+                    android:text="@string/three_players_mode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/radioButton3players"
@@ -52,7 +52,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:onClick="@{() -> mainViewModel.updateNbPlayer(3)}"/>
             <RadioButton
-                    android:text="4"
+                    android:text="@string/four_players_mode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/radioButton4players"
@@ -68,11 +68,12 @@
         </RadioGroup>
 
         <TextView
-                android:text="Joueur 1"
+                android:text="@string/player_one"
                 android:textSize="24sp"
                 android:layout_width="130dp"
                 android:layout_height="46dp"
                 android:id="@+id/labelPlayerOneName"
+                android:labelFor="@id/editPlayerOneName"
                 android:fontFamily="sans-serif-medium"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroupNbPlayers"
                 app:layout_constraintBottom_toTopOf="@+id/labelPlayerTwoName"
@@ -87,17 +88,20 @@
                 android:textSize="24sp"
                 android:ems="10"
                 android:id="@+id/editPlayerOneName"
+                android:contentDescription="@string/name_p1_description"
+                android:importantForAutofill="no"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerOneName"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerOneName" android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"/>
 
         <TextView
-                android:text="Joueur 2"
+                android:text="@string/player_two"
                 android:textSize="24sp"
                 android:layout_width="130dp"
                 android:layout_height="46dp"
                 android:id="@+id/labelPlayerTwoName"
+                android:labelFor="@id/editPlayerTwoName"
                 android:fontFamily="sans-serif-medium"
                 app:layout_constraintTop_toBottomOf="@+id/labelPlayerOneName"
                 app:layout_constraintBottom_toTopOf="@+id/labelPlayerThreeName"
@@ -112,17 +116,20 @@
                 android:textSize="24sp"
                 android:ems="10"
                 android:id="@+id/editPlayerTwoName"
+                android:contentDescription="@string/name_p2_description"
+                android:importantForAutofill="no"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerTwoName"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerTwoName" android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"/>
 
         <TextView
-                android:text="Joueur 3"
+                android:text="@string/player_three"
                 android:textSize="24sp"
                 android:layout_width="130dp"
                 android:layout_height="46dp"
                 android:id="@+id/labelPlayerThreeName"
+                android:labelFor="@id/editPlayerThreeName"
                 android:fontFamily="sans-serif-medium"
                 app:layout_constraintTop_toBottomOf="@+id/labelPlayerTwoName"
                 app:layout_constraintBottom_toTopOf="@+id/labelPlayerFourName"
@@ -137,17 +144,20 @@
                 android:textSize="24sp"
                 android:ems="10"
                 android:id="@+id/editPlayerThreeName"
+                android:contentDescription="@string/name_p3_description"
+                android:importantForAutofill="no"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerThreeName"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerThreeName" android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"/>
 
         <TextView
-                android:text="Joueur 4"
+                android:text="@string/player_four"
                 android:textSize="24sp"
                 android:layout_width="130dp"
                 android:layout_height="46dp"
                 android:id="@+id/labelPlayerFourName"
+                android:labelFor="@id/editPlayerFourName"
                 android:fontFamily="sans-serif-medium"
                 android:visibility="@{mainViewModel.playerFourVisibility}"
                 app:layout_constraintTop_toBottomOf="@+id/labelPlayerThreeName"
@@ -163,6 +173,8 @@
                 android:textSize="24sp"
                 android:ems="10"
                 android:id="@+id/editPlayerFourName"
+                android:contentDescription="@string/name_p4_description"
+                android:importantForAutofill="no"
                 android:visibility="@{mainViewModel.playerFourVisibility}"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerFourName"
@@ -170,7 +182,7 @@
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"/>
 
         <Button
-                android:text="Commencer la partie"
+                android:text="@string/button_start_game"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
                 android:onClick="onStartGame"
