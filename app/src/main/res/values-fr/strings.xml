@@ -20,6 +20,7 @@
     <string name="score_p3_description">Score joueur 3</string>
     <string name="score_p4_description">Score joueur 4</string>
     <string name="three_players_mode">3</string>
-    <string name="button_delete_previous_scores_turn">Supprimer les scores du dernier tour</string>
+    <string name="button_delete_previous_scores_turn">Supprimer les scores\n du dernier tour</string>
     <string name="button_start_game">Commencer la partie</string>
+    <string name="no_score_to_delete">Il n\'y a pas de score à supprimer</string>
 </resources>

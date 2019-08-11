@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         if (viewModel.canStartGame()) {
             val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)
 
-            scoreboardIntent.putExtra(ScoreboardActivity.NB_PLAYERS, viewModel.nbPlayer.value)
+            scoreboardIntent.putExtra(ScoreboardActivity.NB_PLAYERS, viewModel.nbPlayers)
             scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_ONE_NAME, viewModel.playerOneName.value)
             scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_TWO_NAME, viewModel.playerTwoName.value)
             scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_THREE_NAME, viewModel.playerThreeName.value)

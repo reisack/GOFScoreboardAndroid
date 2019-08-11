@@ -5,16 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainViewModel : ViewModel() {
-    val nbPlayer = MutableLiveData<Int>()
-    val playerFourVisibility = MutableLiveData<Int>()
+    var nbPlayers: Int
 
     val playerOneName = MutableLiveData<String>()
     val playerTwoName = MutableLiveData<String>()
     val playerThreeName = MutableLiveData<String>()
     val playerFourName = MutableLiveData<String>()
 
+    val playerFourVisibility = MutableLiveData<Int>()
+
     init {
-        nbPlayer.value = 4
+        nbPlayers = 4
         playerFourVisibility.value = View.VISIBLE
 
         playerOneName.value = ""
@@ -24,14 +25,14 @@ class MainViewModel : ViewModel() {
     }
 
     fun updateNbPlayer(newNbPlayer : Int) {
-        nbPlayer.value = newNbPlayer
-        playerFourVisibility.value = if (nbPlayer.value == 3) View.INVISIBLE else View.VISIBLE
+        nbPlayers = newNbPlayer
+        playerFourVisibility.value = if (nbPlayers == 3) View.INVISIBLE else View.VISIBLE
     }
 
     fun canStartGame(): Boolean {
         return !playerOneName.value.isNullOrEmpty()
                 && !playerTwoName.value.isNullOrEmpty()
                 && !playerThreeName.value.isNullOrEmpty()
-                && (nbPlayer.value == 3 || !playerFourName.value.isNullOrEmpty())
+                && (nbPlayers == 3 || !playerFourName.value.isNullOrEmpty())
     }
 }
