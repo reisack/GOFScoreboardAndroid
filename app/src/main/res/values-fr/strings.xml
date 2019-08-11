@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Gang Of Four - Tableau de score</string>
+    <string name="button_valid">Valider</string>
+    <string name="enter_players_names">Veuillez saisir les noms des joueurs</string>
+    <string name="enter_players_scores">Vous devez saisir les scores des joueurs</string>
+    <string name="enter_scores_explanation">Veuillez saisir le nombre de cartes restantes à la fin de chaque tour</string>
+    <string name="enter_valid_players_scores">Vous devez saisir des scores entre 0 et 16</string>
+    <string name="four_players_mode">4</string>
+    <string name="name_p1_description">Nom joueur 1</string>
+    <string name="name_p2_description">Nom joueur 2</string>
+    <string name="name_p3_description">Nom joueur 3</string>
+    <string name="name_p4_description">Nom joueur 4</string>
+    <string name="number_of_players">Nombre de joueurs</string>
+    <string name="player_four">Joueur 4</string>
+    <string name="player_one">Joueur 1</string>
+    <string name="player_three">Joueur 3</string>
+    <string name="player_two">Joueur 2</string>
+    <string name="score_p1_description">Score joueur 1</string>
+    <string name="score_p2_description">Score joueur 2</string>
+    <string name="score_p3_description">Score joueur 3</string>
+    <string name="score_p4_description">Score joueur 4</string>
+    <string name="three_players_mode">3</string>
+    <string name="button_delete_previous_scores_turn">Supprimer les scores du dernier tour</string>
+    <string name="button_start_game">Commencer la partie</string>
+</resources>
