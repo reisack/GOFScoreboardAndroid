@@ -36,6 +36,7 @@ class ScoreboardActivity : AppCompatActivity() {
         setPlayerFourVisibility()
         initScoreboard()
         setToastMessageObserver()
+        setFinishAlertDialogObserver()
 
         super.onCreate(savedInstanceState)
     }
@@ -112,6 +113,21 @@ class ScoreboardActivity : AppCompatActivity() {
                 val message = getString(resourceId)
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show()
             }
+        })
+    }
+
+    private fun setFinishAlertDialogObserver() {
+        val context = this
+        viewModel.finishAlertDialogWinner.observe(this, Observer { player ->
+            AlertDialog.Builder(this)
+                .setTitle(R.string.game_over_dialog_title)
+                .setMessage(
+                    getString(R.string.game_over_dialog_message,
+                        player.name,
+                        player.getTotalScore()))
+                .setPositiveButton(R.string.yes, null)
+                .setNegativeButton(R.string.no, null)
+                .show()
         })
     }
 

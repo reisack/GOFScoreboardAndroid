@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 
 class ScoreboardViewModel : ViewModel() {
     val toastMessage = MutableLiveData<Int>()
+    val finishAlertDialogWinner = MutableLiveData<Player>()
 
     lateinit var playerOne: Player
     lateinit var playerTwo: Player
@@ -58,6 +59,11 @@ class ScoreboardViewModel : ViewModel() {
             playerTwo.nbCardsLeft.value = ""
             playerThree.nbCardsLeft.value = ""
             playerFour!!.nbCardsLeft.value = ""
+
+            val winner = getWinner()
+            if (winner != null) {
+                finishAlertDialogWinner.value = winner
+            }
         }
     }
 
@@ -111,18 +117,32 @@ class ScoreboardViewModel : ViewModel() {
             else -> 0
         }
 
-    /*private fun checkIfGameIsOver() : Int {
+    private fun getWinner() : Player? {
         val finishScore = 100
+        var winner: Player? = null
 
-        val players = listOf (
-            playerOne,
-            playerTwo,
-            playerThree,
-            playerFour
-        )
-
-        if (scores.max()!! >= 100) {
-            return scores.min()!!
+        val players = if (isFourPlayersMode) {
+            listOf(
+                playerOne,
+                playerTwo,
+                playerThree,
+                playerFour
+            )
         }
-    }*/
+        else {
+            listOf(
+                playerOne,
+                playerTwo,
+                playerThree
+            )
+        }
+
+        val playerWithMaxScore = players.maxBy { player -> player!!.getTotalScore() }
+
+        if (playerWithMaxScore != null && playerWithMaxScore.getTotalScore() >= finishScore) {
+            winner = players.minBy { player -> player!!.getTotalScore() }
+        }
+
+        return winner
+    }
 }
