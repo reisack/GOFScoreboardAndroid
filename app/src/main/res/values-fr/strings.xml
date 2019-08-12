@@ -15,10 +15,10 @@
     <string name="player_one">Joueur 1</string>
     <string name="player_three">Joueur 3</string>
     <string name="player_two">Joueur 2</string>
-    <string name="score_p1_description">Score joueur 1</string>
-    <string name="score_p2_description">Score joueur 2</string>
-    <string name="score_p3_description">Score joueur 3</string>
-    <string name="score_p4_description">Score joueur 4</string>
+    <string name="nb_cards_left_p1_description">Nombre de cartes restantes du joueur 1</string>
+    <string name="nb_cards_left_p2_description">Nombre de cartes restantes du joueur 2</string>
+    <string name="nb_cards_left_p3_description">Nombre de cartes restantes du joueur 3</string>
+    <string name="nb_cards_left_p4_description">Nombre de cartes restantes du joueur 4</string>
     <string name="three_players_mode">3</string>
     <string name="button_delete_previous_scores_turn">Supprimer les scores\n du dernier tour</string>
     <string name="button_start_game">Commencer la partie</string>

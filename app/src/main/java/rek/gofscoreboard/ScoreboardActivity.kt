@@ -1,5 +1,6 @@
 package rek.gofscoreboard
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -75,21 +76,26 @@ class ScoreboardActivity : AppCompatActivity() {
 
     private fun initPlayersInformations() {
         viewModel.nbPlayers = intent.getIntExtra(NB_PLAYERS, 0)
-        viewModel.playerOneName = intent.getStringExtra(PLAYER_ONE_NAME)
-        viewModel.playerTwoName = intent.getStringExtra(PLAYER_TWO_NAME)
-        viewModel.playerThreeName = intent.getStringExtra(PLAYER_THREE_NAME)
-        viewModel.playerFourName = intent.getStringExtra(PLAYER_FOUR_NAME)
+        viewModel.isFourPlayersMode = viewModel.nbPlayers == 4
+
+        viewModel.playerOne = Player(intent.getStringExtra(PLAYER_ONE_NAME))
+        viewModel.playerTwo = Player(intent.getStringExtra(PLAYER_TWO_NAME))
+        viewModel.playerThree = Player(intent.getStringExtra(PLAYER_THREE_NAME))
+        if (viewModel.isFourPlayersMode) {
+            viewModel.playerFour = Player(intent.getStringExtra(PLAYER_FOUR_NAME))
+        }
     }
 
     private fun setPlayerFourVisibility() {
-        val playerFourVisibility = if (viewModel.nbPlayers == 4) View.VISIBLE else View.INVISIBLE
+        val playerFourVisibility = if (viewModel.isFourPlayersMode) View.VISIBLE else View.INVISIBLE
         binding.labelPlayerFourScore.visibility = playerFourVisibility
         binding.editPlayerFourScore.visibility = playerFourVisibility
     }
 
+    @SuppressLint("WrongConstant")
     private fun initScoreboard() {
         binding.scoreboard.setHasFixedSize(true)
-        val scoreGridColumnsCount = if (viewModel.nbPlayers == 3) 4 else 5
+        val scoreGridColumnsCount = if (!viewModel.isFourPlayersMode) 4 else 5
         binding.scoreboard.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
             this, scoreGridColumnsCount,
             androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false

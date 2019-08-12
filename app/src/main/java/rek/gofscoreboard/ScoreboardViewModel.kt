@@ -6,21 +6,13 @@ import androidx.lifecycle.ViewModel
 class ScoreboardViewModel : ViewModel() {
     val toastMessage = MutableLiveData<Int>()
 
+    lateinit var playerOne: Player
+    lateinit var playerTwo: Player
+    lateinit var playerThree: Player
+    var playerFour: Player? = null
+
     var nbPlayers: Int = 4
-    lateinit var playerOneName: String
-    lateinit var playerTwoName: String
-    lateinit var playerThreeName: String
-    lateinit var playerFourName: String
-
-    val playerOneScoreText = MutableLiveData<String>()
-    val playerTwoScoreText = MutableLiveData<String>()
-    val playerThreeScoreText = MutableLiveData<String>()
-    val playerFourScoreText = MutableLiveData<String>()
-
-    private var playerOneTotalScore: Int = 0
-    private var playerTwoTotalScore: Int = 0
-    private var playerThreeTotalScore: Int = 0
-    private var playerFourTotalScore: Int = 0
+    var isFourPlayersMode: Boolean = true
 
     private var invertedTurn: Boolean = true
     private val scoreboard: MutableList<String> = mutableListOf()
@@ -29,11 +21,11 @@ class ScoreboardViewModel : ViewModel() {
 
     fun createScoreboardHeader() {
         scoreboard.add("")
-        scoreboard.add(playerOneName)
-        scoreboard.add(playerTwoName)
-        scoreboard.add(playerThreeName)
-        if (nbPlayers == 4) {
-            scoreboard.add(playerFourName)
+        scoreboard.add(playerOne.name)
+        scoreboard.add(playerTwo.name)
+        scoreboard.add(playerThree.name)
+        if (isFourPlayersMode) {
+            scoreboard.add(playerFour!!.name)
         }
     }
 
@@ -47,77 +39,67 @@ class ScoreboardViewModel : ViewModel() {
         else {
             invertedTurn = !invertedTurn
 
-            playerOneTotalScore += calculateScore(playerOneScoreText.value!!.toInt())
-            playerTwoTotalScore += calculateScore(playerTwoScoreText.value!!.toInt())
-            playerThreeTotalScore += calculateScore(playerThreeScoreText.value!!.toInt())
-            if (nbPlayers == 4) {
-                playerFourTotalScore += calculateScore(playerFourScoreText.value!!.toInt())
+            playerOne.stackedScore.push(calculateScore(playerOne.nbCardsLeft.value!!.toInt()))
+            playerTwo.stackedScore.push(calculateScore(playerTwo.nbCardsLeft.value!!.toInt()))
+            playerThree.stackedScore.push(calculateScore(playerThree.nbCardsLeft.value!!.toInt()))
+            if (isFourPlayersMode) {
+                playerFour!!.stackedScore.push(calculateScore(playerFour!!.nbCardsLeft.value!!.toInt()))
             }
 
             scoreboard.add(if (invertedTurn) "<=" else "=>")
-            scoreboard.add(playerOneTotalScore.toString())
-            scoreboard.add(playerTwoTotalScore.toString())
-            scoreboard.add(playerThreeTotalScore.toString())
-            if (nbPlayers == 4) {
-                scoreboard.add(playerFourTotalScore.toString())
+            scoreboard.add(playerOne.getTotalScore().toString())
+            scoreboard.add(playerTwo.getTotalScore().toString())
+            scoreboard.add(playerThree.getTotalScore().toString())
+            if (isFourPlayersMode) {
+                scoreboard.add(playerFour!!.getTotalScore().toString())
             }
 
-            playerOneScoreText.value = ""
-            playerTwoScoreText.value = ""
-            playerThreeScoreText.value = ""
-            playerFourScoreText.value = ""
+            playerOne.nbCardsLeft.value = ""
+            playerTwo.nbCardsLeft.value = ""
+            playerThree.nbCardsLeft.value = ""
+            playerFour!!.nbCardsLeft.value = ""
         }
     }
 
     fun canRemovePreviousScoresRound(): Boolean {
-        val minimumScoreboardSize = if (nbPlayers == 4) 10 else 8
-        return scoreboard.size >= minimumScoreboardSize
+        // We just check the first player stackedScore
+        // It's always the same size for all players during the game
+        return playerOne.stackedScore.isNotEmpty()
     }
 
     fun removePreviousScoresRound() {
-        invertedTurn = !invertedTurn
-
-        if (nbPlayers == 4) {
-            scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 4
-        }
-
-        scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 3
-        scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 2
-        scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 1
-        scoreboard.removeAt(scoreboard.size - 1) // Remove the turn direction
-
         if (canRemovePreviousScoresRound()) {
-            if (nbPlayers == 4) {
-                playerFourTotalScore = scoreboard[scoreboard.size - 1].toInt()
-                playerThreeTotalScore = scoreboard[scoreboard.size - 2].toInt()
-                playerTwoTotalScore = scoreboard[scoreboard.size - 3].toInt()
-                playerOneTotalScore = scoreboard[scoreboard.size - 4].toInt()
+            invertedTurn = !invertedTurn
+
+            if (isFourPlayersMode) {
+                scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 4
             }
-            else {
-                playerThreeTotalScore = scoreboard[scoreboard.size - 1].toInt()
-                playerTwoTotalScore = scoreboard[scoreboard.size - 2].toInt()
-                playerOneTotalScore = scoreboard[scoreboard.size - 3].toInt()
+
+            scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 3
+            scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 2
+            scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 1
+            scoreboard.removeAt(scoreboard.size - 1) // Remove the turn direction
+
+            playerOne.stackedScore.pop()
+            playerTwo.stackedScore.pop()
+            playerThree.stackedScore.pop()
+            if (isFourPlayersMode) {
+                playerFour!!.stackedScore.pop()
             }
-        }
-        else {
-            playerOneTotalScore = 0
-            playerTwoTotalScore = 0
-            playerThreeTotalScore = 0
-            playerFourTotalScore = 0
         }
     }
 
     private fun canAddScoresRound(): Boolean =
-        !playerOneScoreText.value.isNullOrEmpty()
-        && !playerTwoScoreText.value.isNullOrEmpty()
-        && !playerThreeScoreText.value.isNullOrEmpty()
-        && (nbPlayers == 3 || !playerFourScoreText.value.isNullOrEmpty())
+        !playerOne.nbCardsLeft.value.isNullOrEmpty()
+        && !playerTwo.nbCardsLeft.value.isNullOrEmpty()
+        && !playerThree.nbCardsLeft.value.isNullOrEmpty()
+        && (!isFourPlayersMode || !playerFour!!.nbCardsLeft.value.isNullOrEmpty())
 
     private fun areScoresValid(): Boolean =
-        playerOneScoreText.value!!.toInt() in 0..16
-        && playerTwoScoreText.value!!.toInt() in 0..16
-        && playerThreeScoreText.value!!.toInt() in 0..16
-        && (nbPlayers == 3 || playerFourScoreText.value!!.toInt() in 0..16)
+        playerOne.nbCardsLeft.value!!.toInt() in 0..16
+        && playerTwo.nbCardsLeft.value!!.toInt() in 0..16
+        && playerThree.nbCardsLeft.value!!.toInt() in 0..16
+        && (!isFourPlayersMode || playerFour!!.nbCardsLeft.value!!.toInt() in 0..16)
 
     private fun calculateScore(nbCardsLeft: Int) : Int =
         when (nbCardsLeft) {
@@ -128,4 +110,19 @@ class ScoreboardViewModel : ViewModel() {
             16 -> 80
             else -> 0
         }
+
+    /*private fun checkIfGameIsOver() : Int {
+        val finishScore = 100
+
+        val players = listOf (
+            playerOne,
+            playerTwo,
+            playerThree,
+            playerFour
+        )
+
+        if (scores.max()!! >= 100) {
+            return scores.min()!!
+        }
+    }*/
 }

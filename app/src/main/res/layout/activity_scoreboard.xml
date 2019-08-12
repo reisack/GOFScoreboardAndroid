@@ -28,7 +28,7 @@
                 android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
 
         <TextView
-                android:text="@{scoreboardViewModel.playerOneName}"
+                android:text="@{scoreboardViewModel.playerOne.name}"
                 android:textSize="16sp"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -47,16 +47,16 @@
                 android:inputType="number"
                 android:ems="2"
                 android:textSize="16sp"
-                android:contentDescription="@string/score_p1_description"
+                android:contentDescription="@string/nb_cards_left_p1_description"
                 android:importantForAutofill="no"
-                android:text="@={scoreboardViewModel.playerOneScoreText}"
+                android:text="@={scoreboardViewModel.playerOne.nbCardsLeft}"
                 android:id="@+id/editPlayerOneScore"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerOneScore" app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toStartOf="@+id/labelPlayerTwoScore"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerOneScore"/>
 
         <TextView
-                android:text="@{scoreboardViewModel.playerTwoName}"
+                android:text="@{scoreboardViewModel.playerTwo.name}"
                 android:textSize="16sp"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -74,8 +74,8 @@
                 android:inputType="number"
                 android:ems="2"
                 android:textSize="16sp"
-                android:text="@={scoreboardViewModel.playerTwoScoreText}"
-                android:contentDescription="@string/score_p2_description"
+                android:text="@={scoreboardViewModel.playerTwo.nbCardsLeft}"
+                android:contentDescription="@string/nb_cards_left_p2_description"
                 android:importantForAutofill="no"
                 android:id="@+id/editPlayerTwoScore"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerTwoScore" app:layout_constraintHorizontal_bias="0.5"
@@ -83,7 +83,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerTwoScore" android:layout_marginEnd="24dp"/>
 
         <TextView
-                android:text="@{scoreboardViewModel.playerThreeName}"
+                android:text="@{scoreboardViewModel.playerThree.name}"
                 android:textSize="16sp"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -103,9 +103,9 @@
                 android:inputType="number"
                 android:ems="2"
                 android:textSize="16sp"
-                android:text="@={scoreboardViewModel.playerThreeScoreText}"
+                android:text="@={scoreboardViewModel.playerThree.nbCardsLeft}"
                 android:id="@+id/editPlayerThreeScore"
-                android:contentDescription="@string/score_p3_description"
+                android:contentDescription="@string/nb_cards_left_p3_description"
                 android:importantForAutofill="no"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerThreeScore"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -113,7 +113,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerThreeScore"/>
 
         <TextView
-                android:text="@{scoreboardViewModel.playerFourName}"
+                android:text="@{scoreboardViewModel.playerFour.name}"
                 android:textSize="16sp"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -132,9 +132,9 @@
                 android:inputType="number"
                 android:ems="2"
                 android:textSize="16sp"
-                android:text="@={scoreboardViewModel.playerFourScoreText}"
+                android:text="@={scoreboardViewModel.playerFour.nbCardsLeft}"
                 android:id="@+id/editPlayerFourScore"
-                android:contentDescription="@string/score_p4_description"
+                android:contentDescription="@string/nb_cards_left_p4_description"
                 android:importantForAutofill="no"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerFourScore"
                 app:layout_constraintHorizontal_bias="0.5"
