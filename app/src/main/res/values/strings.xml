@@ -23,7 +23,7 @@
     <string name="name_p4_description">Nom joueur 4</string>
     <string name="button_start_game">Commencer la partie</string>
     <string name="game_over_dialog_title">Partie terminée</string>
-    <string name="game_over_dialog_message">%1$s a gagné la partie avec %2$d points !</string>
+    <string name="game_over_dialog_message">%1$s a gagné la partie avec %2$d points !\n\nClassement\n</string>
     <string name="no_score_to_delete">Il n\'y a pas de score à supprimer</string>
     <string name="delete_score_dialog_title">Suppression des scores</string>
     <string name="delete_score_dialog_message">Êtes-vous sûr de vouloir supprimer les scores du dernier tour ?</string>
@@ -31,4 +31,6 @@
     <string name="back_to_main_screen_dialog_message">Êtes-vous sûr de vouloir abandonner la partie et retourner à l\'écran d\'accueil ?</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="button_back_main_screen">Retour à l\'écran d\'accueil</string>
+    <string name="button_new_game">Nouvelle partie</string>
 </resources>

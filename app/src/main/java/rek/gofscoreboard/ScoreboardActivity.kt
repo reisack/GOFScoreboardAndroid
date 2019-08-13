@@ -1,7 +1,6 @@
 package rek.gofscoreboard
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
@@ -107,28 +106,48 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     private fun setToastMessageObserver() {
-        val context = this
+        val activityContext = this
         viewModel.toastMessage.observe(this, Observer { resourceId ->
             if (resourceId != null) {
                 val message = getString(resourceId)
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                Toast.makeText(activityContext, message, Toast.LENGTH_LONG).show()
             }
         })
     }
 
     private fun setFinishAlertDialogObserver() {
-        val context = this
-        viewModel.finishAlertDialogWinner.observe(this, Observer { player ->
+        val activityContext = this
+        viewModel.finishAlertDialogFinalRanking.observe(this, Observer { ranking ->
             AlertDialog.Builder(this)
+                .setCancelable(false)
                 .setTitle(R.string.game_over_dialog_title)
-                .setMessage(
-                    getString(R.string.game_over_dialog_message,
-                        player.name,
-                        player.getTotalScore()))
-                .setPositiveButton(R.string.yes, null)
-                .setNegativeButton(R.string.no, null)
+                .setMessage(activityContext.getFinalRankingMessage(ranking))
+                .setNegativeButton(R.string.button_back_main_screen) { _, _ ->
+                    activityContext.finish()
+                }
+                .setPositiveButton(R.string.button_new_game) { _, _ ->
+                    activityContext.finish()
+                    activityContext.startActivity(activityContext.intent)
+                }
                 .show()
         })
+    }
+
+    private fun getFinalRankingMessage(ranking: List<Player?>): String {
+        val winner = ranking[0]
+        val winnerMessage = getString(
+            R.string.game_over_dialog_message,
+            winner!!.name,
+            winner.getTotalScore()
+        )
+
+        var rankingMessage = ""
+        var playerRank = 0
+        ranking.forEach { player ->
+            rankingMessage += (++playerRank).toString() + ". " + player!!.name + " " + player.getTotalScore() + "\n"
+        }
+
+        return winnerMessage + rankingMessage
     }
 
     private fun refreshScoreboard() {

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 
 class ScoreboardViewModel : ViewModel() {
     val toastMessage = MutableLiveData<Int>()
-    val finishAlertDialogWinner = MutableLiveData<Player>()
+    val finishAlertDialogFinalRanking = MutableLiveData<List<Player?>>()
 
     lateinit var playerOne: Player
     lateinit var playerTwo: Player
@@ -60,9 +60,10 @@ class ScoreboardViewModel : ViewModel() {
             playerThree.nbCardsLeft.value = ""
             playerFour!!.nbCardsLeft.value = ""
 
-            val winner = getWinner()
-            if (winner != null) {
-                finishAlertDialogWinner.value = winner
+            // Game is finished when we have a final ranking
+            val finalRanking = getFinalRanking()
+            if (finalRanking != null) {
+                finishAlertDialogFinalRanking.value = finalRanking
             }
         }
     }
@@ -117,32 +118,23 @@ class ScoreboardViewModel : ViewModel() {
             else -> 0
         }
 
-    private fun getWinner() : Player? {
+    private fun getFinalRanking() : List<Player?>? {
         val finishScore = 100
-        var winner: Player? = null
+        var finalRanking: List<Player?>? = null
 
         val players = if (isFourPlayersMode) {
-            listOf(
-                playerOne,
-                playerTwo,
-                playerThree,
-                playerFour
-            )
+            listOf(playerOne, playerTwo, playerThree, playerFour)
         }
         else {
-            listOf(
-                playerOne,
-                playerTwo,
-                playerThree
-            )
+            listOf(playerOne, playerTwo, playerThree)
         }
 
         val playerWithMaxScore = players.maxBy { player -> player!!.getTotalScore() }
 
         if (playerWithMaxScore != null && playerWithMaxScore.getTotalScore() >= finishScore) {
-            winner = players.minBy { player -> player!!.getTotalScore() }
+            finalRanking = players.sortedBy { player -> player!!.getTotalScore() }
         }
 
-        return winner
+        return finalRanking
     }
 }
