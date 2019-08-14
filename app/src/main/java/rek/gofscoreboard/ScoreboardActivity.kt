@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import rek.gofscoreboard.databinding.ActivityScoreboardBinding
+import java.lang.Exception
 
 class ScoreboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScoreboardBinding
@@ -33,7 +34,7 @@ class ScoreboardActivity : AppCompatActivity() {
         binding.scoreboardViewModel = viewModel
         binding.lifecycleOwner = this
 
-        initPlayersInformations()
+        initializeGame()
         setPlayerFourVisibility()
         initScoreboard()
         setToastMessageObserver()
@@ -55,8 +56,9 @@ class ScoreboardActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         // The good way to do it is to use itemId property
-        // For an unknown reason, item?.itemId never match with R.id.menu_new_game
-        // So I check with the title item and its localized string
+        // For an unknown reason, item?.itemId doesn't match with R.id.menu_new_game
+        // I have done some research and found nothing for this problem
+        // So I do the check with the title item and its localized string
         // This is absolutely horrible but I cannot do otherwise
         return when (item?.title) {
             getString(R.string.new_game) -> {
@@ -106,15 +108,18 @@ class ScoreboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun initPlayersInformations() {
-        viewModel.nbPlayers = intent.getIntExtra(NB_PLAYERS, 0)
-        viewModel.isFourPlayersMode = viewModel.nbPlayers == 4
+    private fun initializeGame() {
+        val nbPlayers = intent.getIntExtra(NB_PLAYERS, 3)
+        val playerOneName = intent.getStringExtra(PLAYER_ONE_NAME)
+        val playerTwoName = intent.getStringExtra(PLAYER_TWO_NAME)
+        val playerThreeName = intent.getStringExtra(PLAYER_THREE_NAME)
 
-        viewModel.playerOne = Player(intent.getStringExtra(PLAYER_ONE_NAME))
-        viewModel.playerTwo = Player(intent.getStringExtra(PLAYER_TWO_NAME))
-        viewModel.playerThree = Player(intent.getStringExtra(PLAYER_THREE_NAME))
-        if (viewModel.isFourPlayersMode) {
-            viewModel.playerFour = Player(intent.getStringExtra(PLAYER_FOUR_NAME))
+        if (nbPlayers == 3) {
+            viewModel.initializeGame(playerOneName, playerTwoName, playerThreeName)
+        }
+        else {
+            val playerFourName = intent.getStringExtra(PLAYER_FOUR_NAME)
+            viewModel.initializeGame(playerOneName, playerTwoName, playerThreeName, playerFourName)
         }
     }
 
@@ -127,7 +132,7 @@ class ScoreboardActivity : AppCompatActivity() {
     @SuppressLint("WrongConstant")
     private fun initScoreboard() {
         binding.scoreboard.setHasFixedSize(true)
-        val scoreGridColumnsCount = if (!viewModel.isFourPlayersMode) 4 else 5
+        val scoreGridColumnsCount = if (viewModel.isFourPlayersMode) 5 else 4
         binding.scoreboard.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
             this, scoreGridColumnsCount,
             androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false
@@ -149,7 +154,7 @@ class ScoreboardActivity : AppCompatActivity() {
 
     private fun setFinishAlertDialogObserver() {
         val activityContext = this
-        viewModel.finishAlertDialogFinalRanking.observe(this, Observer { ranking ->
+        viewModel.finishAlertDialogFinalRanking.observe(activityContext, Observer { ranking ->
             AlertDialog.Builder(activityContext)
                 .setCancelable(false)
                 .setTitle(R.string.game_over_dialog_title)
@@ -165,17 +170,24 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     private fun getFinalRankingMessage(ranking: List<Player?>): String {
-        val winner = ranking[0]
-        val winnerMessage = getString(
-            R.string.game_over_dialog_message,
-            winner!!.name,
-            winner.getTotalScore()
-        )
-
+        var winnerMessage = ""
         var rankingMessage = ""
-        var playerRank = 0
-        ranking.forEach { player ->
-            rankingMessage += (++playerRank).toString() + ". " + player!!.name + " " + player.getTotalScore() + "\n"
+
+        try {
+            val winner = ranking[0]
+            winnerMessage = getString(
+                R.string.game_over_dialog_message,
+                winner!!.name,
+                winner.getTotalScore()
+            )
+
+            var playerRank = 0
+            ranking.forEach { player ->
+                rankingMessage += (++playerRank).toString() + ". " + player!!.name + " " + player.getTotalScore() + "\n"
+            }
+        }
+        catch (ex: Exception) {
+            Toast.makeText(this, R.string.generic_error_message, Toast.LENGTH_LONG).show()
         }
 
         return winnerMessage + rankingMessage
