@@ -32,5 +32,6 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="button_back_main_screen">Retour à l\'écran d\'accueil</string>
-    <string name="button_new_game">Nouvelle partie</string>
+    <string name="new_game">Nouvelle partie</string>
+    <string name="new_game_message">Êtes-vous sûr de vouloir recommencer une nouvelle partie ?</string>
 </resources>

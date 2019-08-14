@@ -2,6 +2,8 @@ package rek.gofscoreboard
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
@@ -37,7 +39,37 @@ class ScoreboardActivity : AppCompatActivity() {
         setToastMessageObserver()
         setFinishAlertDialogObserver()
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (menu != null) {
+            menuInflater.inflate(R.menu.activity_scoreboard_menu, menu)
+        }
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        // The good way to do it is to use itemId property
+        // For an unknown reason, item?.itemId never match with R.id.menu_new_game
+        // So I check with the title item and its localized string
+        // This is absolutely horrible but I cannot do otherwise
+        return when (item?.title) {
+            getString(R.string.new_game) -> {
+                newGameActionMenu()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {
@@ -107,7 +139,7 @@ class ScoreboardActivity : AppCompatActivity() {
 
     private fun setToastMessageObserver() {
         val activityContext = this
-        viewModel.toastMessage.observe(this, Observer { resourceId ->
+        viewModel.toastMessage.observe(activityContext, Observer { resourceId ->
             if (resourceId != null) {
                 val message = getString(resourceId)
                 Toast.makeText(activityContext, message, Toast.LENGTH_LONG).show()
@@ -118,16 +150,15 @@ class ScoreboardActivity : AppCompatActivity() {
     private fun setFinishAlertDialogObserver() {
         val activityContext = this
         viewModel.finishAlertDialogFinalRanking.observe(this, Observer { ranking ->
-            AlertDialog.Builder(this)
+            AlertDialog.Builder(activityContext)
                 .setCancelable(false)
                 .setTitle(R.string.game_over_dialog_title)
                 .setMessage(activityContext.getFinalRankingMessage(ranking))
                 .setNegativeButton(R.string.button_back_main_screen) { _, _ ->
                     activityContext.finish()
                 }
-                .setPositiveButton(R.string.button_new_game) { _, _ ->
-                    activityContext.finish()
-                    activityContext.startActivity(activityContext.intent)
+                .setPositiveButton(R.string.new_game) { _, _ ->
+                    activityContext.launchNewGame()
                 }
                 .show()
         })
@@ -148,6 +179,22 @@ class ScoreboardActivity : AppCompatActivity() {
         }
 
         return winnerMessage + rankingMessage
+    }
+
+    private fun newGameActionMenu() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.new_game)
+            .setMessage(R.string.new_game_message)
+            .setNegativeButton(R.string.no, null)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                launchNewGame()
+            }
+            .show()
+    }
+
+    private fun launchNewGame() {
+        finish()
+        startActivity(intent)
     }
 
     private fun refreshScoreboard() {
