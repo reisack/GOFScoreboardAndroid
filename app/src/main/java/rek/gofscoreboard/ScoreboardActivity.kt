@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import rek.gofscoreboard.databinding.ActivityScoreboardBinding
 import java.lang.Exception
+import java.lang.StringBuilder
 
 class ScoreboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScoreboardBinding
@@ -171,7 +172,7 @@ class ScoreboardActivity : AppCompatActivity() {
 
     private fun getFinalRankingMessage(ranking: List<Player?>): String {
         var winnerMessage = ""
-        var rankingMessage = ""
+        val rankingMessage = StringBuilder()
 
         try {
             val winner = ranking[0]
@@ -183,7 +184,7 @@ class ScoreboardActivity : AppCompatActivity() {
 
             var playerRank = 0
             ranking.forEach { player ->
-                rankingMessage += (++playerRank).toString() + ". " + player!!.name + " " + player.getTotalScore() + "\n"
+                rankingMessage.appendln("${++playerRank}. ${player!!.name} ${player.getTotalScore()} pts")
             }
         }
         catch (ex: Exception) {
