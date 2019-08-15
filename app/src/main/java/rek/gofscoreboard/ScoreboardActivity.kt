@@ -170,24 +170,24 @@ class ScoreboardActivity : AppCompatActivity() {
         })
     }
 
-    private fun getFinalRankingMessage(ranking: List<Player?>): String {
+    private fun getFinalRankingMessage(ranking: List<Player>): String {
         var winnerMessage = ""
         val rankingMessage = StringBuilder()
 
-        try {
+        if (ranking.isNotEmpty()) {
             val winner = ranking[0]
             winnerMessage = getString(
                 R.string.game_over_dialog_message,
-                winner!!.name,
+                winner.name,
                 winner.getTotalScore()
             )
 
             var playerRank = 0
             ranking.forEach { player ->
-                rankingMessage.appendln("${++playerRank}. ${player!!.name} ${player.getTotalScore()} pts")
+                rankingMessage.appendln("${++playerRank}. ${player.name} ${player.getTotalScore()} pts")
             }
         }
-        catch (ex: Exception) {
+        else {
             Toast.makeText(this, R.string.generic_error_message, Toast.LENGTH_LONG).show()
         }
 

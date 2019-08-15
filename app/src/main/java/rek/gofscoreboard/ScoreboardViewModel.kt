@@ -5,42 +5,45 @@ import androidx.lifecycle.ViewModel
 
 class ScoreboardViewModel : ViewModel() {
     val toastMessage = MutableLiveData<Int>()
-    val finishAlertDialogFinalRanking = MutableLiveData<List<Player?>>()
-
-    lateinit var playerOne: Player
-    lateinit var playerTwo: Player
-    lateinit var playerThree: Player
-    var playerFour: Player? = null
+    val finishAlertDialogFinalRanking = MutableLiveData<List<Player>>()
 
     var isFourPlayersMode: Boolean = true
-    private var invertedTurn: Boolean = true
 
+    private var invertedTurn: Boolean = true
+    private lateinit var playersList: List<Player>
     private val scoreboard: MutableList<String> = mutableListOf()
+
+    fun getPlayerBindingByIndex(index: Int): Player? {
+        return playersList.getOrNull(index)
+    }
 
     fun getAdapterScoresList() = ScoresListAdapter(scoreboard.toTypedArray())
 
     fun initializeGame(playerOneName: String
                        , playerTwoName: String, playerThreeName: String) {
-        playerOne = Player(playerOneName)
-        playerTwo = Player(playerTwoName)
-        playerThree = Player(playerThreeName)
+        val playerOne = Player(playerOneName)
+        val playerTwo = Player(playerTwoName)
+        val playerThree = Player(playerThreeName)
+
+        playersList = listOf(playerOne, playerTwo, playerThree)
         isFourPlayersMode = false
     }
 
     fun initializeGame(playerOneName: String
                        , playerTwoName: String, playerThreeName: String
                        , playerFourName: String) {
-        initializeGame(playerOneName, playerTwoName, playerThreeName)
-        playerFour = Player(playerFourName)
+        val playerOne = Player(playerOneName)
+        val playerTwo = Player(playerTwoName)
+        val playerThree = Player(playerThreeName)
+        val playerFour = Player(playerFourName)
+
+        playersList = listOf(playerOne, playerTwo, playerThree, playerFour)
         isFourPlayersMode = true
     }
 
     fun createScoreboardHeader() {
         scoreboard.add("")
-        scoreboard.add(playerOne.name)
-        scoreboard.add(playerTwo.name)
-        scoreboard.add(playerThree.name)
-        scoreboard.addIfNotNull(playerFour?.name)
+        playersList.forEach { player -> scoreboard.add(player.name) }
     }
 
     fun addScoresRound() {
@@ -52,22 +55,13 @@ class ScoreboardViewModel : ViewModel() {
         }
         else {
             invertedTurn = !invertedTurn
-
-            playerOne.stackedScore.push(calculateScore(playerOne.nbCardsLeft.value!!.toInt()))
-            playerTwo.stackedScore.push(calculateScore(playerTwo.nbCardsLeft.value!!.toInt()))
-            playerThree.stackedScore.push(calculateScore(playerThree.nbCardsLeft.value!!.toInt()))
-            playerFour?.stackedScore?.push(calculateScore(playerFour?.nbCardsLeft?.value!!.toInt()))
-
             scoreboard.add(if (invertedTurn) "<=" else "=>")
-            scoreboard.add(playerOne.getTotalScore().toString())
-            scoreboard.add(playerTwo.getTotalScore().toString())
-            scoreboard.add(playerThree.getTotalScore().toString())
-            scoreboard.addIfNotNull(playerFour?.getTotalScore()?.toString())
 
-            playerOne.nbCardsLeft.value = ""
-            playerTwo.nbCardsLeft.value = ""
-            playerThree.nbCardsLeft.value = ""
-            playerFour?.nbCardsLeft?.value = ""
+            playersList.forEach { player ->
+                player.stackedScore.push(calculateScore(player.nbCardsLeft.value!!.toInt()))
+                scoreboard.add(player.getTotalScore().toString())
+                player.nbCardsLeft.value = ""
+            }
 
             // Game is finished when we have a final ranking
             val finalRanking = getFinalRanking()
@@ -80,39 +74,38 @@ class ScoreboardViewModel : ViewModel() {
     fun canRemovePreviousScoresRound(): Boolean {
         // We just check the first player stackedScore
         // It's always the same size for all players during the game
-        return playerOne.stackedScore.isNotEmpty()
+        return playersList[0].stackedScore.isNotEmpty()
     }
 
     fun removePreviousScoresRound() {
         if (canRemovePreviousScoresRound()) {
             invertedTurn = !invertedTurn
 
-            if (isFourPlayersMode) {
-                scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 4
-            }
-            scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 3
-            scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 2
-            scoreboard.removeAt(scoreboard.size - 1).toInt() // Remove Score player 1
-            scoreboard.removeAt(scoreboard.size - 1) // Remove the turn direction
+            playersList.forEach { player ->
+                // Remove score player from scoreboard for each one
+                scoreboard.removeAt(scoreboard.size - 1).toInt()
 
-            playerOne.stackedScore.pop()
-            playerTwo.stackedScore.pop()
-            playerThree.stackedScore.pop()
-            playerFour?.stackedScore?.pop()
+                player.stackedScore.pop()
+            }
+            scoreboard.removeAt(scoreboard.size - 1) // Remove the turn direction
         }
     }
 
-    private fun canAddScoresRound(): Boolean =
-        !playerOne.nbCardsLeft.value.isNullOrEmpty()
-        && !playerTwo.nbCardsLeft.value.isNullOrEmpty()
-        && !playerThree.nbCardsLeft.value.isNullOrEmpty()
-        && (!isFourPlayersMode || !playerFour!!.nbCardsLeft.value.isNullOrEmpty())
+    private fun canAddScoresRound(): Boolean {
+        val nbInvalidScores = playersList.count { player ->
+            player.nbCardsLeft.value.isNullOrEmpty()
+        }
 
-    private fun areScoresValid(): Boolean =
-        playerOne.nbCardsLeft.value!!.toInt() in 0..16
-        && playerTwo.nbCardsLeft.value!!.toInt() in 0..16
-        && playerThree.nbCardsLeft.value!!.toInt() in 0..16
-        && (!isFourPlayersMode || playerFour!!.nbCardsLeft.value!!.toInt() in 0..16)
+        return nbInvalidScores == 0
+    }
+
+    private fun areScoresValid(): Boolean {
+        val nbValidScores = playersList.count { player ->
+            player.nbCardsLeft.value?.toInt() in 0..16
+        }
+
+        return nbValidScores == playersList.count()
+    }
 
     private fun calculateScore(nbCardsLeft: Int) : Int =
         when (nbCardsLeft) {
@@ -124,21 +117,14 @@ class ScoreboardViewModel : ViewModel() {
             else -> 0
         }
 
-    private fun getFinalRanking() : List<Player?>? {
+    private fun getFinalRanking() : List<Player>? {
         val finishScore = 100
-        var finalRanking: List<Player?>? = null
+        var finalRanking: List<Player>? = null
 
-        val players = if (isFourPlayersMode) {
-            listOf(playerOne, playerTwo, playerThree, playerFour)
-        }
-        else {
-            listOf(playerOne, playerTwo, playerThree)
-        }
-
-        val playerWithMaxScore = players.maxBy { player -> player!!.getTotalScore() }
+        val playerWithMaxScore = playersList.maxBy { player -> player.getTotalScore() }
 
         if (playerWithMaxScore != null && playerWithMaxScore.getTotalScore() >= finishScore) {
-            finalRanking = players.sortedBy { player -> player!!.getTotalScore() }
+            finalRanking = playersList.sortedBy { player -> player.getTotalScore() }
         }
 
         return finalRanking
