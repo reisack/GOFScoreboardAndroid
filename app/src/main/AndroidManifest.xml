@@ -10,15 +10,17 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".ScoreboardActivity"
+                  android:label="@string/app_header"
                   android:screenOrientation="portrait"
-                  android:windowSoftInputMode="adjustNothing">
+                  android:windowSoftInputMode="adjustNothing|stateAlwaysHidden">
         </activity>
         <activity android:name=".MainActivity"
-                  android:screenOrientation="portrait">
+                  android:label="@string/app_header"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

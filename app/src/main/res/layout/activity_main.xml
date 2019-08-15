@@ -88,7 +88,7 @@
                 android:textSize="24sp"
                 android:ems="10"
                 android:id="@+id/editPlayerOneName"
-                android:contentDescription="@string/name_p1_description"
+                android:hint="@string/player_name_hint"
                 android:importantForAutofill="no"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerOneName"
