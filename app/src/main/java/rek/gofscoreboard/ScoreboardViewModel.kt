@@ -17,7 +17,7 @@ class ScoreboardViewModel : ViewModel() {
         return playersList.getOrNull(index)
     }
 
-    fun getAdapterScoresList() = ScoresListAdapter(scoreboard.toTypedArray())
+    fun getScoreboardAdapter() = ScoreboardAdapter(scoreboard.toTypedArray())
 
     fun initializeGame(playerOneName: String
                        , playerTwoName: String, playerThreeName: String) {

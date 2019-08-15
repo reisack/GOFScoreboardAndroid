@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import rek.gofscoreboard.databinding.ActivityScoreboardBinding
-import java.lang.Exception
 import java.lang.StringBuilder
 
 class ScoreboardActivity : AppCompatActivity() {
@@ -211,6 +210,6 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     private fun refreshScoreboard() {
-        binding.scoreboard.adapter = viewModel.getAdapterScoresList()
+        binding.scoreboard.adapter = viewModel.getScoreboardAdapter()
     }
 }
