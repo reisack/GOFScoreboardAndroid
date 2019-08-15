@@ -24,6 +24,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onRestart() {
+        viewModel.clearPlayerNames()
+        super.onRestart()
+    }
+
+    override fun onResume() {
+        viewModel.clearPlayerNames()
+        super.onResume()
+    }
+
     fun onStartGame(view: View) {
         if (viewModel.canStartGame()) {
             val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)

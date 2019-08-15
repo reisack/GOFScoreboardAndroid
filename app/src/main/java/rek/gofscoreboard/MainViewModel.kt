@@ -17,11 +17,7 @@ class MainViewModel : ViewModel() {
     init {
         nbPlayers = 4
         playerFourVisibility.value = View.VISIBLE
-
-        playerOneName.value = ""
-        playerTwoName.value = ""
-        playerThreeName.value = ""
-        playerFourName.value = ""
+        clearPlayerNames()
     }
 
     fun updateNbPlayer(newNbPlayer : Int) {
@@ -34,5 +30,12 @@ class MainViewModel : ViewModel() {
                 && !playerTwoName.value.isNullOrEmpty()
                 && !playerThreeName.value.isNullOrEmpty()
                 && (nbPlayers == 3 || !playerFourName.value.isNullOrEmpty())
+    }
+
+    fun clearPlayerNames() {
+        playerOneName.value = ""
+        playerTwoName.value = ""
+        playerThreeName.value = ""
+        playerFourName.value = ""
     }
 }
