@@ -9,13 +9,15 @@ class ScoreboardViewModel : ViewModel() {
 
     var isFourPlayersMode: Boolean = true
 
-    private var invertedTurn: Boolean = true
+    private var invertedTurn: Boolean = false
     private lateinit var playersList: List<Player>
     private val scoreboard: MutableList<String> = mutableListOf()
 
     fun getPlayerBindingByIndex(index: Int): Player? {
         return playersList.getOrNull(index)
     }
+
+    fun getScoreboardColumnsCount() = if (isFourPlayersMode) 5 else 4
 
     fun getScoreboardAdapter() = ScoreboardAdapter(scoreboard.toTypedArray())
 
@@ -44,6 +46,7 @@ class ScoreboardViewModel : ViewModel() {
     fun createScoreboardHeader() {
         scoreboard.add("")
         playersList.forEach { player -> scoreboard.add(player.name) }
+        displayTurnDirection()
     }
 
     fun addScoresRound() {
@@ -54,14 +57,13 @@ class ScoreboardViewModel : ViewModel() {
             toastMessage.value = R.string.enter_valid_players_scores
         }
         else {
-            invertedTurn = !invertedTurn
-            scoreboard.add(if (invertedTurn) "<=" else "=>")
-
             playersList.forEach { player ->
                 player.stackedScore.push(calculateScore(player.nbCardsLeft.value!!.toInt()))
                 scoreboard.add(player.getTotalScore().toString())
                 player.nbCardsLeft.value = ""
             }
+
+            displayTurnDirection()
 
             // Game is finished when we have a final ranking
             val finalRanking = getFinalRanking()
@@ -80,23 +82,26 @@ class ScoreboardViewModel : ViewModel() {
     fun removePreviousScoresRound() {
         if (canRemovePreviousScoresRound()) {
             invertedTurn = !invertedTurn
-
+            scoreboard.removeAt(scoreboard.size - 1) // Remove the turn direction
             playersList.forEach { player ->
                 // Remove score player from scoreboard for each one
                 scoreboard.removeAt(scoreboard.size - 1).toInt()
-
                 player.stackedScore.pop()
             }
-            scoreboard.removeAt(scoreboard.size - 1) // Remove the turn direction
         }
     }
 
-    private fun canAddScoresRound(): Boolean {
+    fun canAddScoresRound(): Boolean {
         val nbInvalidScores = playersList.count { player ->
             player.nbCardsLeft.value.isNullOrEmpty()
         }
 
         return nbInvalidScores == 0
+    }
+
+    private fun displayTurnDirection() {
+        scoreboard.add(if (invertedTurn) "\u21e6" else "\u21e8")
+        invertedTurn = !invertedTurn
     }
 
     private fun areScoresValid(): Boolean {

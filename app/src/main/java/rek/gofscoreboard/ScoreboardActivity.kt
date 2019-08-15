@@ -132,9 +132,8 @@ class ScoreboardActivity : AppCompatActivity() {
     @SuppressLint("WrongConstant")
     private fun initScoreboard() {
         binding.scoreboard.setHasFixedSize(true)
-        val scoreGridColumnsCount = if (viewModel.isFourPlayersMode) 5 else 4
         binding.scoreboard.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
-            this, scoreGridColumnsCount,
+            this, viewModel.getScoreboardColumnsCount(),
             androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false
         )
 
@@ -209,7 +208,15 @@ class ScoreboardActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun setScoreboardScrollPosition() {
+        val scoreboardAdapter = binding.scoreboard.adapter
+        if (scoreboardAdapter != null) {
+            binding.scoreboard.scrollToPosition(scoreboardAdapter.itemCount - 1)
+        }
+    }
+
     private fun refreshScoreboard() {
         binding.scoreboard.adapter = viewModel.getScoreboardAdapter()
+        setScoreboardScrollPosition()
     }
 }
