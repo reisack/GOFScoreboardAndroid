@@ -1,11 +1,13 @@
 package rek.gofscoreboard
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -87,11 +89,14 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     fun onAddScore(view: View) {
-        viewModel.addScoresRound()
-        refreshScoreboard()
+        hideSoftKeyboard(view)
+        if (viewModel.addScoresRound()) {
+            refreshScoreboard()
+        }
     }
 
     fun onRemovePreviousScore(view: View) {
+        hideSoftKeyboard(view)
         if (viewModel.canRemovePreviousScoresRound()) {
             AlertDialog.Builder(this)
                 .setTitle(R.string.delete_score_dialog_title)
@@ -213,6 +218,11 @@ class ScoreboardActivity : AppCompatActivity() {
         if (scoreboardAdapter != null) {
             binding.scoreboard.scrollToPosition(scoreboardAdapter.itemCount - 1)
         }
+    }
+
+    private fun hideSoftKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun refreshScoreboard() {

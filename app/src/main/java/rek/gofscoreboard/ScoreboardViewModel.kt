@@ -49,12 +49,18 @@ class ScoreboardViewModel : ViewModel() {
         displayTurnDirection()
     }
 
-    fun addScoresRound() {
+    /**
+     * Add players score round to the scoreboard
+     * @return true if scores could have been added to the scoreboard, otherwise return false
+     */
+    fun addScoresRound(): Boolean {
         if (!canAddScoresRound()) {
             toastMessage.value = R.string.enter_players_scores
+            return false
         }
         else if (!areScoresValid()) {
             toastMessage.value = R.string.enter_valid_players_scores
+            return false
         }
         else {
             playersList.forEach { player ->
@@ -71,6 +77,7 @@ class ScoreboardViewModel : ViewModel() {
                 finishAlertDialogFinalRanking.value = finalRanking
             }
         }
+        return true
     }
 
     fun canRemovePreviousScoresRound(): Boolean {
@@ -91,7 +98,7 @@ class ScoreboardViewModel : ViewModel() {
         }
     }
 
-    fun canAddScoresRound(): Boolean {
+    private fun canAddScoresRound(): Boolean {
         val nbInvalidScores = playersList.count { player ->
             player.nbCardsLeft.value.isNullOrEmpty()
         }
