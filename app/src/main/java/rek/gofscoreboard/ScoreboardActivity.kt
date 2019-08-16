@@ -136,6 +136,12 @@ class ScoreboardActivity : AppCompatActivity() {
 
     @SuppressLint("WrongConstant")
     private fun initScoreboard() {
+        binding.scoreboardHeader.setHasFixedSize(true)
+        binding.scoreboardHeader.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
+            this, viewModel.getScoreboardColumnsCount(),
+            androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false
+        )
+
         binding.scoreboard.setHasFixedSize(true)
         binding.scoreboard.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
             this, viewModel.getScoreboardColumnsCount(),
@@ -226,6 +232,7 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     private fun refreshScoreboard() {
+        binding.scoreboardHeader.adapter = viewModel.getScoreboardHeaderAdapter()
         binding.scoreboard.adapter = viewModel.getScoreboardAdapter()
         setScoreboardScrollPosition()
     }

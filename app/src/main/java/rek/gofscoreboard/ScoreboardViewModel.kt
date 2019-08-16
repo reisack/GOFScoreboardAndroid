@@ -11,6 +11,8 @@ class ScoreboardViewModel : ViewModel() {
 
     private var invertedTurn: Boolean = false
     private lateinit var playersList: List<Player>
+
+    private lateinit var scoreboardHeader: List<String>
     private val scoreboard: MutableList<String> = mutableListOf()
 
     fun getPlayerBindingByIndex(index: Int): Player? {
@@ -20,6 +22,7 @@ class ScoreboardViewModel : ViewModel() {
     fun getScoreboardColumnsCount() = if (isFourPlayersMode) 5 else 4
 
     fun getScoreboardAdapter() = ScoreboardAdapter(scoreboard.toTypedArray())
+    fun getScoreboardHeaderAdapter() = ScoreboardAdapter(scoreboardHeader.toTypedArray())
 
     fun initializeGame(playerOneName: String
                        , playerTwoName: String, playerThreeName: String) {
@@ -44,8 +47,11 @@ class ScoreboardViewModel : ViewModel() {
     }
 
     fun createScoreboardHeader() {
-        scoreboard.add("")
-        playersList.forEach { player -> scoreboard.add(player.name) }
+        val header = mutableListOf<String>()
+        header.add("")
+        playersList.forEach { player -> header.add(player.name) }
+        scoreboardHeader = header.toList()
+
         displayTurnDirection()
     }
 
