@@ -65,8 +65,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerTwoScore"
-                android:layout_marginEnd="24dp"
-                style="@style/scoreboardScreenEditText"/>
+                style="@style/scoreboardScreenEditTextAlt"/>
 
         <TextView
                 android:text="@{scoreboardViewModel.getPlayerBindingByIndex(2).name}"
@@ -109,8 +108,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerFourScore"
-                android:layout_marginEnd="24dp"
-                style="@style/scoreboardScreenEditText" />
+                style="@style/scoreboardScreenEditTextAlt" />
 
         <Button
                 android:text="@string/button_valid"
@@ -125,36 +123,29 @@
 
         <Button
                 android:text="@string/button_delete_previous_scores_turn"
-                android:textColor="@color/colorAccent"
                 android:id="@+id/btnRemovePreviousScore"
                 android:onClick="onRemovePreviousScore"
                 app:layout_constraintBottom_toBottomOf="@+id/btnAddScore"
                 app:layout_constraintStart_toEndOf="@+id/btnAddScore"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/scoreboardScreenDeleteScoreButton" />
+                style="@style/scoreboardScreenRemoveScoreButton" />
 
         <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:scrollbars="none"
                 android:id="@+id/scoreboardHeader"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/scoreboard"
                 app:layout_constraintTop_toBottomOf="@+id/btnAddScore"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/scoreboardScreenScoreboard" />
+                style="@style/scoreboardScreenScoreboardHeader" />
 
         <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="0dp"
-                android:layout_height="310dp"
-                android:scrollbars="vertical"
                 android:id="@+id/scoreboard"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scoreboardHeader"
                 app:layout_constraintBottom_toBottomOf="parent"
-                style="@style/scoreboardScreenScoreboard" />
+                style="@style/scoreboardScreenScoreboardTable" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
