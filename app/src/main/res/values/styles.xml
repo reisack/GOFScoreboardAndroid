@@ -8,4 +8,115 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="mainStyle">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Main Screen -->
+    <style name="mainScreenTitle" parent="mainStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">38sp</item>
+        <item name="android:height">50dp</item>
+        <item name="android:width">400dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <style name="mainScreenRadioGroup" parent="mainStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginStart">96dp</item>
+        <item name="android:layout_marginEnd">96dp</item>
+    </style>
+
+    <style name="mainScreenRadioButton" parent="mainStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">48sp</item>
+    </style>
+
+    <style name="mainScreenTextView" parent="mainStyle">
+        <item name="android:layout_width">130dp</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+    </style>
+
+    <style name="mainScreenEditText" parent="mainStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:ems">10</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="startGameButton" parent="mainStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:layout_marginStart">55dp</item>
+        <item name="android:layout_marginEnd">55dp</item>
+    </style>
+
+    <!-- Score grid cell -->
+    <style name="scoreGridCell" parent="mainStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Scoreboard -->
+    <style name="scoreboardScreenHelpText" parent="mainStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+    </style>
+
+    <style name="scoreboardScreenTextView" parent="mainStyle">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+    </style>
+
+    <style name="scoreboardScreenEditText" parent="mainStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:ems">2</item>
+        <item name="android:inputType">number</item>
+    </style>
+
+    <style name="scoreboardScreenValidButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <style name="scoreboardScreenDeleteScoreButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+    </style>
+
+    <style name="scoreboardScreenScoreboard">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
 </resources>

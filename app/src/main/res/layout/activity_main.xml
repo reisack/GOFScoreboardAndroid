@@ -13,186 +13,138 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".MainActivity"
-            android:background="#D2D2D2">
+            android:background="@color/background">
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/number_of_players"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="38sp"
-                android:height="50dp"
-                android:width="400dp"
-                android:textAlignment="center" android:id="@+id/labelNbPlayers"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/radioGroupNbPlayers"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"/>
+                android:id="@+id/labelNbPlayers"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/radioGroupNbPlayers"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/mainScreenTitle" />
+
         <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:checkedButton="@id/radioButton4players"
                 android:id="@+id/radioGroupNbPlayers"
                 app:layout_constraintTop_toBottomOf="@+id/labelNbPlayers"
                 app:layout_constraintBottom_toTopOf="@+id/labelPlayerOneName"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="96dp" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="96dp">
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/mainScreenRadioGroup">
             <RadioButton
                     android:text="@string/three_players_mode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/radioButton3players"
-                    android:layout_weight="1"
-                    android:textSize="48sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:fontFamily="sans-serif-medium"
-                    android:onClick="@{() -> mainViewModel.updateNbPlayer(3)}"/>
+                    android:onClick="@{() -> mainViewModel.updateNbPlayer(3)}"
+                    style="@style/mainScreenRadioButton" />
             <RadioButton
                     android:text="@string/four_players_mode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/radioButton4players"
-                    android:layout_weight="1"
-                    android:textSize="48sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:fontFamily="sans-serif-medium"
                     android:layout_marginStart="60dp"
-                    android:onClick="@{() -> mainViewModel.updateNbPlayer(4)}"/>
+                    android:onClick="@{() -> mainViewModel.updateNbPlayer(4)}"
+                    style="@style/mainScreenRadioButton"/>
         </RadioGroup>
 
         <TextView
                 android:text="@string/player_one"
-                android:textSize="24sp"
-                android:layout_width="130dp"
-                android:layout_height="46dp"
                 android:id="@+id/labelPlayerOneName"
                 android:labelFor="@id/editPlayerOneName"
-                android:fontFamily="sans-serif-medium"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroupNbPlayers"
                 app:layout_constraintBottom_toTopOf="@+id/labelPlayerTwoName"
-                app:layout_constraintEnd_toStartOf="@+id/editPlayerOneName" android:layout_marginEnd="8dp"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"/>
+                app:layout_constraintEnd_toStartOf="@+id/editPlayerOneName"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/mainScreenTextView" />
 
         <EditText
-                android:layout_width="0dp"
-                android:layout_height="48dp"
                 android:inputType="textPersonName"
                 android:text="@={mainViewModel.playerOneName}"
-                android:textSize="24sp"
-                android:ems="10"
                 android:id="@+id/editPlayerOneName"
                 android:hint="@string/player_name_hint"
                 android:importantForAutofill="no"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerOneName"
-                app:layout_constraintStart_toEndOf="@+id/labelPlayerOneName" android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"/>
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerOneName"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/mainScreenEditText" />
 
         <TextView
                 android:text="@string/player_two"
-                android:textSize="24sp"
-                android:layout_width="130dp"
-                android:layout_height="46dp"
                 android:id="@+id/labelPlayerTwoName"
                 android:labelFor="@id/editPlayerTwoName"
-                android:fontFamily="sans-serif-medium"
                 app:layout_constraintTop_toBottomOf="@+id/labelPlayerOneName"
                 app:layout_constraintBottom_toTopOf="@+id/labelPlayerThreeName"
-                app:layout_constraintEnd_toStartOf="@+id/editPlayerTwoName" android:layout_marginEnd="8dp"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"/>
+                app:layout_constraintEnd_toStartOf="@+id/editPlayerTwoName"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/mainScreenTextView" />
 
         <EditText
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:inputType="textPersonName"
                 android:text="@={mainViewModel.playerTwoName}"
-                android:textSize="24sp"
-                android:ems="10"
                 android:id="@+id/editPlayerTwoName"
                 android:contentDescription="@string/name_p2_description"
                 android:importantForAutofill="no"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerTwoName"
-                app:layout_constraintStart_toEndOf="@+id/labelPlayerTwoName" android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"/>
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerTwoName"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/mainScreenEditText" />
 
         <TextView
                 android:text="@string/player_three"
-                android:textSize="24sp"
-                android:layout_width="130dp"
-                android:layout_height="46dp"
                 android:id="@+id/labelPlayerThreeName"
                 android:labelFor="@id/editPlayerThreeName"
-                android:fontFamily="sans-serif-medium"
                 app:layout_constraintTop_toBottomOf="@+id/labelPlayerTwoName"
                 app:layout_constraintBottom_toTopOf="@+id/labelPlayerFourName"
-                app:layout_constraintEnd_toStartOf="@+id/editPlayerThreeName" android:layout_marginEnd="8dp"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"/>
+                app:layout_constraintEnd_toStartOf="@+id/editPlayerThreeName"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/mainScreenTextView" />
 
         <EditText
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:inputType="textPersonName"
                 android:text="@={mainViewModel.playerThreeName}"
-                android:textSize="24sp"
-                android:ems="10"
                 android:id="@+id/editPlayerThreeName"
                 android:contentDescription="@string/name_p3_description"
                 android:importantForAutofill="no"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerThreeName"
-                app:layout_constraintStart_toEndOf="@+id/labelPlayerThreeName" android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"/>
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerThreeName"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/mainScreenEditText" />
 
         <TextView
                 android:text="@string/player_four"
-                android:textSize="24sp"
-                android:layout_width="130dp"
-                android:layout_height="46dp"
                 android:id="@+id/labelPlayerFourName"
                 android:labelFor="@id/editPlayerFourName"
-                android:fontFamily="sans-serif-medium"
                 android:visibility="@{mainViewModel.playerFourVisibility}"
                 app:layout_constraintTop_toBottomOf="@+id/labelPlayerThreeName"
                 app:layout_constraintBottom_toTopOf="@+id/buttonStartGame"
-                app:layout_constraintEnd_toStartOf="@+id/editPlayerFourName" android:layout_marginEnd="8dp"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"/>
+                app:layout_constraintEnd_toStartOf="@+id/editPlayerFourName"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/mainScreenTextView" />
 
         <EditText
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:inputType="textPersonName"
                 android:text="@={mainViewModel.playerFourName}"
-                android:textSize="24sp"
-                android:ems="10"
                 android:id="@+id/editPlayerFourName"
                 android:contentDescription="@string/name_p4_description"
                 android:importantForAutofill="no"
                 android:visibility="@{mainViewModel.playerFourVisibility}"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/labelPlayerFourName"
-                app:layout_constraintStart_toEndOf="@+id/labelPlayerFourName" android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"/>
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerFourName"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/mainScreenEditText" />
 
         <Button
                 android:text="@string/button_start_game"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
                 android:onClick="onStartGame"
                 android:id="@+id/buttonStartGame"
-                android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/labelPlayerFourName"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="56dp" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="55dp"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/startGameButton"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
