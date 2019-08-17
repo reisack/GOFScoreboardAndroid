@@ -193,7 +193,7 @@ class ScoreboardActivity : AppCompatActivity() {
 
             var playerRank = 0
             ranking.forEach { player ->
-                rankingMessage.appendln("${++playerRank}. ${player.name} ${player.getTotalScore()} pts")
+                rankingMessage.appendln("${++playerRank}. ${player.name} - ${player.getTotalScore()} pts")
             }
         }
         else {
