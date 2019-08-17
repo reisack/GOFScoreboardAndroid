@@ -191,9 +191,13 @@ class ScoreboardActivity : AppCompatActivity() {
                 winner.getTotalScore()
             )
 
+            val pointsLabel = getString(R.string.points_label)
+
             var playerRank = 0
             ranking.forEach { player ->
-                rankingMessage.appendln("${++playerRank}. ${player.name} - ${player.getTotalScore()} pts")
+                rankingMessage.appendln("${++playerRank}. ${player.name}")
+                rankingMessage.appendln("\u27f6 ${player.getTotalScore()} $pointsLabel")
+                rankingMessage.appendln()
             }
         }
         else {
