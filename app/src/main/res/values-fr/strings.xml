@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gang Of Four - Tableau de score</string>
+    <string name="app_name">Gang Of Four - Tableau des scores</string>
     <string name="app_header">GOF - Scoreboard</string>
     <string name="button_valid">Valider</string>
     <string name="enter_players_names">Veuillez saisir les noms des joueurs</string>
