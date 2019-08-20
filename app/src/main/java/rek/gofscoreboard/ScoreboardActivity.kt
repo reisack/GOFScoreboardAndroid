@@ -169,7 +169,7 @@ class ScoreboardActivity : AppCompatActivity() {
                 .setCancelable(false)
                 .setTitle(R.string.game_over_dialog_title)
                 .setMessage(activityContext.getFinalRankingMessage(ranking))
-                .setNegativeButton(R.string.button_back_main_screen) { _, _ ->
+                .setNegativeButton(R.string.back_main_screen_button) { _, _ ->
                     activityContext.finish()
                 }
                 .setPositiveButton(R.string.new_game) { _, _ ->

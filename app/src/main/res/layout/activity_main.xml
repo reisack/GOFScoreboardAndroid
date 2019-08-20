@@ -137,7 +137,7 @@
                 style="@style/mainScreenEditText" />
 
         <Button
-                android:text="@string/button_start_game"
+                android:text="@string/start_game_button"
                 android:onClick="onStartGame"
                 android:id="@+id/buttonStartGame"
                 app:layout_constraintBottom_toBottomOf="parent"

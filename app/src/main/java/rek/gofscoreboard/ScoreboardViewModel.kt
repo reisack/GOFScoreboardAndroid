@@ -69,7 +69,7 @@ class ScoreboardViewModel : ViewModel() {
             return false
         }
         else if (!onlyOneWinnerExistsForThisRound()) {
-            toastMessage.value = R.string.only_one_winner_on_set
+            toastMessage.value = R.string.only_one_winner_on_round
         }
         else {
             playersList.forEach { player ->
@@ -104,6 +104,7 @@ class ScoreboardViewModel : ViewModel() {
                 scoreboard.removeAt(scoreboard.size - 1).toInt()
                 player.stackedScore.pop()
             }
+            toastMessage.value = R.string.previous_scores_round_deleted
         }
     }
 
