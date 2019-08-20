@@ -56,11 +56,11 @@ class ScoreboardViewModel : ViewModel() {
     }
 
     /**
-     * Add players score round to the scoreboard
+     * Add players score set to the scoreboard
      * @return true if scores could have been added to the scoreboard, otherwise return false
      */
-    fun addScoresRound(): Boolean {
-        if (!canAddScoresRound()) {
+    fun addScoresSet(): Boolean {
+        if (!canAddScoresSet()) {
             toastMessage.value = R.string.enter_players_scores
             return false
         }
@@ -86,14 +86,14 @@ class ScoreboardViewModel : ViewModel() {
         return true
     }
 
-    fun canRemovePreviousScoresRound(): Boolean {
+    fun canRemovePreviousScoresSet(): Boolean {
         // We just check the first player stackedScore
         // It's always the same size for all players during the game
         return playersList[0].stackedScore.isNotEmpty()
     }
 
-    fun removePreviousScoresRound() {
-        if (canRemovePreviousScoresRound()) {
+    fun removePreviousScoresSet() {
+        if (canRemovePreviousScoresSet()) {
             invertedTurn = !invertedTurn
             scoreboard.removeAt(scoreboard.size - 1) // Remove the turn direction
             playersList.forEach { player ->
@@ -104,7 +104,7 @@ class ScoreboardViewModel : ViewModel() {
         }
     }
 
-    private fun canAddScoresRound(): Boolean {
+    private fun canAddScoresSet(): Boolean {
         val nbInvalidScores = playersList.count { player ->
             player.nbCardsLeft.value.isNullOrEmpty()
         }

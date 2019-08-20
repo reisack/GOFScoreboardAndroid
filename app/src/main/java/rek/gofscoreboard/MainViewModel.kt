@@ -33,16 +33,16 @@ class MainViewModel : ViewModel() {
                 && (nbPlayers == 3 || !playerFourName.value.isNullOrEmpty())
     }
 
-    fun clearPlayersNames() {
-        playerOneName.value = ""
-        playerTwoName.value = ""
-        playerThreeName.value = ""
-        playerFourName.value = ""
-    }
-
     fun delayedClearPlayersNames() {
         Handler().postDelayed({
             clearPlayersNames()
         }, 1000)
+    }
+
+    private fun clearPlayersNames() {
+        playerOneName.value = ""
+        playerTwoName.value = ""
+        playerThreeName.value = ""
+        playerFourName.value = ""
     }
 }
