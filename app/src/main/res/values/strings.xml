@@ -5,11 +5,11 @@
     <string name="enter_players_scores">Enter players scores</string>
     <string name="enter_valid_players_scores">Enter scores between 0 and 16</string>
     <string name="only_one_winner_on_round">A single player must have 0 point</string>
-    <string name="enter_scores_explanation">Enter the number of left cards when round ends</string>
-    <string name="nb_cards_left_p1_description">Number of left cards for player 1</string>
-    <string name="nb_cards_left_p2_description">Number of left cards for player 2</string>
-    <string name="nb_cards_left_p3_description">Number of left cards for player 3</string>
-    <string name="nb_cards_left_p4_description">Number of left cards for player 4</string>
+    <string name="enter_scores_explanation">Enter the number of cards left when round ends</string>
+    <string name="nb_cards_left_p1_description">Number of cards left for player 1</string>
+    <string name="nb_cards_left_p2_description">Number of cards left for player 2</string>
+    <string name="nb_cards_left_p3_description">Number of cards left for player 3</string>
+    <string name="nb_cards_left_p4_description">Number of cards left for player 4</string>
     <string name="valid_button">Valid</string>
     <string name="delete_previous_scores_round_button">Remove last\n round scores</string>
     <string name="previous_scores_round_deleted">Last round scores have been removed</string>
