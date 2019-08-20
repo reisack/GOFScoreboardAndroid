@@ -122,7 +122,7 @@
                 style="@style/scoreboardScreenValidButton" />
 
         <Button
-                android:text="@string/button_delete_previous_scores_turn"
+                android:text="@string/button_delete_previous_scores_round"
                 android:id="@+id/btnRemovePreviousScore"
                 android:onClick="onRemovePreviousScore"
                 app:layout_constraintBottom_toBottomOf="@+id/btnAddScore"

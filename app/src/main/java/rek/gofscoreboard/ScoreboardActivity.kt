@@ -90,19 +90,19 @@ class ScoreboardActivity : AppCompatActivity() {
 
     fun onAddScore(view: View) {
         hideSoftKeyboard(view)
-        if (viewModel.addScoresSet()) {
+        if (viewModel.addScoresRound()) {
             refreshScoreboard()
         }
     }
 
     fun onRemovePreviousScore(view: View) {
         hideSoftKeyboard(view)
-        if (viewModel.canRemovePreviousScoresSet()) {
+        if (viewModel.canRemovePreviousScoresRound()) {
             AlertDialog.Builder(this)
                 .setTitle(R.string.delete_score_dialog_title)
                 .setMessage(R.string.delete_score_dialog_message)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    viewModel.removePreviousScoresSet()
+                    viewModel.removePreviousScoresRound()
                     refreshScoreboard()
                 }
                 .setNegativeButton(R.string.no, null)

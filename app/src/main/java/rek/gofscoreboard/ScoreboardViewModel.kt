@@ -59,14 +59,17 @@ class ScoreboardViewModel : ViewModel() {
      * Add players score set to the scoreboard
      * @return true if scores could have been added to the scoreboard, otherwise return false
      */
-    fun addScoresSet(): Boolean {
-        if (!canAddScoresSet()) {
+    fun addScoresRound(): Boolean {
+        if (!canAddScoresRound()) {
             toastMessage.value = R.string.enter_players_scores
             return false
         }
         else if (!areScoresValid()) {
             toastMessage.value = R.string.enter_valid_players_scores
             return false
+        }
+        else if (!onlyOneWinnerExistsForThisRound()) {
+            toastMessage.value = R.string.only_one_winner_on_set
         }
         else {
             playersList.forEach { player ->
@@ -86,14 +89,14 @@ class ScoreboardViewModel : ViewModel() {
         return true
     }
 
-    fun canRemovePreviousScoresSet(): Boolean {
+    fun canRemovePreviousScoresRound(): Boolean {
         // We just check the first player stackedScore
         // It's always the same size for all players during the game
         return playersList[0].stackedScore.isNotEmpty()
     }
 
-    fun removePreviousScoresSet() {
-        if (canRemovePreviousScoresSet()) {
+    fun removePreviousScoresRound() {
+        if (canRemovePreviousScoresRound()) {
             invertedTurn = !invertedTurn
             scoreboard.removeAt(scoreboard.size - 1) // Remove the turn direction
             playersList.forEach { player ->
@@ -104,7 +107,7 @@ class ScoreboardViewModel : ViewModel() {
         }
     }
 
-    private fun canAddScoresSet(): Boolean {
+    private fun canAddScoresRound(): Boolean {
         val nbInvalidScores = playersList.count { player ->
             player.nbCardsLeft.value.isNullOrEmpty()
         }
@@ -123,6 +126,14 @@ class ScoreboardViewModel : ViewModel() {
         }
 
         return nbValidScores == playersList.count()
+    }
+
+    private fun onlyOneWinnerExistsForThisRound(): Boolean {
+        val nbPlayersWithNoCardsLeft = playersList.count { player ->
+            player.nbCardsLeft.value?.toInt() == 0
+        }
+
+        return nbPlayersWithNoCardsLeft == 1
     }
 
     private fun calculateScore(nbCardsLeft: Int) : Int =
