@@ -24,16 +24,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onRestart() {
-        viewModel.clearPlayerNames()
-        super.onRestart()
-    }
-
-    override fun onResume() {
-        viewModel.clearPlayerNames()
-        super.onResume()
-    }
-
     fun onStartGame(view: View) {
         if (viewModel.canStartGame()) {
             val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)
@@ -45,6 +35,11 @@ class MainActivity : AppCompatActivity() {
             scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_FOUR_NAME, viewModel.playerFourName.value)
 
             startActivity(scoreboardIntent)
+
+            // Players names are cleared 1 second later in order to avoid
+            // empty input fields when the user start a new game
+            // (This is only an UI issue)
+            viewModel.delayedClearPlayersNames()
         }
         else {
             Toast.makeText(this, R.string.enter_players_names, Toast.LENGTH_LONG).show()

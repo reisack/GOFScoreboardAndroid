@@ -1,5 +1,6 @@
 package rek.gofscoreboard
 
+import android.os.Handler
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +18,7 @@ class MainViewModel : ViewModel() {
     init {
         nbPlayers = 4
         playerFourVisibility.value = View.VISIBLE
-        clearPlayerNames()
+        clearPlayersNames()
     }
 
     fun updateNbPlayer(newNbPlayer : Int) {
@@ -32,10 +33,16 @@ class MainViewModel : ViewModel() {
                 && (nbPlayers == 3 || !playerFourName.value.isNullOrEmpty())
     }
 
-    fun clearPlayerNames() {
+    fun clearPlayersNames() {
         playerOneName.value = ""
         playerTwoName.value = ""
         playerThreeName.value = ""
         playerFourName.value = ""
+    }
+
+    fun delayedClearPlayersNames() {
+        Handler().postDelayed({
+            clearPlayersNames()
+        }, 1000)
     }
 }
