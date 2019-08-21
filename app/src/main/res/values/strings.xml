@@ -1,18 +1,18 @@
 <resources>
     <string name="app_name">Gang Of Four - Scoreboard</string>
     <string name="app_header">GOF - Scoreboard</string>
-    <string name="enter_players_names">Enter players names</string>
-    <string name="enter_players_scores">Enter players scores</string>
-    <string name="enter_valid_players_scores">Enter scores between 0 and 16</string>
-    <string name="only_one_winner_on_round">A single player must have 0 point</string>
-    <string name="enter_scores_explanation">Enter the number of cards left when round ends</string>
+    <string name="enter_players_names">Enter players names.</string>
+    <string name="enter_players_scores">Enter players scores.</string>
+    <string name="enter_valid_players_scores">Enter scores between 0 and 16.</string>
+    <string name="only_one_winner_on_round">A single player must have 0 point.</string>
+    <string name="enter_scores_explanation">Enter the number of cards left when round ends.</string>
     <string name="nb_cards_left_p1_description">Number of cards left for player 1</string>
     <string name="nb_cards_left_p2_description">Number of cards left for player 2</string>
     <string name="nb_cards_left_p3_description">Number of cards left for player 3</string>
     <string name="nb_cards_left_p4_description">Number of cards left for player 4</string>
     <string name="valid_button">Valid</string>
     <string name="delete_previous_scores_round_button">Remove last\n round scores</string>
-    <string name="previous_scores_round_deleted">Last round scores have been removed</string>
+    <string name="previous_scores_round_deleted">Last round scores have been removed.</string>
     <string name="number_of_players">Number of players</string>
     <string name="three_players_mode">3</string>
     <string name="four_players_mode">4</string>
@@ -28,7 +28,7 @@
     <string name="start_game_button">Start game</string>
     <string name="game_over_dialog_title">Game over</string>
     <string name="game_over_dialog_message">%1$s won with %2$d points !\n\nRanking :\n\n</string>
-    <string name="no_score_to_delete">There is no score to remove</string>
+    <string name="no_score_to_delete">There is no score to remove.</string>
     <string name="delete_score_dialog_title">Remove scores</string>
     <string name="delete_score_dialog_message">Are you sure you want to remove last round scores ?</string>
     <string name="back_to_main_screen_dialog_title">Back to homepage</string>
@@ -38,6 +38,6 @@
     <string name="back_main_screen_button">Back to homepage</string>
     <string name="new_game">New game</string>
     <string name="new_game_message">Are you sure you want to start a new game ?</string>
-    <string name="generic_error_message">An error has occurred</string>
+    <string name="generic_error_message">An error has occurred.</string>
     <string name="points_label">pts</string>
 </resources>
