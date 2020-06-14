@@ -33,11 +33,13 @@
     <string name="delete_score_dialog_message">Are you sure you want to remove last round scores ?</string>
     <string name="back_to_main_screen_dialog_title">Back to homepage</string>
     <string name="back_to_main_screen_dialog_message">Are you sure you want to give up the current game and go back to homepage ?</string>
+    <string name="back_to_main_screen_game_ended_dialog_message">Are you sure you want to go back to homepage ?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="back_main_screen_button">Back to homepage</string>
     <string name="new_game">New game</string>
     <string name="new_game_message">Are you sure you want to start a new game ?</string>
+    <string name="back_to_scoreboard">Back to scoreboard</string>
     <string name="generic_error_message">An error has occurred.</string>
     <string name="points_label">pts</string>
 </resources>

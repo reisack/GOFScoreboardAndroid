@@ -33,11 +33,13 @@
     <string name="delete_score_dialog_message">Êtes-vous sûr(e) de vouloir supprimer les scores de la dernière manche ?</string>
     <string name="back_to_main_screen_dialog_title">Retourner à l\'écran d\'accueil</string>
     <string name="back_to_main_screen_dialog_message">Êtes-vous sûr(e) de vouloir abandonner la partie en cours et retourner à l\'écran d\'accueil ?</string>
+    <string name="back_to_main_screen_game_ended_dialog_message">Êtes-vous sûr(e) de vouloir retourner à l\'écran d\'accueil ?</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="back_main_screen_button">Retourner à l\'écran d\'accueil</string>
     <string name="new_game">Nouvelle partie</string>
     <string name="new_game_message">Êtes-vous sûr(e) de vouloir recommencer une nouvelle partie ?</string>
+    <string name="back_to_scoreboard">Retourner au tableau des scores</string>
     <string name="generic_error_message">Une erreur est survenue.</string>
     <string name="points_label">pts</string>
 </resources>

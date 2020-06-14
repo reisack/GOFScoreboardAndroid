@@ -8,12 +8,17 @@ class ScoreboardViewModel : ViewModel() {
     val finishAlertDialogFinalRanking = MutableLiveData<List<Player>>()
 
     var isFourPlayersMode: Boolean = true
+    val gameFinished = MutableLiveData<Boolean>()
 
     private var invertedTurn: Boolean = false
     private lateinit var playersList: List<Player>
 
     private lateinit var scoreboardHeader: List<String>
     private val scoreboard: MutableList<String> = mutableListOf()
+
+    init {
+        gameFinished.value = false
+    }
 
     fun getPlayerBindingByIndex(index: Int): Player? {
         return playersList.getOrNull(index)
@@ -83,6 +88,7 @@ class ScoreboardViewModel : ViewModel() {
             // Game is finished when we have a final ranking
             val finalRanking = getFinalRanking()
             if (finalRanking != null) {
+                gameFinished.value = true
                 finishAlertDialogFinalRanking.value = finalRanking
             }
         }

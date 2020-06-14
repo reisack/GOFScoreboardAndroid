@@ -77,9 +77,13 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        val message = if (viewModel.gameFinished.value!!)
+            R.string.back_to_main_screen_game_ended_dialog_message
+            else R.string.back_to_main_screen_dialog_message
+
         AlertDialog.Builder(this)
             .setTitle(R.string.back_to_main_screen_dialog_title)
-            .setMessage(R.string.back_to_main_screen_dialog_message)
+            .setMessage(message)
             .setPositiveButton(R.string.yes) { _, _ ->
                 // Return to main activity
                 super.onBackPressed()
@@ -175,6 +179,7 @@ class ScoreboardActivity : AppCompatActivity() {
                 .setPositiveButton(R.string.new_game) { _, _ ->
                     activityContext.launchNewGame()
                 }
+                .setNeutralButton(R.string.back_to_scoreboard, null)
                 .show()
         })
     }

@@ -4,8 +4,6 @@ Bugs to fix :
 -----------------------------------------------------------------
 
 Feature list :
-- When a game ends, i want to be able to go back on the scoreboard, in order to see the full result
-
 - As a user with a tablet, i should be able to enter a player name with more than 5 characters
 see https://stackoverflow.com/questions/17357682/how-can-i-made-the-layout-that-will-work-in-both-tablet-and-phone
 
