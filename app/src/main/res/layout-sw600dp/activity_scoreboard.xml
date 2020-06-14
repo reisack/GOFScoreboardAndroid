@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable name="scoreboardViewModel"
+                  type="rek.gofscoreboard.ScoreboardViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ScoreboardActivity"
+            android:background="@color/background">
+
+        <TextView
+                android:text="@string/enter_scores_explanation"
+                android:id="@+id/labelNewScoreText"
+                app:layout_constraintBottom_toTopOf="@+id/labelPlayerOneScore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/scoreboardScreenHelpText"/>
+
+        <TextView
+                android:text="@{scoreboardViewModel.getPlayerBindingByIndex(0).name}"
+                android:id="@+id/labelPlayerOneScore"
+                android:labelFor="@id/editPlayerOneScore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/editPlayerOneScore"
+                app:layout_constraintTop_toBottomOf="@+id/labelNewScoreText"
+                app:layout_constraintBottom_toTopOf="@+id/labelPlayerThreeScore"
+                style="@style/scoreboardScreenTextView" />
+
+        <EditText
+                android:contentDescription="@string/nb_cards_left_p1_description"
+                android:importantForAutofill="no"
+                android:text="@={scoreboardViewModel.getPlayerBindingByIndex(0).nbCardsLeft}"
+                android:id="@+id/editPlayerOneScore"
+                android:enabled="@{!scoreboardViewModel.gameFinished}"
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerOneScore"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/labelPlayerTwoScore"
+                app:layout_constraintBottom_toBottomOf="@+id/labelPlayerOneScore"
+                style="@style/scoreboardScreenEditText" />
+
+        <TextView
+                android:text="@{scoreboardViewModel.getPlayerBindingByIndex(1).name}"
+                android:id="@+id/labelPlayerTwoScore"
+                android:labelFor="@id/editPlayerTwoScore"
+                app:layout_constraintStart_toEndOf="@+id/editPlayerOneScore"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/editPlayerTwoScore"
+                app:layout_constraintBottom_toBottomOf="@+id/editPlayerOneScore"
+                style="@style/scoreboardScreenTextView" />
+
+        <EditText
+                android:text="@={scoreboardViewModel.getPlayerBindingByIndex(1).nbCardsLeft}"
+                android:contentDescription="@string/nb_cards_left_p2_description"
+                android:importantForAutofill="no"
+                android:id="@+id/editPlayerTwoScore"
+                android:enabled="@{!scoreboardViewModel.gameFinished}"
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerTwoScore"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/labelPlayerTwoScore"
+                style="@style/scoreboardScreenEditTextAlt"/>
+
+        <TextView
+                android:text="@{scoreboardViewModel.getPlayerBindingByIndex(2).name}"
+                android:id="@+id/labelPlayerThreeScore"
+                android:labelFor="@id/editPlayerThreeScore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/editPlayerThreeScore"
+                app:layout_constraintTop_toBottomOf="@+id/labelPlayerOneScore"
+                app:layout_constraintBottom_toTopOf="@+id/btnAddScore"
+                style="@style/scoreboardScreenTextView" />
+
+        <EditText
+                android:text="@={scoreboardViewModel.getPlayerBindingByIndex(2).nbCardsLeft}"
+                android:id="@+id/editPlayerThreeScore"
+                android:contentDescription="@string/nb_cards_left_p3_description"
+                android:importantForAutofill="no"
+                android:enabled="@{!scoreboardViewModel.gameFinished}"
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerThreeScore"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/labelPlayerFourScore"
+                app:layout_constraintBottom_toBottomOf="@+id/labelPlayerThreeScore"
+                style="@style/scoreboardScreenEditText" />
+
+        <TextView
+                android:text="@{scoreboardViewModel.getPlayerBindingByIndex(3).name}"
+                android:id="@+id/labelPlayerFourScore"
+                android:labelFor="@id/editPlayerFourScore"
+                app:layout_constraintStart_toEndOf="@+id/editPlayerThreeScore"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/editPlayerFourScore"
+                app:layout_constraintBottom_toBottomOf="@+id/editPlayerThreeScore"
+                style="@style/scoreboardScreenTextView" />
+
+        <EditText
+                android:text="@={scoreboardViewModel.getPlayerBindingByIndex(3).nbCardsLeft}"
+                android:id="@+id/editPlayerFourScore"
+                android:contentDescription="@string/nb_cards_left_p4_description"
+                android:importantForAutofill="no"
+                android:enabled="@{!scoreboardViewModel.gameFinished}"
+                app:layout_constraintStart_toEndOf="@+id/labelPlayerFourScore"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/labelPlayerFourScore"
+                style="@style/scoreboardScreenEditTextAlt" />
+
+        <Button
+                android:text="@string/valid_button"
+                android:id="@+id/btnAddScore"
+                android:onClick="onAddScore"
+                android:enabled="@{!scoreboardViewModel.gameFinished}"
+                app:layout_constraintTop_toBottomOf="@+id/labelPlayerThreeScore"
+                app:layout_constraintBottom_toTopOf="@+id/scoreboardHeader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/btnRemovePreviousScore"
+                style="@style/scoreboardScreenValidButton" />
+
+        <Button
+                android:text="@string/delete_previous_scores_round_button"
+                android:id="@+id/btnRemovePreviousScore"
+                android:onClick="onRemovePreviousScore"
+                android:enabled="@{!scoreboardViewModel.gameFinished}"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAddScore"
+                app:layout_constraintStart_toEndOf="@+id/btnAddScore"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/scoreboardScreenRemoveScoreButton" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/scoreboardHeader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/scoreboard"
+                app:layout_constraintTop_toBottomOf="@+id/btnAddScore"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/scoreboardScreenScoreboardHeader" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/scoreboard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scoreboardHeader"
+                app:layout_constraintBottom_toBottomOf="parent"
+                style="@style/scoreboardScreenScoreboardTable" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
