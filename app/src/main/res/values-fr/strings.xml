@@ -39,6 +39,7 @@
     <string name="back_main_screen_button">Retourner à l\'écran d\'accueil</string>
     <string name="new_game">Nouvelle partie</string>
     <string name="new_game_message">Êtes-vous sûr(e) de vouloir recommencer une nouvelle partie ?</string>
+    <string name="save_game">Save</string>
     <string name="back_to_scoreboard">Retourner au tableau des scores</string>
     <string name="generic_error_message">Une erreur est survenue.</string>
     <string name="points_label">pts</string>

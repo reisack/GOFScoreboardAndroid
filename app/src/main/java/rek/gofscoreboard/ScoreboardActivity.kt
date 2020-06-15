@@ -67,6 +67,10 @@ class ScoreboardActivity : AppCompatActivity() {
                 newGameActionMenu()
                 return true
             }
+            getString(R.string.save_game) -> {
+                saveGameActionMenu()
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -221,6 +225,14 @@ class ScoreboardActivity : AppCompatActivity() {
                 launchNewGame()
             }
             .show()
+    }
+
+    private fun saveGameActionMenu() {
+        val saveFileName = "savefile"
+        val fileContent = viewModel.getSaveFileContent()
+        applicationContext.openFileOutput(saveFileName, Context.MODE_PRIVATE).use {
+            it.write(fileContent.toByteArray())
+        }
     }
 
     private fun launchNewGame() {

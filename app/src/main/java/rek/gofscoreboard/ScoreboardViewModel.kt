@@ -2,6 +2,7 @@ package rek.gofscoreboard
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.util.*
 
 class ScoreboardViewModel : ViewModel() {
     val toastMessage = MutableLiveData<Int>()
@@ -31,9 +32,9 @@ class ScoreboardViewModel : ViewModel() {
 
     fun initializeGame(playerOneName: String
                        , playerTwoName: String, playerThreeName: String) {
-        val playerOne = Player(playerOneName)
-        val playerTwo = Player(playerTwoName)
-        val playerThree = Player(playerThreeName)
+        val playerOne = Player(1, playerOneName)
+        val playerTwo = Player(2,playerTwoName)
+        val playerThree = Player(3, playerThreeName)
 
         playersList = listOf(playerOne, playerTwo, playerThree)
         isFourPlayersMode = false
@@ -42,10 +43,10 @@ class ScoreboardViewModel : ViewModel() {
     fun initializeGame(playerOneName: String
                        , playerTwoName: String, playerThreeName: String
                        , playerFourName: String) {
-        val playerOne = Player(playerOneName)
-        val playerTwo = Player(playerTwoName)
-        val playerThree = Player(playerThreeName)
-        val playerFour = Player(playerFourName)
+        val playerOne = Player(1, playerOneName)
+        val playerTwo = Player(2,playerTwoName)
+        val playerThree = Player(3, playerThreeName)
+        val playerFour = Player(4, playerFourName)
 
         playersList = listOf(playerOne, playerTwo, playerThree, playerFour)
         isFourPlayersMode = true
@@ -164,5 +165,22 @@ class ScoreboardViewModel : ViewModel() {
         }
 
         return finalRanking
+    }
+
+    fun getSaveFileContent(): String {
+        val content = "isFourPlayersMode|#|$isFourPlayersMode|,|"
+
+        playersList.forEach { player ->
+            content.plus("name${player.index}|#|${player.name}|,|")
+            val stackedScoreClone: Stack<Int> = player.stackedScore.clone() as Stack<Int>
+            val listedScore = stackedScoreClone.toList()
+            val score: String = ""
+            listedScore.forEach { currentScore ->
+                score.plus("$currentScore,")
+                score.trimEnd(',')
+            }
+            content.plus("score${player.index}|#|$score|,|")
+        }
+        return content
     }
 }
