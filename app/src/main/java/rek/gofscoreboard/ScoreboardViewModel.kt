@@ -2,6 +2,7 @@ package rek.gofscoreboard
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.lang.StringBuilder
 import java.util.*
 
 class ScoreboardViewModel : ViewModel() {
@@ -168,19 +169,21 @@ class ScoreboardViewModel : ViewModel() {
     }
 
     fun getSaveFileContent(): String {
-        val content = "isFourPlayersMode|#|$isFourPlayersMode|,|"
+        val content = StringBuilder()
+        content.append("isFourPlayersMode|$isFourPlayersMode,")
 
         playersList.forEach { player ->
-            content.plus("name${player.index}|#|${player.name}|,|")
+            content.append("name${player.index}|${player.name},")
             val stackedScoreClone: Stack<Int> = player.stackedScore.clone() as Stack<Int>
             val listedScore = stackedScoreClone.toList()
-            val score: String = ""
+            val score = StringBuilder()
             listedScore.forEach { currentScore ->
-                score.plus("$currentScore,")
-                score.trimEnd(',')
+                score.append("$currentScore#")
+                score.trimEnd('#')
             }
-            content.plus("score${player.index}|#|$score|,|")
+            content.append("score${player.index}|$score,")
         }
-        return content
+
+        return content.trimEnd(',').toString()
     }
 }

@@ -39,8 +39,10 @@
     <string name="back_main_screen_button">Back to homepage</string>
     <string name="new_game">New game</string>
     <string name="new_game_message">Are you sure you want to start a new game ?</string>
-    <string name="save_game">Sauvegarder</string>
+    <string name="save_game">Save game</string>
     <string name="back_to_scoreboard">Back to scoreboard</string>
     <string name="generic_error_message">An error has occurred.</string>
     <string name="points_label">pts</string>
+    <string name="game_saved_message">Game saved</string>
+    <string name="game_saving_error_message">An error occurred when saving game, please try again</string>
 </resources>

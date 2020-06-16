@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import rek.gofscoreboard.databinding.ActivityScoreboardBinding
+import java.lang.Exception
 import java.lang.StringBuilder
 
 class ScoreboardActivity : AppCompatActivity() {
@@ -230,8 +231,16 @@ class ScoreboardActivity : AppCompatActivity() {
     private fun saveGameActionMenu() {
         val saveFileName = "savefile"
         val fileContent = viewModel.getSaveFileContent()
-        applicationContext.openFileOutput(saveFileName, Context.MODE_PRIVATE).use {
-            it.write(fileContent.toByteArray())
+
+        try {
+            applicationContext.openFileOutput(saveFileName, Context.MODE_PRIVATE).use {
+                it.write(fileContent.toByteArray())
+            }
+
+            Toast.makeText(this, R.string.game_saved_message, Toast.LENGTH_LONG).show()
+        }
+        catch (ex: Exception) {
+            Toast.makeText(this, R.string.game_saving_error_message, Toast.LENGTH_LONG).show()
         }
     }
 

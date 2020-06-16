@@ -64,7 +64,6 @@
                 style="@style/mainScreenTextView" />
 
         <EditText
-                android:inputType="textPersonName"
                 android:text="@={mainViewModel.playerOneName}"
                 android:id="@+id/editPlayerOneName"
                 android:hint="@string/player_name_hint"
