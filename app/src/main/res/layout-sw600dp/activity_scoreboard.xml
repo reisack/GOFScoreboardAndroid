@@ -25,7 +25,7 @@
                 style="@style/scoreboardScreenHelpText"/>
 
         <TextView
-                android:text="@{scoreboardViewModel.getPlayerBindingByIndex(0).name}"
+                android:text="@{scoreboardViewModel.getPlayerByIndex(0).name}"
                 android:id="@+id/labelPlayerOneScore"
                 android:labelFor="@id/editPlayerOneScore"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
         <EditText
                 android:contentDescription="@string/nb_cards_left_p1_description"
                 android:importantForAutofill="no"
-                android:text="@={scoreboardViewModel.getPlayerBindingByIndex(0).nbCardsLeft}"
+                android:text="@={scoreboardViewModel.getPlayerByIndex(0).nbCardsLeft}"
                 android:id="@+id/editPlayerOneScore"
                 android:enabled="@{!scoreboardViewModel.gameFinished}"
                 app:layout_constraintStart_toEndOf="@+id/labelPlayerOneScore"
@@ -48,7 +48,7 @@
                 style="@style/scoreboardScreenEditText" />
 
         <TextView
-                android:text="@{scoreboardViewModel.getPlayerBindingByIndex(1).name}"
+                android:text="@{scoreboardViewModel.getPlayerByIndex(1).name}"
                 android:id="@+id/labelPlayerTwoScore"
                 android:labelFor="@id/editPlayerTwoScore"
                 app:layout_constraintStart_toEndOf="@+id/editPlayerOneScore"
@@ -58,7 +58,7 @@
                 style="@style/scoreboardScreenTextView" />
 
         <EditText
-                android:text="@={scoreboardViewModel.getPlayerBindingByIndex(1).nbCardsLeft}"
+                android:text="@={scoreboardViewModel.getPlayerByIndex(1).nbCardsLeft}"
                 android:contentDescription="@string/nb_cards_left_p2_description"
                 android:importantForAutofill="no"
                 android:id="@+id/editPlayerTwoScore"
@@ -70,7 +70,7 @@
                 style="@style/scoreboardScreenEditTextAlt"/>
 
         <TextView
-                android:text="@{scoreboardViewModel.getPlayerBindingByIndex(2).name}"
+                android:text="@{scoreboardViewModel.getPlayerByIndex(2).name}"
                 android:id="@+id/labelPlayerThreeScore"
                 android:labelFor="@id/editPlayerThreeScore"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +81,7 @@
                 style="@style/scoreboardScreenTextView" />
 
         <EditText
-                android:text="@={scoreboardViewModel.getPlayerBindingByIndex(2).nbCardsLeft}"
+                android:text="@={scoreboardViewModel.getPlayerByIndex(2).nbCardsLeft}"
                 android:id="@+id/editPlayerThreeScore"
                 android:contentDescription="@string/nb_cards_left_p3_description"
                 android:importantForAutofill="no"
@@ -93,7 +93,7 @@
                 style="@style/scoreboardScreenEditText" />
 
         <TextView
-                android:text="@{scoreboardViewModel.getPlayerBindingByIndex(3).name}"
+                android:text="@{scoreboardViewModel.getPlayerByIndex(3).name}"
                 android:id="@+id/labelPlayerFourScore"
                 android:labelFor="@id/editPlayerFourScore"
                 app:layout_constraintStart_toEndOf="@+id/editPlayerThreeScore"
@@ -103,7 +103,7 @@
                 style="@style/scoreboardScreenTextView" />
 
         <EditText
-                android:text="@={scoreboardViewModel.getPlayerBindingByIndex(3).nbCardsLeft}"
+                android:text="@={scoreboardViewModel.getPlayerByIndex(3).nbCardsLeft}"
                 android:id="@+id/editPlayerFourScore"
                 android:contentDescription="@string/nb_cards_left_p4_description"
                 android:importantForAutofill="no"

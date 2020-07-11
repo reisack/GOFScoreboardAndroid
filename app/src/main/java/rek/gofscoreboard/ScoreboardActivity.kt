@@ -28,6 +28,7 @@ class ScoreboardActivity : AppCompatActivity() {
         const val PLAYER_TWO_NAME = "PLAYER2_NAME"
         const val PLAYER_THREE_NAME = "PLAYER3_NAME"
         const val PLAYER_FOUR_NAME = "PLAYER4_NAME"
+        const val LOAD_SAVED_GAME = "LOAD_SAVED_GAME"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +39,15 @@ class ScoreboardActivity : AppCompatActivity() {
         binding.scoreboardViewModel = viewModel
         binding.lifecycleOwner = this
 
-        initializeGame()
+        val loadedGame = intent.getBooleanExtra(LOAD_SAVED_GAME, false)
+
+        if (loadedGame) initializeGameWithSave() else initializeGame()
         setPlayerFourVisibility()
         initScoreboard()
+        if (loadedGame) {
+            viewModel.loadScoreFromSave()
+            refreshScoreboard()
+        }
         setToastMessageObserver()
         setFinishAlertDialogObserver()
 
@@ -58,13 +65,13 @@ class ScoreboardActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // The good way to do it is to use itemId property
         // For an unknown reason, item?.itemId doesn't match with R.id.menu_new_game
         // I have done some research and found nothing for this problem
         // So I do the check with the title item and its localized string
         // This is absolutely horrible but I cannot do otherwise
-        return when (item?.title) {
+        return when (item.title) {
             getString(R.string.new_game) -> {
                 newGameActionMenu()
                 return true
@@ -147,37 +154,17 @@ class ScoreboardActivity : AppCompatActivity() {
             val text = File(applicationContext.filesDir, saveFileName).bufferedReader().use {
                 saveText = it.readText()
             }
-
-            // parse data
-            val keyValuePairs = saveText.split(",")
-            val savedData = SavedData()
-            keyValuePairs.forEach { keyValue ->
-                val splitKeyValue = keyValue.split("|")
-                val key = splitKeyValue[0]
-                val value = splitKeyValue[1]
-
-                when (key) {
-                    "isFourPlayersMode" -> savedData.isFourPlayersMode = value.toBoolean()
-                    "name1" -> savedData.namePlayerOne = value
-                    "name2" -> savedData.namePlayerTwo = value
-                    "name3" -> savedData.namePlayerThree = value
-                    "name4" -> savedData.namePlayerFour = value
-                    "score1" -> if (!value.isNullOrBlank()) savedData.scorePlayerOne = getScoreFromSave(value)
-                    "score2" -> if (!value.isNullOrBlank()) savedData.scorePlayerTwo = getScoreFromSave(value)
-                    "score3" -> if (!value.isNullOrBlank()) savedData.scorePlayerThree = getScoreFromSave(value)
-                    "score4" -> if (!value.isNullOrBlank()) savedData.scorePlayerFour = getScoreFromSave(value)
-                }
-            }
-
-            //TODO : Create and call viewModel.initializeGameWithSave(data)
+            viewModel.fillSavedData(saveText)
+            viewModel.initializeGameWithSave()
+            intent.putExtra(NB_PLAYERS, if (viewModel.isFourPlayersMode) 4 else 3)
+            intent.putExtra(PLAYER_ONE_NAME, viewModel.getPlayerByIndex(0)?.name)
+            intent.putExtra(PLAYER_TWO_NAME, viewModel.getPlayerByIndex(1)?.name)
+            intent.putExtra(PLAYER_THREE_NAME, viewModel.getPlayerByIndex(2)?.name)
+            intent.putExtra(PLAYER_FOUR_NAME, viewModel.getPlayerByIndex(3)?.name)
         }
         catch (ex: Exception) {
             Toast.makeText(this, R.string.game_saving_error_message, Toast.LENGTH_LONG).show()
         }
-    }
-
-    private fun getScoreFromSave(scoreValue: String): List<Int> {
-        return scoreValue.split("#").map { it.toInt() }
     }
 
     private fun setPlayerFourVisibility() {
@@ -285,13 +272,11 @@ class ScoreboardActivity : AppCompatActivity() {
         catch (ex: Exception) {
             Toast.makeText(this, R.string.game_saving_error_message, Toast.LENGTH_LONG).show()
         }
-
-        // TEST
-        initializeGameWithSave()
     }
 
     private fun launchNewGame() {
         finish()
+        intent.removeExtra(LOAD_SAVED_GAME)
         startActivity(intent)
     }
 

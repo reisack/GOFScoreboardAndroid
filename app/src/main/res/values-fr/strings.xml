@@ -40,8 +40,10 @@
     <string name="new_game">Nouvelle partie</string>
     <string name="new_game_message">Êtes-vous sûr(e) de vouloir recommencer une nouvelle partie ?</string>
     <string name="save_game">Sauvegarder la partie</string>
+    <string name="load_saved_game">Charger la partie sauvegardée</string>
+    <string name="no_saved_game_message">Il n\'existe pas de partie sauvegardée</string>
     <string name="back_to_scoreboard">Retourner au tableau des scores</string>
-    <string name="generic_error_message">Une erreur est survenue.</string>
+    <string name="generic_error_message">Une erreur est survenue</string>
     <string name="points_label">pts</string>
     <string name="game_saved_message">Partie sauvegardée</string>
     <string name="game_saving_error_message">Une erreur est survenue lors de la sauvegarde, veuillez réessayer</string>

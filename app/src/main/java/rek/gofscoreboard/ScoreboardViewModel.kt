@@ -18,11 +18,14 @@ class ScoreboardViewModel : ViewModel() {
     private lateinit var scoreboardHeader: List<String>
     private val scoreboard: MutableList<String> = mutableListOf()
 
+    private val savedData: SavedData
+
     init {
         gameFinished.value = false
+        savedData = SavedData()
     }
 
-    fun getPlayerBindingByIndex(index: Int): Player? {
+    fun getPlayerByIndex(index: Int): Player? {
         return playersList.getOrNull(index)
     }
 
@@ -51,6 +54,77 @@ class ScoreboardViewModel : ViewModel() {
 
         playersList = listOf(playerOne, playerTwo, playerThree, playerFour)
         isFourPlayersMode = true
+    }
+
+    fun fillSavedData(saveTextFile: String) {
+        val keyValuePairs = saveTextFile.split(",")
+        keyValuePairs.forEach { keyValue ->
+            val splitKeyValue = keyValue.split("|")
+            val key = splitKeyValue[0]
+            val value = splitKeyValue[1]
+
+            when (key) {
+                "isFourPlayersMode" -> savedData.isFourPlayersMode = value.toBoolean()
+                "name1" -> savedData.namePlayerOne = value
+                "name2" -> savedData.namePlayerTwo = value
+                "name3" -> savedData.namePlayerThree = value
+                "name4" -> savedData.namePlayerFour = value
+                "score1" -> if (!value.isNullOrBlank()) savedData.scorePlayerOne = getScoreFromSave(value)
+                "score2" -> if (!value.isNullOrBlank()) savedData.scorePlayerTwo = getScoreFromSave(value)
+                "score3" -> if (!value.isNullOrBlank()) savedData.scorePlayerThree = getScoreFromSave(value)
+                "score4" -> if (!value.isNullOrBlank()) savedData.scorePlayerFour = getScoreFromSave(value)
+            }
+        }
+    }
+
+    fun initializeGameWithSave() {
+        isFourPlayersMode = savedData.isFourPlayersMode
+
+        val playerOne = Player(1, savedData.namePlayerOne)
+        val playerTwo = Player(2, savedData.namePlayerTwo)
+        val playerThree = Player(3, savedData.namePlayerThree)
+
+        playersList = if (isFourPlayersMode) {
+            val playerFour = Player(4, savedData.namePlayerFour)
+            listOf(playerOne, playerTwo, playerThree, playerFour)
+        } else {
+            listOf(playerOne, playerTwo, playerThree)
+        }
+    }
+
+    private fun getScoreFromSave(scoreValue: String): List<Int> {
+        return scoreValue.split("#").map { it.toInt() }
+    }
+
+    fun loadScoreFromSave() {
+        val playerOne = playersList[0]
+        val playerTwo = playersList[1]
+        val playerThree = playersList[2]
+
+        var playerFour: Player? = null
+        if (isFourPlayersMode) playerFour = playersList[3]
+
+        if (savedData.scorePlayerOne != null) {
+            val count = savedData.scorePlayerOne!!.count()
+
+            for (i in 0 until count) {
+                playerOne.stackedScore.push(savedData.scorePlayerOne!![i])
+                scoreboard.add(playerOne.getTotalScore().toString())
+
+                playerTwo.stackedScore.push(savedData.scorePlayerTwo!![i])
+                scoreboard.add(playerTwo.getTotalScore().toString())
+
+                playerThree.stackedScore.push(savedData.scorePlayerThree!![i])
+                scoreboard.add(playerThree.getTotalScore().toString())
+
+                if (isFourPlayersMode) {
+                    playerFour!!.stackedScore.push(savedData.scorePlayerFour!![i])
+                    scoreboard.add(playerFour.getTotalScore().toString())
+                }
+
+                displayTurnDirection()
+            }
+        }
     }
 
     fun createScoreboardHeader() {

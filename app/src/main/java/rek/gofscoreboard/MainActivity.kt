@@ -3,11 +3,15 @@ package rek.gofscoreboard
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import rek.gofscoreboard.databinding.ActivityMainBinding
+import java.io.File
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -22,6 +26,24 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (menu != null) {
+            menuInflater.inflate(R.menu.activity_main_menu, menu)
+        }
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.title) {
+            getString(R.string.load_saved_game) -> {
+                startSavedGameActionMenu()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     fun onStartGame(view: View) {
@@ -43,6 +65,27 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             Toast.makeText(this, R.string.enter_players_names, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun startSavedGameActionMenu() {
+        val saveFileName = "savefile.txt"
+
+        try {
+            val isSaveFileExists = File(applicationContext.filesDir, saveFileName).exists()
+
+            if (isSaveFileExists) {
+                val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)
+                scoreboardIntent.putExtra(ScoreboardActivity.LOAD_SAVED_GAME, true)
+                startActivity(scoreboardIntent)
+                viewModel.delayedClearPlayersNames()
+            }
+            else {
+                Toast.makeText(this, R.string.no_saved_game_message, Toast.LENGTH_LONG).show()
+            }
+        }
+        catch (ex: Exception) {
+            Toast.makeText(this, R.string.no_saved_game_message, Toast.LENGTH_LONG).show()
         }
     }
 }
