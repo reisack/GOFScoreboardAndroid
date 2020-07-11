@@ -174,14 +174,12 @@ class ScoreboardViewModel : ViewModel() {
 
         playersList.forEach { player ->
             content.append("name${player.index}|${player.name},")
-            val stackedScoreClone: Stack<Int> = player.stackedScore.clone() as Stack<Int>
-            val listedScore = stackedScoreClone.toList()
+            val listedScore = player.stackedScore.toList()
             val score = StringBuilder()
             listedScore.forEach { currentScore ->
                 score.append("$currentScore#")
-                score.trimEnd('#')
             }
-            content.append("score${player.index}|$score,")
+            content.append("score${player.index}|${score.trimEnd('#')},")
         }
 
         return content.trimEnd(',').toString()

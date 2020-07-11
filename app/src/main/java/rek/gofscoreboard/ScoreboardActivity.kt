@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import rek.gofscoreboard.databinding.ActivityScoreboardBinding
+import java.io.File
 import java.lang.Exception
 import java.lang.StringBuilder
 
@@ -137,6 +138,48 @@ class ScoreboardActivity : AppCompatActivity() {
         }
     }
 
+    private fun initializeGameWithSave() {
+        val saveFileName = "savefile.txt"
+        var saveText: String = ""
+
+        try {
+            // get save file content
+            val text = File(applicationContext.filesDir, saveFileName).bufferedReader().use {
+                saveText = it.readText()
+            }
+
+            // parse data
+            val keyValuePairs = saveText.split(",")
+            val savedData = SavedData()
+            keyValuePairs.forEach { keyValue ->
+                val splitKeyValue = keyValue.split("|")
+                val key = splitKeyValue[0]
+                val value = splitKeyValue[1]
+
+                when (key) {
+                    "isFourPlayersMode" -> savedData.isFourPlayersMode = value.toBoolean()
+                    "name1" -> savedData.namePlayerOne = value
+                    "name2" -> savedData.namePlayerTwo = value
+                    "name3" -> savedData.namePlayerThree = value
+                    "name4" -> savedData.namePlayerFour = value
+                    "score1" -> if (!value.isNullOrBlank()) savedData.scorePlayerOne = getScoreFromSave(value)
+                    "score2" -> if (!value.isNullOrBlank()) savedData.scorePlayerTwo = getScoreFromSave(value)
+                    "score3" -> if (!value.isNullOrBlank()) savedData.scorePlayerThree = getScoreFromSave(value)
+                    "score4" -> if (!value.isNullOrBlank()) savedData.scorePlayerFour = getScoreFromSave(value)
+                }
+            }
+
+            //TODO : Create and call viewModel.initializeGameWithSave(data)
+        }
+        catch (ex: Exception) {
+            Toast.makeText(this, R.string.game_saving_error_message, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun getScoreFromSave(scoreValue: String): List<Int> {
+        return scoreValue.split("#").map { it.toInt() }
+    }
+
     private fun setPlayerFourVisibility() {
         val playerFourVisibility = if (viewModel.isFourPlayersMode) View.VISIBLE else View.INVISIBLE
         binding.labelPlayerFourScore.visibility = playerFourVisibility
@@ -229,7 +272,7 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     private fun saveGameActionMenu() {
-        val saveFileName = "savefile"
+        val saveFileName = "savefile.txt"
         val fileContent = viewModel.getSaveFileContent()
 
         try {
@@ -242,6 +285,9 @@ class ScoreboardActivity : AppCompatActivity() {
         catch (ex: Exception) {
             Toast.makeText(this, R.string.game_saving_error_message, Toast.LENGTH_LONG).show()
         }
+
+        // TEST
+        initializeGameWithSave()
     }
 
     private fun launchNewGame() {
