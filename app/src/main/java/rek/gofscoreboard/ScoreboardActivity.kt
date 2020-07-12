@@ -146,16 +146,15 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     private fun initializeGameWithSave() {
-        val saveFileName = "savefile.txt"
-        var saveText: String = ""
+        var saveFileContent: String = ""
 
         try {
             // get save file content
-            val text = File(applicationContext.filesDir, saveFileName).bufferedReader().use {
-                saveText = it.readText()
+            val text = File(applicationContext.filesDir, SavedData.FILENAME).bufferedReader().use {
+                saveFileContent = it.readText()
             }
-            viewModel.fillSavedData(saveText)
-            viewModel.initializeGameWithSave()
+
+            viewModel.initializeGameWithSave(saveFileContent)
             intent.putExtra(NB_PLAYERS, if (viewModel.isFourPlayersMode) 4 else 3)
             intent.putExtra(PLAYER_ONE_NAME, viewModel.getPlayerByIndex(0)?.name)
             intent.putExtra(PLAYER_TWO_NAME, viewModel.getPlayerByIndex(1)?.name)
@@ -259,11 +258,10 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     private fun saveGameActionMenu() {
-        val saveFileName = "savefile.txt"
-        val fileContent = viewModel.getSaveFileContent()
+        val fileContent = viewModel.getContentForSaveFile()
 
         try {
-            applicationContext.openFileOutput(saveFileName, Context.MODE_PRIVATE).use {
+            applicationContext.openFileOutput(SavedData.FILENAME, Context.MODE_PRIVATE).use {
                 it.write(fileContent.toByteArray())
             }
 
