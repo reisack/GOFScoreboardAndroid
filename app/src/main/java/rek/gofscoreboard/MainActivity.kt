@@ -69,10 +69,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startSavedGameActionMenu() {
-        val saveFileName = "savefile.txt"
-
         try {
-            val isSaveFileExists = File(applicationContext.filesDir, saveFileName).exists()
+            val isSaveFileExists = File(applicationContext.filesDir, SavedData.FILENAME).exists()
 
             if (isSaveFileExists) {
                 val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)
