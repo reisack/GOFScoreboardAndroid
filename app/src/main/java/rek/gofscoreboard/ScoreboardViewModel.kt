@@ -58,12 +58,12 @@ class ScoreboardViewModel : ViewModel() {
         savedData.fillSavedData(saveFileContent)
 
         isFourPlayersMode = savedData.isFourPlayersMode
-        val playerOne = Player(1, savedData.namePlayerOne)
-        val playerTwo = Player(2, savedData.namePlayerTwo)
-        val playerThree = Player(3, savedData.namePlayerThree)
+        val playerOne = Player(1, savedData.playerOneName)
+        val playerTwo = Player(2, savedData.playerTwoName)
+        val playerThree = Player(3, savedData.playerThreeName)
 
         playersList = if (isFourPlayersMode) {
-            val playerFour = Player(4, savedData.namePlayerFour)
+            val playerFour = Player(4, savedData.playerFourName)
             listOf(playerOne, playerTwo, playerThree, playerFour)
         } else {
             listOf(playerOne, playerTwo, playerThree)
@@ -71,16 +71,16 @@ class ScoreboardViewModel : ViewModel() {
     }
 
     fun loadScoreFromSave() {
-        if (savedData.scorePlayerOne != null) {
-            val count = savedData.scorePlayerOne!!.count()
+        if (savedData.playerOneScore != null) {
+            val count = savedData.playerOneScore!!.count()
 
             for (i in 0 until count) {
-                loadPlayerScore(playersList[0], savedData.scorePlayerOne!![i])
-                loadPlayerScore(playersList[1], savedData.scorePlayerTwo!![i])
-                loadPlayerScore(playersList[2], savedData.scorePlayerThree!![i])
+                loadPlayerScore(playersList[0], savedData.playerOneScore!![i])
+                loadPlayerScore(playersList[1], savedData.playerTwoScore!![i])
+                loadPlayerScore(playersList[2], savedData.playerThreeScore!![i])
 
                 if (isFourPlayersMode) {
-                    loadPlayerScore(playersList[3], savedData.scorePlayerFour!![i])
+                    loadPlayerScore(playersList[3], savedData.playerFourScore!![i])
                 }
 
                 displayTurnDirection()

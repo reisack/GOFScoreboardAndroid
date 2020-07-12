@@ -7,14 +7,14 @@ class SavedData {
     }
 
     var isFourPlayersMode: Boolean = false
-    lateinit var namePlayerOne: String
-    lateinit var namePlayerTwo: String
-    lateinit var namePlayerThree: String
-    lateinit var namePlayerFour: String
-    var scorePlayerOne: List<Int>? = null
-    var scorePlayerTwo: List<Int>? = null
-    var scorePlayerThree: List<Int>? = null
-    var scorePlayerFour: List<Int>? = null
+    lateinit var playerOneName: String
+    lateinit var playerTwoName: String
+    lateinit var playerThreeName: String
+    lateinit var playerFourName: String
+    var playerOneScore: List<Int>? = null
+    var playerTwoScore: List<Int>? = null
+    var playerThreeScore: List<Int>? = null
+    var playerFourScore: List<Int>? = null
 
     fun fillSavedData(saveFileContent: String) {
         val keyValuePairs = saveFileContent.split(",")
@@ -25,14 +25,14 @@ class SavedData {
 
             when (key) {
                 "isFourPlayersMode" -> isFourPlayersMode = value.toBoolean()
-                "name1" -> namePlayerOne = value
-                "name2" -> namePlayerTwo = value
-                "name3" -> namePlayerThree = value
-                "name4" -> namePlayerFour = value
-                "score1" -> if (!value.isNullOrBlank()) scorePlayerOne = getScoreFromSave(value)
-                "score2" -> if (!value.isNullOrBlank()) scorePlayerTwo = getScoreFromSave(value)
-                "score3" -> if (!value.isNullOrBlank()) scorePlayerThree = getScoreFromSave(value)
-                "score4" -> if (!value.isNullOrBlank()) scorePlayerFour = getScoreFromSave(value)
+                "name1" -> playerOneName = value
+                "name2" -> playerTwoName = value
+                "name3" -> playerThreeName = value
+                "name4" -> playerFourName = value
+                "score1" -> if (!value.isNullOrBlank()) playerOneScore = getScoreFromSave(value)
+                "score2" -> if (!value.isNullOrBlank()) playerTwoScore = getScoreFromSave(value)
+                "score3" -> if (!value.isNullOrBlank()) playerThreeScore = getScoreFromSave(value)
+                "score4" -> if (!value.isNullOrBlank()) playerFourScore = getScoreFromSave(value)
             }
         }
     }
