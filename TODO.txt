@@ -1,5 +1,5 @@
 Bugs to fix :
-- User shouldn't be able to save when game is finished
+/
 
 -----------------------------------------------------------------
 

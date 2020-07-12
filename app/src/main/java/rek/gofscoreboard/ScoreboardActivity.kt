@@ -21,6 +21,7 @@ import java.lang.StringBuilder
 class ScoreboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScoreboardBinding
     private lateinit var viewModel: ScoreboardViewModel
+    private var menu: Menu? = null
 
     companion object PropertyNames {
         const val NB_PLAYERS = "NB_PLAYERS"
@@ -59,6 +60,7 @@ class ScoreboardActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if (menu != null) {
+            this.menu = menu
             menuInflater.inflate(R.menu.activity_scoreboard_menu, menu)
         }
 
@@ -109,6 +111,16 @@ class ScoreboardActivity : AppCompatActivity() {
         hideSoftKeyboard(view)
         if (viewModel.addScoresRound()) {
             refreshScoreboard()
+            hideSaveGameItemMenuIfGameFinished()
+        }
+    }
+
+    private fun hideSaveGameItemMenuIfGameFinished() {
+        if (viewModel.gameFinished.value!!) {
+            if (menu != null) {
+                val itemMenu: MenuItem = menu!!.findItem(R.id.menu_save_game)
+                itemMenu.isVisible = false
+            }
         }
     }
 
