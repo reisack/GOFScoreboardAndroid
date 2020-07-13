@@ -22,14 +22,14 @@ import org.junit.Rule
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class MainInstrumentedTest {
+class MainInstrumentedTests {
     /**
      * Use [ActivityScenarioRule] to create and launch the activity under test before each test,
      * and close it after each test. This is a replacement for
      * [androidx.test.rule.ActivityTestRule].
      */
     @get:Rule
-    var activityScenarioRule = ActivityTestRule(MainActivity::class.java)
+    val activityScenarioRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
     fun useAppContext() {
