@@ -55,13 +55,13 @@ class MainInstrumentedTests {
         onView(withId(R.id.editPlayerOneName)).perform(typeText("Stan"), closeSoftKeyboard())
         onView(withId(R.id.editPlayerTwoName)).perform(typeText("Kyle]"), closeSoftKeyboard())
         onView(withId(R.id.editPlayerThreeName)).perform(typeText("Ken|ny"), closeSoftKeyboard())
-        onView(withId(R.id.editPlayerFourName)).perform(typeText("Cartman"), closeSoftKeyboard())
+        onView(withId(R.id.editPlayerFourName)).perform(typeText("[Clyde"), closeSoftKeyboard())
 
         // Asserted names
         onView(withId(R.id.editPlayerOneName)).check(matches(withText("Stan")))
         onView(withId(R.id.editPlayerTwoName)).check(matches(withText("Kyle")))
         onView(withId(R.id.editPlayerThreeName)).check(matches(withText("Kenny")))
-        onView(withId(R.id.editPlayerFourName)).check(matches(withText("Cartm")))
+        onView(withId(R.id.editPlayerFourName)).check(matches(withText("Clyde")))
     }
 
     @Test

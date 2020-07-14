@@ -85,12 +85,14 @@ class MultiActivitiesInstrumentedTests {
     }
 
     private fun saveGame() {
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().context)
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().targetContext)
+        Thread.sleep(2000)
         onView(withText(R.string.save_game)).perform(click())
     }
 
     private fun loadSavedGame() {
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().context)
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().targetContext)
+        Thread.sleep(2000)
         onView(withText(R.string.load_saved_game)).perform(click())
     }
 
