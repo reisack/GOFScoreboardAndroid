@@ -35,8 +35,8 @@ class ScoreboardThreePlayersInstrumentedTests {
 
     @Test
     fun playAGameThenClickOnNewGame() {
-        insertScoresTurn(16, 0, 1)
-        insertScoresTurn(16, 0, 1)
+        helper.insertScoresTurn(16, 0, 1)
+        helper.insertScoresTurn(16, 0, 1)
         onView(withText(R.string.new_game)).inRoot(isDialog()).perform(click())
 
         // Still on Scoreboard Activity
@@ -45,8 +45,8 @@ class ScoreboardThreePlayersInstrumentedTests {
 
     @Test
     fun playAGameThenClickOnBackToMain() {
-        insertScoresTurn(16, 0, 1)
-        insertScoresTurn(16, 0, 1)
+        helper.insertScoresTurn(16, 0, 1)
+        helper.insertScoresTurn(16, 0, 1)
         onView(withText(R.string.back_main_screen_button)).inRoot(isDialog()).perform(click())
     }
 
@@ -57,26 +57,28 @@ class ScoreboardThreePlayersInstrumentedTests {
         // Should not crash app
         helper.removePreviousScores()
 
-        insertScoresTurn(3, 6, 0)
-        insertScoresTurn(0, 1, 6)
+        helper.insertScoresTurn(3, 6, 0)
+        helper.insertScoresTurn(0, 1, 6)
 
         // No score with 0
         insertScoresTurnShouldFail(7, 8, 9)
 
-        insertScoresTurn(4, 11, 0)
+        helper.insertScoresTurn(4, 11, 0)
 
         // More than one score with 0
         insertScoresTurnShouldFail(6, 0, 0)
 
-        insertScoresTurn(7, 0, 4)
-        helper.removePreviousScoresWithDialogToClose()
+        helper.insertScoresTurn(7, 0, 4)
+        helper.removePreviousScores()
+        helper.clickYesToDialogAlert()
 
         for (i in 0..10) {
-            insertScoresTurn(1, 0, 1)
+            helper.insertScoresTurn(1, 0, 1)
         }
 
-        insertScoresTurn(0, 9, 2)
-        helper.removePreviousScoresWithDialogToClose()
+        helper.insertScoresTurn(0, 9, 2)
+        helper.removePreviousScores()
+        helper.clickYesToDialogAlert()
 
         // More than one score with 0
         insertScoresTurnShouldFail(0, 0, 9)
@@ -84,7 +86,7 @@ class ScoreboardThreePlayersInstrumentedTests {
         // No score with 0
         insertScoresTurnShouldFail(7, 8, 9)
 
-        insertScoresTurn(0, 16, 4)
+        helper.insertScoresTurn(0, 16, 4)
 
         onView(withText(R.string.back_to_scoreboard)).inRoot(isDialog()).perform(click())
 
@@ -102,18 +104,8 @@ class ScoreboardThreePlayersInstrumentedTests {
         onView(withId(R.id.editPlayerFourScore)).check(matches(not(isDisplayed())))
     }
 
-    private fun insertScoresTurn(scoreP1: Int, scoreP2: Int, scoreP3: Int) {
-        // Write scores
-        onView(withId(R.id.editPlayerOneScore)).perform(typeText(scoreP1.toString()), closeSoftKeyboard())
-        onView(withId(R.id.editPlayerTwoScore)).perform(typeText(scoreP2.toString()), closeSoftKeyboard())
-        onView(withId(R.id.editPlayerThreeScore)).perform(typeText(scoreP3.toString()), closeSoftKeyboard())
-
-        // Validate turn
-        onView(withId(R.id.btnAddScore)).perform(click())
-    }
-
     private fun insertScoresTurnShouldFail(scoreP1: Int, scoreP2: Int, scoreP3: Int) {
-        insertScoresTurn(scoreP1, scoreP2, scoreP3)
+        helper.insertScoresTurn(scoreP1, scoreP2, scoreP3)
 
         onView(withId(R.id.editPlayerOneScore))
             .check(matches(withText(scoreP1.toString())))
