@@ -149,11 +149,11 @@ class ScoreboardActivity : AppCompatActivity() {
         val playerThreeName = intent.getStringExtra(PLAYER_THREE_NAME)
 
         if (nbPlayers == 3) {
-            viewModel.initializeGame(playerOneName, playerTwoName, playerThreeName)
+            viewModel.initializeGame(playerOneName!!, playerTwoName!!, playerThreeName!!)
         }
         else {
             val playerFourName = intent.getStringExtra(PLAYER_FOUR_NAME)
-            viewModel.initializeGame(playerOneName, playerTwoName, playerThreeName, playerFourName)
+            viewModel.initializeGame(playerOneName!!, playerTwoName!!, playerThreeName!!, playerFourName!!)
         }
     }
 
