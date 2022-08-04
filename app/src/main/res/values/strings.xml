@@ -47,4 +47,5 @@
     <string name="points_label">pts</string>
     <string name="game_saved_message">Game saved</string>
     <string name="game_saving_error_message">An error occurred when saving game, please try again</string>
+    <string name="privacy">Privacy policy</string>
 </resources>

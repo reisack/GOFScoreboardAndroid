@@ -1,17 +1,17 @@
 package rek.gofscoreboard
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import rek.gofscoreboard.databinding.ActivityMainBinding
 import java.io.File
-import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -40,6 +40,12 @@ class MainActivity : AppCompatActivity() {
         return when (item.title) {
             getString(R.string.load_saved_game) -> {
                 startSavedGameActionMenu()
+                return true
+            }
+            getString(R.string.privacy) -> {
+                val privacyUrl = "https://reisack.github.io/GOF/privacy.html"
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(privacyUrl))
+                startActivity(browserIntent)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
