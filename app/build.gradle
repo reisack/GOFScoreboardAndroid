@@ -4,8 +4,6 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'kotlin-kapt'
-
 android {
     compileSdkVersion 31
     defaultConfig {
@@ -26,6 +24,7 @@ android {
         dataBinding = true
         viewBinding = true
     }
+    namespace 'rek.gofscoreboard'
 }
 
 dependencies {

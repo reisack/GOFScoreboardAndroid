@@ -16,7 +16,7 @@ class ScoreHelper {
             val finishScore = 100
             var finalRanking: List<Player>? = null
 
-            val playerWithMaxScore = playersList.maxBy { player -> player.getTotalScore() }
+            val playerWithMaxScore = playersList.maxByOrNull { player -> player.getTotalScore() }
 
             if (playerWithMaxScore != null && playerWithMaxScore.getTotalScore() >= finishScore) {
                 finalRanking = playersList.sortedBy { player -> player.getTotalScore() }
