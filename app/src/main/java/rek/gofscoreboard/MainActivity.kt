@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import rek.gofscoreboard.databinding.ActivityMainBinding
 import java.io.File
 
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
 
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding.mainViewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onStartGame(view: View) {
+    fun onStartGame(@Suppress("UNUSED_PARAMETER") view: View) {
         if (viewModel.canStartGame()) {
             val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)
 

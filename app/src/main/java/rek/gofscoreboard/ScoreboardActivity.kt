@@ -9,10 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import rek.gofscoreboard.databinding.ActivityScoreboardBinding
 import java.io.File
 import java.lang.Exception
@@ -36,7 +36,7 @@ class ScoreboardActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_scoreboard)
         setContentView(binding.root)
 
-        viewModel = ViewModelProviders.of(this).get(ScoreboardViewModel::class.java)
+        viewModel = ViewModelProvider(this)[ScoreboardViewModel::class.java]
         binding.scoreboardViewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -54,6 +54,12 @@ class ScoreboardActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                backButtonPressed()
+            }
+        })
 
         super.onCreate(savedInstanceState)
     }
@@ -91,28 +97,28 @@ class ScoreboardActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
-    override fun onBackPressed() {
-        val message = if (viewModel.gameFinished.value!!)
-            R.string.back_to_main_screen_game_ended_dialog_message
-            else R.string.back_to_main_screen_dialog_message
-
-        AlertDialog.Builder(this)
-            .setTitle(R.string.back_to_main_screen_dialog_title)
-            .setMessage(message)
-            .setPositiveButton(R.string.yes) { _, _ ->
-                // Return to main activity
-                super.onBackPressed()
-            }
-            .setNegativeButton(R.string.no, null)
-            .show()
-    }
-
     fun onAddScore(view: View) {
         hideSoftKeyboard(view)
         if (viewModel.addScoresRound()) {
             refreshScoreboard()
             hideSaveGameItemMenuIfGameFinished()
         }
+    }
+
+    private fun backButtonPressed() {
+        val message = if (viewModel.gameFinished.value!!)
+            R.string.back_to_main_screen_game_ended_dialog_message
+        else R.string.back_to_main_screen_dialog_message
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.back_to_main_screen_dialog_title)
+            .setMessage(message)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                // Return to main activity
+                finish()
+            }
+            .setNegativeButton(R.string.no, null)
+            .show()
     }
 
     private fun hideSaveGameItemMenuIfGameFinished() {
@@ -158,11 +164,11 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     private fun initializeGameWithSave() {
-        var saveFileContent: String = ""
+        var saveFileContent: String
 
         try {
             // get save file content
-            val text = File(applicationContext.filesDir, SavedData.FILENAME).bufferedReader().use {
+            File(applicationContext.filesDir, SavedData.FILENAME).bufferedReader().use {
                 saveFileContent = it.readText()
             }
 
@@ -204,17 +210,17 @@ class ScoreboardActivity : AppCompatActivity() {
 
     private fun setToastMessageObserver() {
         val activityContext = this
-        viewModel.toastMessage.observe(activityContext, Observer { resourceId ->
+        viewModel.toastMessage.observe(activityContext) { resourceId ->
             if (resourceId != null) {
                 val message = getString(resourceId)
                 Toast.makeText(activityContext, message, Toast.LENGTH_LONG).show()
             }
-        })
+        }
     }
 
     private fun setFinishAlertDialogObserver() {
         val activityContext = this
-        viewModel.finishAlertDialogFinalRanking.observe(activityContext, Observer { ranking ->
+        viewModel.finishAlertDialogFinalRanking.observe(activityContext) { ranking ->
             AlertDialog.Builder(activityContext)
                 .setCancelable(false)
                 .setTitle(R.string.game_over_dialog_title)
@@ -227,7 +233,7 @@ class ScoreboardActivity : AppCompatActivity() {
                 }
                 .setNeutralButton(R.string.back_to_scoreboard, null)
                 .show()
-        })
+        }
     }
 
     private fun getFinalRankingMessage(ranking: List<Player>): String {
@@ -246,9 +252,9 @@ class ScoreboardActivity : AppCompatActivity() {
 
             var playerRank = 0
             ranking.forEach { player ->
-                rankingMessage.appendln("${++playerRank}. ${player.name}")
-                rankingMessage.appendln("\u27f6 ${player.getTotalScore()} $pointsLabel")
-                rankingMessage.appendln()
+                rankingMessage.appendLine("${++playerRank}. ${player.name}")
+                rankingMessage.appendLine("\u27f6 ${player.getTotalScore()} $pointsLabel")
+                rankingMessage.appendLine()
             }
         }
         else {

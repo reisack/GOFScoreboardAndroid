@@ -1,6 +1,7 @@
 package rek.gofscoreboard
 
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,7 +35,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun delayedClearPlayersNames() {
-        Handler().postDelayed({
+        Handler(Looper.myLooper()!!).postDelayed({
             clearPlayersNames()
         }, 1000)
     }

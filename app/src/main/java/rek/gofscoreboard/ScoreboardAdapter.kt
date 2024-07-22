@@ -3,7 +3,7 @@ package rek.gofscoreboard
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.score_grid_cell.view.*
+import android.widget.TextView
 
 class ScoreboardAdapter(private val scoresData: Array<String>)
     : androidx.recyclerview.widget.RecyclerView.Adapter<ScoreboardAdapter.ScoreboardViewHolder>() {
@@ -24,7 +24,10 @@ class ScoreboardAdapter(private val scoresData: Array<String>)
     override fun onBindViewHolder(holder: ScoreboardViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.scoreView.textScoreValue.text = scoresData[position]
+        val scoreView = holder.scoreView.findViewById<TextView>(R.id.textScoreValue)
+        if (scoreView != null) {
+            scoreView.text = scoresData[position]
+        }
     }
 
     override fun getItemCount(): Int = scoresData.size
