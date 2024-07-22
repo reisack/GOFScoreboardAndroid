@@ -1,8 +1,8 @@
 package rek.gofscoreboard
 
-import androidx.test.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
-import androidx.test.rule.ActivityTestRule
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,12 +29,12 @@ class MainInstrumentedTests {
      * [androidx.test.rule.ActivityTestRule].
      */
     @get:Rule
-    val activityScenarioRule = ActivityTestRule(MainActivity::class.java)
+    val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun useAppContext() {
         // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("rek.gofscoreboard", appContext.packageName)
     }
 

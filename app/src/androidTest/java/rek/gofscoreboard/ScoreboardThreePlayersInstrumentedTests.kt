@@ -2,8 +2,8 @@ package rek.gofscoreboard
 
 import android.content.Intent
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,8 +20,10 @@ class ScoreboardThreePlayersInstrumentedTests {
     private val helper = ScoreboardInstrumentedTestsHelper()
 
     @get:Rule
-    val activityScenarioRule: ActivityTestRule<ScoreboardActivity> = object : ActivityTestRule<ScoreboardActivity>(ScoreboardActivity::class.java) {
-        override fun getActivityIntent(): Intent {
+    val activityScenarioRule: ActivityScenarioRule<ScoreboardActivity> = ActivityScenarioRule<ScoreboardActivity>(launchActivityIntent())
+
+    companion object {
+        private fun launchActivityIntent(): Intent {
             val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
             val intent = Intent(targetContext, ScoreboardActivity::class.java)
             intent.putExtra(ScoreboardActivity.NB_PLAYERS, 3)
