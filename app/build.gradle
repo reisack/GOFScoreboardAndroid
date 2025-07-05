@@ -23,14 +23,18 @@ android {
         dataBinding = true
         viewBinding = true
     }
-    kotlin {
-        jvmToolchain(17)
-        compilerOptions {
-            sourceCompatibility JavaVersion.VERSION_17
-            targetCompatibility JavaVersion.VERSION_17
-        }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+    kotlinOptions {
+        jvmTarget = "21"
     }
     namespace 'rek.gofscoreboard'
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 dependencies {
