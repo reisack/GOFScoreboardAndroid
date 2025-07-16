@@ -38,11 +38,8 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run unit tests and generate coverage report
-        #run: ./gradlew testDebugUnitTest
-        run: ./gradlew jacocoTestReport
-        # When code coverage will be possible with android-35 image emulator => run: ./gradlew testDebugUnitTest jacocoTestReport
+        run: ./gradlew testDebugUnitTest jacocoTestReport
 
-      # Cannot run this step now, we need to wait that android-35 image emulator is stable
       - name: Run instrumented tests on emulator and generate coverage report
         uses: ReactiveCircus/android-emulator-runner@v2
         env:
@@ -54,7 +51,7 @@ jobs:
           disable-animations: true
           script: |
             adb wait-for-device
-            ./gradlew jacocoTestDebugReport
+            ./gradlew connectedDebugAndroidTest jacocoTestDebugReport
 
       - name: Build and analyze
         env:

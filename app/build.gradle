@@ -68,7 +68,9 @@ jacoco {
 }
 
 tasks.register('jacocoTestReport', JacocoReport) {
-    dependsOn['testDebugUnitTest']
+    dependsOn 'testDebugUnitTest'
+    dependsOn 'compileDebugKotlin'
+
     group = "Reporting"
     description = "Generate JaCoCo coverage reports for unit tests."
 
@@ -106,7 +108,9 @@ tasks.register('jacocoTestReport', JacocoReport) {
 }
 
 tasks.register('jacocoTestDebugReport', JacocoReport) {
-    dependsOn['connectedDebugAndroidTest']
+    dependsOn 'connectedDebugAndroidTest'
+    dependsOn 'compileDebugKotlin'
+
     group = "Reporting"
     description = "Generate JaCoCo coverage reports for instrumented tests."
 
