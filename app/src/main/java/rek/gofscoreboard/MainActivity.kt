@@ -1,7 +1,6 @@
 package rek.gofscoreboard
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import rek.gofscoreboard.databinding.ActivityMainBinding
 import java.io.File
+import androidx.core.net.toUri
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         binding.mainViewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             }
             getString(R.string.privacy) -> {
                 val privacyUrl = "https://reisack.github.io/GOF/privacy.html"
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(privacyUrl))
+                val browserIntent = Intent(Intent.ACTION_VIEW, privacyUrl.toUri())
                 startActivity(browserIntent)
                 return true
             }

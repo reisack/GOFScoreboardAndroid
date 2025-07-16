@@ -122,11 +122,9 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     private fun hideSaveGameItemMenuIfGameFinished() {
-        if (viewModel.gameFinished.value!!) {
-            if (menu != null) {
-                val itemMenu: MenuItem = menu!!.findItem(R.id.menu_save_game)
-                itemMenu.isVisible = false
-            }
+        if (viewModel.gameFinished.value!! && menu != null) {
+            val itemMenu: MenuItem = menu!!.findItem(R.id.menu_save_game)
+            itemMenu.isVisible = false
         }
     }
 
