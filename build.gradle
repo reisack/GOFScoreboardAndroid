@@ -23,9 +23,10 @@ sonar {
         property "sonar.projectKey", "reisack_GOFScoreboardAndroid"
         property "sonar.organization", "reisack"
         property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.coverage.jacoco.xmlReportPaths", "app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml,app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml"
 
         // No code coverage until android-35 image emulator can play instrumented tests
-        property "sonar.coverage.exclusions", "**/*"
+        //property "sonar.coverage.exclusions", "**/*"
     }
 }
 
