@@ -47,9 +47,7 @@ jobs:
           arch: x86_64
           target: google_apis
           profile: pixel_6
-          script: |
-            adb wait-for-device
-            ./gradlew connectedDebugAndroidTest jacocoTestDebugReport
+          script: ./gradlew connectedDebugAndroidTest jacocoTestDebugReport
 
       - name: Build and analyze
         env:
