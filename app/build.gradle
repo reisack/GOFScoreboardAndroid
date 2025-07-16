@@ -1,3 +1,20 @@
+plugins {
+    id "org.sonarqube" version "6.2.0.5505"
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "reisack_GOFScoreboardAndroid"
+        property "sonar.organization", "reisack"
+        property "sonar.host.url", "https://sonarcloud.io"
+
+        property "sonar.sources", "src/main/java"
+        property "sonar.tests", "src/test/java,src/androidTest/java"
+        property "sonar.java.binaries", "build/tmp/kotlin-classes/debug,build/intermediates/javac/debug/classes"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml,build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml"
+    }
+}
+
 apply plugin: 'jacoco'
 
 apply plugin: 'com.android.application'
