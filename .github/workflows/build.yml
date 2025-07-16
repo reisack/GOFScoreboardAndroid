@@ -48,7 +48,7 @@ jobs:
         with:
           api-level: 35
           arch: x86_64
-          emulator-options: -memory 4096 -partition-size 4096
+          profile: Nexus 5
           disable-animations: true
           script: |
             adb wait-for-device
