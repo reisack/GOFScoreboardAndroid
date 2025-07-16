@@ -40,18 +40,19 @@ jobs:
       - name: Run unit tests and generate coverage report
         run: ./gradlew testDebugUnitTest jacocoTestReport
 
-      - name: Run instrumented tests on emulator and generate coverage report
-        uses: ReactiveCircus/android-emulator-runner@v2
-        env:
-          CI_COMPILE_SDK: 34
-          CI_TARGET_SDK: 34
-        with:
-          api-level: 34
-          arch: x86_64
-          profile: pixel_6
-          script: |
-            adb wait-for-device
-            ./gradlew connectedDebugAndroidTest jacocoTestDebugReport
+      # Cannot run this step now, we need to wait that android-35 image emulator is stable
+      # - name: Run instrumented tests on emulator and generate coverage report
+      #   uses: ReactiveCircus/android-emulator-runner@v2
+      #   env:
+      #     CI_COMPILE_SDK: 35
+      #     CI_TARGET_SDK: 35
+      #   with:
+      #     api-level: 35
+      #     arch: x86_64
+      #     profile: pixel_6
+      #     script: |
+      #       adb wait-for-device
+      #       ./gradlew connectedDebugAndroidTest jacocoTestDebugReport
 
       - name: Build and analyze
         env:
