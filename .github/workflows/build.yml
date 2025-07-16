@@ -45,9 +45,10 @@ jobs:
         with:
           api-level: 30
           arch: x86_64
+          target: google_apis
           profile: pixel_6
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -memory 4096
+          emulator-options: -no-snapshot-save -noaudio -no-boot-anim -no-window -gpu swiftshader_indirect -memory 4096
           script: |
             adb wait-for-device
             ./gradlew connectedDebugAndroidTest jacocoTestDebugReport
