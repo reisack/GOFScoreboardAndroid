@@ -45,8 +45,10 @@ jobs:
         with:
           api-level: 33
           arch: x86_64
-          profile: Nexus 6
+          profile: pixel_6
           script: ./gradlew connectedDebugAndroidTest jacocoTestDebugReport
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -memory 4096
 
       - name: Build and analyze
         env:
