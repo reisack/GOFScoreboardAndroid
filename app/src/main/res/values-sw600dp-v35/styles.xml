@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
     </style>
 
     <!-- Global styles -->
@@ -54,7 +55,7 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:textSize">24sp</item>
         <item name="android:ems">10</item>
-        <item name="android:maxLength">5</item>
+        <item name="android:maxLength">10</item>
         <item name="android:inputType">textPersonName</item>
         <item name="android:digits">aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ 0123456789</item>
         <item name="android:singleLine">true</item>
@@ -90,7 +91,7 @@
     </style>
 
     <style name="scoreboardScreenTextView" parent="mainStyle">
-        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_width">200dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
         <item name="android:layout_marginTop">20dp</item>
@@ -135,7 +136,7 @@
 
     <style name="scoreboardScreenScoreboardTable" parent="scoreboardScreenScoreboard">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">230dp</item>
+        <item name="android:layout_height">400dp</item>
         <item name="android:scrollbars">vertical</item>
     </style>
 
