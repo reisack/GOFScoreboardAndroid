@@ -1,4 +1,15 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id "org.sonarqube" version "6.2.0.5505"
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "reisack_GOFScoreboardAndroid"
+        property "sonar.organization", "reisack"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
 
 buildscript {
     ext.kotlin_version = '2.2.0'
