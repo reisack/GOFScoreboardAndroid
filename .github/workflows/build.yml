@@ -43,12 +43,14 @@ jobs:
       - name: Run instrumented tests on emulator and generate coverage report
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
-          api-level: 33
+          api-level: 30
           arch: x86_64
           profile: pixel_6
-          script: ./gradlew connectedDebugAndroidTest jacocoTestDebugReport
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -memory 4096
+          script: |
+            adb wait-for-device
+            ./gradlew connectedDebugAndroidTest jacocoTestDebugReport
 
       - name: Build and analyze
         env:
