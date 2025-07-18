@@ -55,28 +55,26 @@ class MainActivity : AppCompatActivity() {
     fun onStartGame(@Suppress("UNUSED_PARAMETER") view: View) {
         if (!viewModel.isEveryPlayerNameFilled()) {
             Toast.makeText(this, R.string.enter_players_names, Toast.LENGTH_LONG).show()
-            return
         }
-
-        if (!viewModel.isEveryPlayerNameDifferent()) {
+        else if (!viewModel.isEveryPlayerNameDifferent()) {
             Toast.makeText(this, R.string.duplicate_players_names, Toast.LENGTH_LONG).show()
-            return
         }
+        else {
+            val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)
 
-        val scoreboardIntent = Intent(this, ScoreboardActivity::class.java)
+            scoreboardIntent.putExtra(ScoreboardActivity.NB_PLAYERS, viewModel.nbPlayers)
+            scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_ONE_NAME, viewModel.playerOneName.value)
+            scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_TWO_NAME, viewModel.playerTwoName.value)
+            scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_THREE_NAME, viewModel.playerThreeName.value)
+            scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_FOUR_NAME, viewModel.playerFourName.value)
 
-        scoreboardIntent.putExtra(ScoreboardActivity.NB_PLAYERS, viewModel.nbPlayers)
-        scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_ONE_NAME, viewModel.playerOneName.value)
-        scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_TWO_NAME, viewModel.playerTwoName.value)
-        scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_THREE_NAME, viewModel.playerThreeName.value)
-        scoreboardIntent.putExtra(ScoreboardActivity.PLAYER_FOUR_NAME, viewModel.playerFourName.value)
+            startActivity(scoreboardIntent)
 
-        startActivity(scoreboardIntent)
-
-        // Players names are cleared 1 second later in order to avoid
-        // empty input fields when the user start a new game
-        // (This is only an UI issue)
-        viewModel.delayedClearPlayersNames()
+            // Players names are cleared 1 second later in order to avoid
+            // empty input fields when the user start a new game
+            // (This is only an UI issue)
+            viewModel.delayedClearPlayersNames()
+        }
     }
 
     private fun startSavedGameActionMenu() {
