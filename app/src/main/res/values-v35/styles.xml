@@ -57,7 +57,7 @@
         <item name="android:ems">10</item>
         <item name="android:maxLength">5</item>
         <item name="android:inputType">textPersonName</item>
-        <item name="android:digits">aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ 0123456789</item>
+        <item name="android:digits">aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789</item>
         <item name="android:singleLine">true</item>
         <item name="android:layout_marginStart">8dp</item>
         <item name="android:layout_marginEnd">32dp</item>

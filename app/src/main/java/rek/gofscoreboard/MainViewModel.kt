@@ -27,11 +27,22 @@ class MainViewModel : ViewModel() {
         playerFourVisibility.value = if (nbPlayers == 3) View.INVISIBLE else View.VISIBLE
     }
 
-    fun canStartGame(): Boolean {
+    fun isEveryPlayerNameFilled(): Boolean {
         return !playerOneName.value.isNullOrEmpty()
                 && !playerTwoName.value.isNullOrEmpty()
                 && !playerThreeName.value.isNullOrEmpty()
                 && (nbPlayers == 3 || !playerFourName.value.isNullOrEmpty())
+    }
+
+    fun isEveryPlayerNameDifferent(): Boolean {
+        val names = listOf(playerOneName.value, playerTwoName.value, playerThreeName.value, playerFourName.value)
+
+        // Check is case-insensitive
+        val lowered = names.map { it?.lowercase() }
+
+        // Putting them in a Set, which removes duplicates.
+        // if size is the same in the set and in original list, every player name is different
+        return lowered.size == lowered.toSet().size
     }
 
     fun delayedClearPlayersNames() {

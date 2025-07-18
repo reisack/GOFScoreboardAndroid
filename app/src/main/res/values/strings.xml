@@ -2,6 +2,7 @@
     <string name="app_name">Gang Of Four - Scoreboard</string>
     <string name="app_header">GOF - Scoreboard</string>
     <string name="enter_players_names">Enter players names.</string>
+    <string name="duplicate_players_names">Player names must be unique.</string>
     <string name="enter_players_scores">Enter players scores.</string>
     <string name="enter_valid_players_scores">Enter scores between 0 and 16.</string>
     <string name="only_one_winner_on_round">A single player must have 0 point.</string>

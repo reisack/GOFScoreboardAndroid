@@ -3,6 +3,7 @@
     <string name="app_header">GOF - Scoreboard</string>
     <string name="valid_button">Valider</string>
     <string name="enter_players_names">Veuillez saisir les noms des joueurs.</string>
+    <string name="duplicate_players_names">Les noms des joueurs doivent être uniques.</string>
     <string name="enter_players_scores">Veuillez saisir les scores des joueurs.</string>
     <string name="enter_scores_explanation">Veuillez saisir le nombre de cartes restantes à la fin de chaque manche.</string>
     <string name="enter_valid_players_scores">Veuillez saisir des scores entre 0 et 16.</string>
