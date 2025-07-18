@@ -80,11 +80,42 @@ class MainInstrumentedTests {
     }
 
     @Test
+    fun shouldNotStartGameIfAllNamesAreNotDifferent_fourPlayers() {
+        onView(withId(R.id.radioButton4players)).perform(click())
+
+        // Fill player name
+        onView(withId(R.id.editPlayerOneName)).perform(typeText("p1"), closeSoftKeyboard())
+        onView(withId(R.id.editPlayerTwoName)).perform(typeText("p2"), closeSoftKeyboard())
+        onView(withId(R.id.editPlayerThreeName)).perform(typeText("p3"), closeSoftKeyboard())
+        onView(withId(R.id.editPlayerFourName)).perform(typeText("P2"), closeSoftKeyboard())
+
+        onView(withId(R.id.buttonStartGame)).perform(click())
+
+        // Assert
+        checkScoreboardActivityDoesNotExist()
+    }
+
+    @Test
     fun shouldNotStartGameIfAllNamesAreNotProvided_threePlayers() {
         onView(withId(R.id.radioButton3players)).perform(click())
 
         // Fill player name
         onView(withId(R.id.editPlayerOneName)).perform(typeText("p1"), closeSoftKeyboard())
+        onView(withId(R.id.editPlayerThreeName)).perform(typeText("p3"), closeSoftKeyboard())
+
+        onView(withId(R.id.buttonStartGame)).perform(click())
+
+        // Assert
+        checkScoreboardActivityDoesNotExist()
+    }
+
+    @Test
+    fun shouldNotStartGameIfAllNamesAreNotDifferent_threePlayers() {
+        onView(withId(R.id.radioButton3players)).perform(click())
+
+        // Fill player name
+        onView(withId(R.id.editPlayerOneName)).perform(typeText("p1"), closeSoftKeyboard())
+        onView(withId(R.id.editPlayerTwoName)).perform(typeText("p1"), closeSoftKeyboard())
         onView(withId(R.id.editPlayerThreeName)).perform(typeText("p3"), closeSoftKeyboard())
 
         onView(withId(R.id.buttonStartGame)).perform(click())
