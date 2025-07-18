@@ -1,5 +1,6 @@
 package rek.gofscoreboard
 
+import android.content.Intent
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -7,10 +8,14 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.junit.Test
 import org.junit.runner.RunWith
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
+import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
 import org.junit.Assert.*
@@ -153,6 +158,29 @@ class MainInstrumentedTests {
 
         // Assert
         checkScoreboardActivityExists()
+    }
+
+    @Test
+    fun shouldOpenPrivacyInBrowserWhenPrivacyMenuClicked() {
+        // Initialize Espresso Intents
+        Intents.init()
+
+        // Open the overflow menu (three dots)
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().targetContext)
+
+        // Click the "Privacy" menu item
+        onView(withText(R.string.privacy)).perform(click())
+
+        // Verify the correct intent was fired
+        Intents.intended(
+            allOf(
+                IntentMatchers.hasAction(Intent.ACTION_VIEW),
+                IntentMatchers.hasData("https://reisack.github.io/GOF/privacy.html")
+            )
+        )
+
+        // Release Espresso Intents
+        Intents.release()
     }
 
     private fun checkScoreboardActivityExists() {
