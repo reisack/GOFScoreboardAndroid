@@ -27,12 +27,13 @@ class MainViewModel : ViewModel() {
         playerFourVisibility.value = if (nbPlayers == 3) View.INVISIBLE else View.VISIBLE
     }
 
-    fun isEveryPlayerNameFilled(): Boolean {
-        return !playerOneName.value.isNullOrEmpty()
-                && !playerTwoName.value.isNullOrEmpty()
-                && !playerThreeName.value.isNullOrEmpty()
-                && (nbPlayers == 3 || !playerFourName.value.isNullOrEmpty())
-    }
+    fun isEveryPlayerNameFilled(): Boolean =
+        listOfNotNull(
+            playerOneName.value,
+            playerTwoName.value,
+            playerThreeName.value,
+            if (nbPlayers == 4) playerFourName.value else null
+        ).all { it.isNotEmpty() }
 
     fun isEveryPlayerNameDifferent(): Boolean {
         val names = listOf(playerOneName.value, playerTwoName.value, playerThreeName.value, playerFourName.value)
