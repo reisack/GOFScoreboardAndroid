@@ -61,15 +61,21 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            ./gradlew jacocoTestDebugReport
+            ./gradlew jacocoCombinedReport
 
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          test -s app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
-          test -s app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml
+          test -s app/build/reports/jacoco/jacocoCombinedReport/jacocoCombinedReport.xml
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          root = ET.parse('app/build/reports/jacoco/jacocoCombinedReport/jacocoCombinedReport.xml').getroot()
+          counters = {c.attrib['type']: (int(c.attrib['missed']), int(c.attrib['covered'])) for c in root.findall('counter')}
+          print('JaCoCo combined counters:', counters)
+          if counters.get('LINE', (0, 0))[1] == 0:
+              raise SystemExit('Combined JaCoCo report has 0 covered lines')
+          PY
           ./gradlew sonar --info \
             -Dsonar.scanner.skipJreProvisioning=true \
-            -Dsonar.coverage.jacoco.xmlReportPaths=app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml,app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml \
             -Dsonar.verbose=true
