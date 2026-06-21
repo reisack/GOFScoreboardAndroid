@@ -29,6 +29,9 @@ sonar {
         property "sonar.organization", "reisack"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.projectName", "GOFScoreboardAndroid"
+        property "sonar.coverage.jacoco.xmlReportPaths", "app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml,app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml"
+        property "sonar.java.binaries", "app/build/tmp/kotlin-classes/debug,app/build/intermediates/javac/debug/classes"
+        property "sonar.kotlin.binaries", "app/build/tmp/kotlin-classes/debug"
     }
 }
 

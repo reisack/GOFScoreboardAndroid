@@ -69,4 +69,7 @@ jobs:
         run: |
           test -s app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
           test -s app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml
-          ./gradlew build sonar --info -Dsonar.scanner.skipJreProvisioning=true
+          ./gradlew sonar --info \
+            -Dsonar.scanner.skipJreProvisioning=true \
+            -Dsonar.coverage.jacoco.xmlReportPaths=app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml,app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml \
+            -Dsonar.verbose=true
