@@ -39,18 +39,44 @@ def main():
     output = Path(sys.argv[1])
     reports = [Path(arg) for arg in sys.argv[2:]]
     coverage = {}
+    source_roots = [Path("app/src/main/java"), Path("app/src/main/kotlin")]
+    source_index = {}
+    unmatched = set()
+
+    for source_root in source_roots:
+        if source_root.is_dir():
+            for source_file in source_root.rglob("*"):
+                if source_file.suffix in (".kt", ".java"):
+                    source_index.setdefault(source_file.name, []).append(source_file)
 
     for report in reports:
         root = ET.parse(report).getroot()
         for package in root.findall("package"):
-            package_path = package.attrib["name"]
+            package_path = package.attrib["name"].replace(".", "/")
             for sourcefile in package.findall("sourcefile"):
                 source_name = sourcefile.attrib["name"]
-                if source_name.endswith((".kt", ".java")):
-                    file_path = f"app/src/main/java/{package_path}/{source_name}"
-                else:
+                if not source_name.endswith((".kt", ".java")):
                     continue
-                if not Path(file_path).is_file():
+
+                candidates = [
+                    source_root / package_path / source_name
+                    for source_root in source_roots
+                ]
+                source_path = next((path for path in candidates if path.is_file()), None)
+                if source_path is None:
+                    matches = source_index.get(source_name, [])
+                    if len(matches) == 1:
+                        source_path = matches[0]
+                    else:
+                        unmatched.add(f"{package_path}/{source_name}")
+                        continue
+
+                file_path = source_path.as_posix()
+
+                if file_path.startswith("app/"):
+                    file_path = file_path.removeprefix("app/")
+
+                if not Path("app", file_path).is_file():
                     continue
 
                 for line in sourcefile.findall("line"):
@@ -82,7 +108,15 @@ def main():
         f"Generated {output} with {len(files)} files, "
         f"{covered}/{len(coverage)} covered lines"
     )
+    if unmatched:
+        preview = ", ".join(sorted(unmatched)[:10])
+        print(f"Unmatched JaCoCo source files: {preview}")
     if covered == 0:
+        available_roots = ", ".join(
+            f"{root}={'yes' if root.is_dir() else 'no'}" for root in source_roots
+        )
+        print(f"Source roots: {available_roots}")
+        print(f"Indexed source files: {sum(len(files) for files in source_index.values())}")
         raise SystemExit("Generic Sonar coverage report has 0 covered lines")
 
 
