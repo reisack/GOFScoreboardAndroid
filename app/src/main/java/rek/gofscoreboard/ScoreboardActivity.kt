@@ -296,7 +296,7 @@ class ScoreboardActivity : AppCompatActivity() {
         intent.removeExtra(LOAD_SAVED_GAME)
 
         val name = intent.resolveActivity(packageManager)
-        if (name.packageName == "rek.gofscoreboard" && name.className == "MainActivity")
+        if (name.packageName == "rek.gofscoreboard")
             startActivity(intent)
     }
 
