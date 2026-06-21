@@ -50,10 +50,10 @@ jobs:
       - name: Run instrumented tests on emulator and generate coverage report
         uses: ReactiveCircus/android-emulator-runner@v2
         env:
-          CI_COMPILE_SDK: 35
-          CI_TARGET_SDK: 35
+          CI_COMPILE_SDK: 36
+          CI_TARGET_SDK: 36
         with:
-          api-level: 35
+          api-level: 36
           arch: x86_64
           profile: Nexus 5
           disable-animations: true

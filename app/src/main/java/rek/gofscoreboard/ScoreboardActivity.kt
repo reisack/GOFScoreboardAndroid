@@ -35,6 +35,8 @@ class ScoreboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_scoreboard)
         setContentView(binding.root)
+        EdgeToEdgeInsets.applyLightStatusBar(this)
+        EdgeToEdgeInsets.applySystemBarsPadding(binding.root)
 
         viewModel = ViewModelProvider(this)[ScoreboardViewModel::class.java]
         binding.scoreboardViewModel = viewModel
