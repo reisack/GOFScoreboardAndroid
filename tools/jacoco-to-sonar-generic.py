@@ -8,6 +8,14 @@ def line_key(file_path, line_number):
     return file_path, int(line_number)
 
 
+def tag_name(element):
+    return element.tag.rsplit("}", 1)[-1]
+
+
+def children(element, name):
+    return [child for child in element if tag_name(child) == name]
+
+
 def merge_line(existing, line):
     ci = int(line.attrib.get("ci", 0))
     mi = int(line.attrib.get("mi", 0))
@@ -42,6 +50,7 @@ def main():
     source_roots = [Path("app/src/main/java"), Path("app/src/main/kotlin")]
     source_index = {}
     unmatched = set()
+    report_stats = []
 
     for source_root in source_roots:
         if source_root.is_dir():
@@ -51,9 +60,14 @@ def main():
 
     for report in reports:
         root = ET.parse(report).getroot()
-        for package in root.findall("package"):
+        package_count = 0
+        sourcefile_count = 0
+        line_count = 0
+        for package in children(root, "package"):
+            package_count += 1
             package_path = package.attrib["name"].replace(".", "/")
-            for sourcefile in package.findall("sourcefile"):
+            for sourcefile in children(package, "sourcefile"):
+                sourcefile_count += 1
                 source_name = sourcefile.attrib["name"]
                 if not source_name.endswith((".kt", ".java")):
                     continue
@@ -79,9 +93,11 @@ def main():
                 if not Path("app", file_path).is_file():
                     continue
 
-                for line in sourcefile.findall("line"):
+                for line in children(sourcefile, "line"):
+                    line_count += 1
                     key = line_key(file_path, line.attrib["nr"])
                     coverage[key] = merge_line(coverage.get(key), line)
+        report_stats.append((report, package_count, sourcefile_count, line_count))
 
     generic_root = ET.Element("coverage", {"version": "1"})
     files = {}
@@ -112,6 +128,11 @@ def main():
         preview = ", ".join(sorted(unmatched)[:10])
         print(f"Unmatched JaCoCo source files: {preview}")
     if covered == 0:
+        for report, package_count, sourcefile_count, line_count in report_stats:
+            print(
+                f"JaCoCo report {report}: packages={package_count}, "
+                f"sourcefiles={sourcefile_count}, matched_lines={line_count}"
+            )
         available_roots = ", ".join(
             f"{root}={'yes' if root.is_dir() else 'no'}" for root in source_roots
         )
