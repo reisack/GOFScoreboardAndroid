@@ -63,16 +63,15 @@ jobs:
           script: |
             ./gradlew jacocoTestDebugReport
 
-      - name: Build and analyze
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Verify coverage reports
         run: |
           test -s app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
           test -s app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml
-          python3 tools/jacoco-to-sonar-generic.py \
-            build/reports/sonar/sonar-generic-coverage.xml \
-            app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml \
-            app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml
-          ./gradlew sonar --info \
-            -Dsonar.scanner.skipJreProvisioning=true \
+
+      - name: SonarQube scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
             -Dsonar.verbose=true

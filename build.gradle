@@ -9,36 +9,14 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:9.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:7.3.1.8318'
     }
 }
-
-apply plugin: 'org.sonarqube'
 
 allprojects {
     repositories {
         google()
         mavenCentral()
         
-    }
-}
-
-sonar {
-    properties {
-        property "sonar.projectKey", "reisack_GOFScoreboardAndroid"
-        property "sonar.organization", "reisack"
-        property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.projectName", "GOFScoreboardAndroid"
-    }
-}
-
-project(':app') {
-    sonar {
-        properties {
-            property "sonar.coverageReportPaths", "../build/reports/sonar/sonar-generic-coverage.xml"
-            property "sonar.java.binaries", "build/tmp/kotlin-classes/debug,build/intermediates/javac/debug/classes"
-            property "sonar.kotlin.binaries", "build/tmp/kotlin-classes/debug"
-        }
     }
 }
 
