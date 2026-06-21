@@ -69,7 +69,6 @@ jobs:
           test -s app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml
 
       - name: Build and analyze
-        working-directory: app
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ../gradlew build sonar --info -Dsonar.scanner.skipJreProvisioning=true
+        run: ./gradlew build sonar --info -Dsonar.scanner.skipJreProvisioning=true
