@@ -68,11 +68,8 @@ jobs:
           test -s app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
           test -s app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml
 
-      - name: SonarQube scan
-        uses: SonarSource/sonarqube-scan-action@v6
+      - name: Build and analyze
+        working-directory: app
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          projectBaseDir: app
-          args: >
-            -Dsonar.verbose=true
+        run: ../gradlew build sonar --info -Dsonar.scanner.skipJreProvisioning=true
