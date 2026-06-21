@@ -290,10 +290,14 @@ class ScoreboardActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     private fun launchNewGame() {
         finish()
         intent.removeExtra(LOAD_SAVED_GAME)
-        startActivity(intent)
+
+        val name = intent.resolveActivity(packageManager)
+        if (name.packageName == "rek.gofscoreboard" && name.className == "MainActivity")
+            startActivity(intent)
     }
 
     private fun setScoreboardScrollPosition() {

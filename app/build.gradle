@@ -10,6 +10,8 @@ sonar {
         property "sonar.projectName", "GOFScoreboardAndroid"
 
         property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml,build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml"
+        property "sonar.java.binaries", "build/tmp/kotlin-classes/debug,build/intermediates/javac/debug/classes"
+        property "sonar.kotlin.binaries", "build/tmp/kotlin-classes/debug"
     }
 }
 
