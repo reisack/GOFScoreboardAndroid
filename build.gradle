@@ -13,11 +13,28 @@ buildscript {
     }
 }
 
+apply plugin: 'org.sonarqube'
+
 allprojects {
     repositories {
         google()
         mavenCentral()
         
+    }
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "reisack_GOFScoreboardAndroid"
+        property "sonar.organization", "reisack"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.projectName", "GOFScoreboardAndroid"
+
+        property "sonar.sources", "app/src/main/java"
+        property "sonar.tests", "app/src/test/java,app/src/androidTest/java"
+        property "sonar.coverage.jacoco.xmlReportPaths", "app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml,app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml"
+        property "sonar.java.binaries", "app/build/tmp/kotlin-classes/debug,app/build/intermediates/javac/debug/classes"
+        property "sonar.kotlin.binaries", "app/build/tmp/kotlin-classes/debug"
     }
 }
 
