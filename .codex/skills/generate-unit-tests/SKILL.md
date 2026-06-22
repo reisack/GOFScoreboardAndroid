@@ -1,11 +1,11 @@
 ---
 name: generate-unit-tests
-description: Generate or improve unit tests for a specific source file, class, function, or module with emphasis on branch coverage suitable for SonarQube/SonarCloud validation. Use when the user asks to create unit tests, add missing tests, increase coverage, cover uncovered or missed branches, satisfy Sonar coverage gates, or write tests for a named file/class. In this workspace, using this skill should spawn or delegate to the tester agent defined in .agents/tester.md when agent spawning is available.
+description: Generate or improve local JVM unit tests only for a specific source file, class, function, or module with emphasis on branch coverage suitable for SonarQube/SonarCloud validation. Use when the user asks to create unit tests, add missing tests, increase unit coverage, cover uncovered or missed branches, satisfy Sonar unit coverage gates, or write tests for a named file/class. Do not create, update, or run Android instrumentation/UI tests with this skill. In this workspace, using this skill should spawn or delegate to the tester agent defined in .agents/tester.md when agent spawning is available.
 ---
 
 # Generate Unit Tests
 
-Use this skill to add high-signal unit tests for a target file or class while preserving production behavior. Optimize for meaningful branch coverage, not superficial line coverage.
+Use this skill to add high-signal local JVM unit tests for a target file or class while preserving production behavior. Optimize for meaningful branch coverage, not superficial line coverage. Keep all test changes in unit-test sources such as `app/src/test`; do not touch instrumentation sources such as `app/src/androidTest`.
 
 ## Workspace Delegation
 
@@ -27,6 +27,7 @@ If sub-agent spawning is unavailable in the current environment, follow `.agents
 - If tests already exist for the target, extend them to cover missed branches instead of duplicating covered cases.
 - Keep tests deterministic and isolated. Avoid network, real clocks, random data, shared filesystem state, and external services unless the existing test suite already provides safe fakes.
 - Assert behavior, state, emitted events, thrown errors, interactions, or persisted output that matter to users or callers.
+- Do not add or modify Android instrumentation, Espresso, emulator-backed, or UI automation tests. If a requested branch is only practical through instrumentation, report that as out of scope for this skill.
 
 ## Workflow
 
@@ -42,8 +43,8 @@ If sub-agent spawning is unavailable in the current environment, follow `.agents
    - parser branches, serialization branches, feature flags, mode flags
 5. Compare the map to existing tests and list only missing behavior cases.
 6. Add focused tests using the smallest public setup that reaches each missing branch.
-7. Run the narrow relevant test command first, then broader commands if risk or project norms call for it.
-8. If coverage tooling is available, run or inspect it and iterate on genuine missed branches.
+7. Run the narrow relevant JVM unit test command first, then broader JVM unit test commands if risk or project norms call for it. In this repository, prefer `.\gradlew.bat testDebugUnitTest` or an equivalent targeted unit-test task.
+8. If JVM unit coverage tooling is available, run or inspect it and iterate on genuine missed branches. Do not run connected-device or emulator-backed coverage tasks for this skill.
 
 ## Existing Coverage and Sonar
 
@@ -52,7 +53,7 @@ When SonarQube/SonarCloud or a local coverage report is available:
 - Prefer the report's missed branch details over guessing.
 - Locate the source line, then identify the public input or state that exercises each missing decision outcome.
 - Add one test per distinct behavior where possible; combine cases only when it stays readable.
-- Re-run the coverage-producing task if practical.
+- Re-run the JVM unit coverage-producing task if practical.
 - If a missed branch is unreachable through the public API, document that clearly rather than using reflection or changing access modifiers.
 
 If no coverage report is available, derive a branch checklist from source code and existing tests. State what could and could not be verified.
@@ -65,7 +66,7 @@ If no coverage report is available, derive a branch checklist from source code a
 - For validation code, cover valid input, missing input, malformed input, and conflicting input when applicable.
 - For stateful classes, cover initial state, state transition, repeated operation, and undo/reset behavior if present.
 - For parsers/serializers, cover empty values, optional fields, all supported modes, malformed input only if the public contract handles it.
-- For UI-adjacent view models, test view model behavior directly when possible and reserve instrumentation/UI tests for platform wiring.
+- For UI-adjacent view models, test view model behavior directly through local unit tests. Do not add instrumentation/UI tests for platform wiring as part of this skill.
 
 ## Production Code Discipline
 
@@ -85,4 +86,4 @@ If a private branch cannot be reached through public behavior, do not force it. 
 
 If tests expose a likely production bug, stop treating it as a test-generation task. Explain the failing behavior, the public scenario that exposes it, and whether the user wants the production fix included.
 
-If required test tooling, emulators, services, or credentials are unavailable, still add the tests when confident and clearly report the unrun verification.
+If required unit-test tooling, services, or credentials are unavailable, still add the tests when confident and clearly report the unrun verification. Do not require emulator/device availability for this skill.
