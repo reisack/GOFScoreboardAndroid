@@ -13,6 +13,8 @@ import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.NoMatchingViewException
+import org.junit.After
 import org.hamcrest.Matchers.not
 
 @RunWith(AndroidJUnit4::class)
@@ -21,6 +23,11 @@ class MultiActivitiesInstrumentedTests {
 
     @get:Rule
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
+
+    @After
+    fun tearDown() {
+        returnToMainActivityIfNeeded()
+    }
 
     @Test
     fun saveAndLoadGame_fourPlayers() {
@@ -34,6 +41,7 @@ class MultiActivitiesInstrumentedTests {
 
         // Start game
         onView(withId(R.id.buttonStartGame)).perform(click())
+        helper.checkScoreboardActivityIsDisplayed()
 
         // Insert some scores
         helper.insertScoresTurn(0, 6, 2, 1)
@@ -42,9 +50,9 @@ class MultiActivitiesInstrumentedTests {
 
         saveGame()
         goBackToMainActivity()
-        Thread.sleep(1000)
+        checkMainActivityIsDisplayed()
         loadSavedGame()
-        Thread.sleep(1000)
+        helper.checkScoreboardActivityIsDisplayed()
 
         // Check
         onView(withId(R.id.labelPlayerOneScore)).check(matches(withText("Stan")))
@@ -64,6 +72,7 @@ class MultiActivitiesInstrumentedTests {
 
         // Start game
         onView(withId(R.id.buttonStartGame)).perform(click())
+        helper.checkScoreboardActivityIsDisplayed()
 
         // Insert some scores
         helper.insertScoresTurn(0, 6, 2)
@@ -72,9 +81,9 @@ class MultiActivitiesInstrumentedTests {
 
         saveGame()
         goBackToMainActivity()
-        Thread.sleep(1000)
+        checkMainActivityIsDisplayed()
         loadSavedGame()
-        Thread.sleep(1000)
+        helper.checkScoreboardActivityIsDisplayed()
 
         // Check
         onView(withId(R.id.labelPlayerOneScore)).check(matches(withText("Stan")))
@@ -99,5 +108,22 @@ class MultiActivitiesInstrumentedTests {
     private fun goBackToMainActivity() {
         pressBack()
         helper.clickYesToDialogAlert()
+    }
+
+    private fun returnToMainActivityIfNeeded() {
+        try {
+            helper.checkScoreboardActivityIsDisplayed()
+            goBackToMainActivity()
+        }
+        catch (_: NoMatchingViewException) {
+            // Already on another screen.
+        }
+        catch (_: AssertionError) {
+            // The scoreboard root exists but is not active/displayed.
+        }
+    }
+
+    private fun checkMainActivityIsDisplayed() {
+        onView(withId(R.id.buttonStartGame)).check(matches(isDisplayed()))
     }
 }
