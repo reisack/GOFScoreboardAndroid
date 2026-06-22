@@ -1,3 +1,5 @@
+package rek.gofscoreboard
+
 @Retention(AnnotationRetention.BINARY)
 @Target(
     AnnotationTarget.CLASS,

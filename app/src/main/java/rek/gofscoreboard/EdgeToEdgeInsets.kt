@@ -1,6 +1,5 @@
 package rek.gofscoreboard
 
-import GeneratedCoverage
 import android.app.Activity
 import android.view.View
 import androidx.core.view.ViewCompat
