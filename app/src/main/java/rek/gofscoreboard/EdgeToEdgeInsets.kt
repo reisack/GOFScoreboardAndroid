@@ -6,6 +6,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 
+@GeneratedCoverage
 object EdgeToEdgeInsets {
     fun applyLightStatusBar(activity: Activity) {
         WindowCompat.getInsetsController(
@@ -14,7 +15,6 @@ object EdgeToEdgeInsets {
         ).isAppearanceLightStatusBars = true
     }
 
-    @GeneratedCoverage
     fun applySystemBarsPadding(view: View) {
         val initialPaddingLeft = view.paddingLeft
         val initialPaddingTop = view.paddingTop
