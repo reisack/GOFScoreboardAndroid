@@ -1,5 +1,6 @@
 package rek.gofscoreboard
 
+import GeneratedCoverage
 import android.app.Activity
 import android.view.View
 import androidx.core.view.ViewCompat
@@ -14,6 +15,7 @@ object EdgeToEdgeInsets {
         ).isAppearanceLightStatusBars = true
     }
 
+    @GeneratedCoverage
     fun applySystemBarsPadding(view: View) {
         val initialPaddingLeft = view.paddingLeft
         val initialPaddingTop = view.paddingTop
