@@ -65,8 +65,10 @@ jobs:
 
       - name: Verify coverage reports
         run: |
+          ./gradlew jacocoCombinedReport
           test -s app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
           test -s app/build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml
+          test -s app/build/reports/jacoco/jacocoCombinedReport/jacocoCombinedReport.xml
 
       - name: Build and analyze
         env:

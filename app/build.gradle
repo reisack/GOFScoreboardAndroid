@@ -14,7 +14,7 @@ sonar {
         property "sonar.tests", "src/test/java,src/androidTest/java"
         property "sonar.java.binaries", "build/tmp/kotlin-classes/debug,build/intermediates/javac/debug/classes"
         property "sonar.kotlin.binaries", "build/tmp/kotlin-classes/debug"
-        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml,build/reports/jacoco/jacocoTestDebugReport/jacocoTestDebugReport.xml"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/jacocoCombinedReport/jacocoCombinedReport.xml"
     }
 }
 
@@ -151,5 +151,50 @@ tasks.register('jacocoTestDebugReport', JacocoReport) {
     sourceDirectories.setFrom(files(['src/main/java', 'src/main/kotlin']))
     executionData.setFrom(fileTree(dir: new File(buildDirFile, "outputs/code_coverage/debugAndroidTest/connected"), includes: [
             '**/coverage.ec'
+    ]))
+}
+
+tasks.register('jacocoCombinedReport', JacocoReport) {
+    dependsOn 'testDebugUnitTest'
+    dependsOn 'compileDebugKotlin'
+
+    group = "Reporting"
+    description = "Generate a combined JaCoCo coverage report for unit and instrumented tests."
+
+    reports {
+        xml.required = true
+        html.required = true
+    }
+
+    def fileFilter = [
+            '**/R.class',
+            '**/R$*.class',
+            '**/BuildConfig.*',
+            '**/Manifest*.*',
+            '**/*Test*.*',
+            'android/**/*.*'
+    ]
+
+    def buildDirFile = layout.buildDirectory.get().asFile
+
+    def javaClasses = fileTree(
+            dir: "$buildDirFile/intermediates/javac/debug/classes",
+            excludes: fileFilter
+    )
+
+    def kotlinClasses = fileTree(
+            dir: "$buildDirFile/tmp/kotlin-classes/debug",
+            excludes: fileFilter
+    )
+
+    classDirectories.setFrom(files([javaClasses, kotlinClasses]))
+    sourceDirectories.setFrom(files(['src/main/java', 'src/main/kotlin']))
+    executionData.setFrom(files([
+            fileTree(dir: new File(buildDirFile, "outputs/unit_test_code_coverage/debugUnitTest"), includes: [
+                    'testDebugUnitTest.exec'
+            ]),
+            fileTree(dir: new File(buildDirFile, "outputs/code_coverage/debugAndroidTest/connected"), includes: [
+                    '**/coverage.ec'
+            ])
     ]))
 }
