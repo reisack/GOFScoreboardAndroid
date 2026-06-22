@@ -1,0 +1,4 @@
+interface:
+  display_name: "Generate Unit Tests"
+  short_description: "Generate branch-covering unit tests"
+  default_prompt: "Use $generate-unit-tests and delegate to the workspace tester agent to cover missed branches for a file or class."

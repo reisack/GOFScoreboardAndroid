@@ -2,6 +2,10 @@
 
 This directory is for agent-facing documentation. It is not user help text and it should stay practical: what to inspect, what to change, and how to verify it.
 
+Available workspace agents:
+
+- `tester.md`: Kotlin/Android testing specialist for creating and updating unit tests with the project-local `$generate-unit-tests` skill.
+
 ## Repository Map
 
 ```text
