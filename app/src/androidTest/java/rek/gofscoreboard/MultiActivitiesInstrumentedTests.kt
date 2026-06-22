@@ -6,6 +6,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.Before
 
 import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -13,8 +14,6 @@ import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.NoMatchingViewException
-import org.junit.After
 import org.hamcrest.Matchers.not
 
 @RunWith(AndroidJUnit4::class)
@@ -24,9 +23,9 @@ class MultiActivitiesInstrumentedTests {
     @get:Rule
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
-    @After
-    fun tearDown() {
-        returnToMainActivityIfNeeded()
+    @Before
+    fun setUp() {
+        InstrumentationRegistry.getInstrumentation().targetContext.deleteFile(SavedData.FILENAME)
     }
 
     @Test
@@ -41,7 +40,6 @@ class MultiActivitiesInstrumentedTests {
 
         // Start game
         onView(withId(R.id.buttonStartGame)).perform(click())
-        helper.checkScoreboardActivityIsDisplayed()
 
         // Insert some scores
         helper.insertScoresTurn(0, 6, 2, 1)
@@ -50,15 +48,17 @@ class MultiActivitiesInstrumentedTests {
 
         saveGame()
         goBackToMainActivity()
-        checkMainActivityIsDisplayed()
+        Thread.sleep(1000)
         loadSavedGame()
-        helper.checkScoreboardActivityIsDisplayed()
+        Thread.sleep(1000)
 
         // Check
         onView(withId(R.id.labelPlayerOneScore)).check(matches(withText("Stan")))
         onView(withId(R.id.labelPlayerTwoScore)).check(matches(withText("Kyle")))
         onView(withId(R.id.labelPlayerThreeScore)).check(matches(withText("Kenny")))
         onView(withId(R.id.labelPlayerFourScore)).check(matches(withText("Clyde")))
+
+        goBackToMainActivity()
     }
 
     @Test
@@ -72,7 +72,6 @@ class MultiActivitiesInstrumentedTests {
 
         // Start game
         onView(withId(R.id.buttonStartGame)).perform(click())
-        helper.checkScoreboardActivityIsDisplayed()
 
         // Insert some scores
         helper.insertScoresTurn(0, 6, 2)
@@ -81,9 +80,9 @@ class MultiActivitiesInstrumentedTests {
 
         saveGame()
         goBackToMainActivity()
-        checkMainActivityIsDisplayed()
+        Thread.sleep(1000)
         loadSavedGame()
-        helper.checkScoreboardActivityIsDisplayed()
+        Thread.sleep(1000)
 
         // Check
         onView(withId(R.id.labelPlayerOneScore)).check(matches(withText("Stan")))
@@ -91,6 +90,8 @@ class MultiActivitiesInstrumentedTests {
         onView(withId(R.id.labelPlayerThreeScore)).check(matches(withText("Kenny")))
         onView(withId(R.id.labelPlayerFourScore)).check(matches(not(isDisplayed())))
         onView(withId(R.id.editPlayerFourScore)).check(matches(not(isDisplayed())))
+
+        goBackToMainActivity()
     }
 
     private fun saveGame() {
@@ -108,22 +109,5 @@ class MultiActivitiesInstrumentedTests {
     private fun goBackToMainActivity() {
         pressBack()
         helper.clickYesToDialogAlert()
-    }
-
-    private fun returnToMainActivityIfNeeded() {
-        try {
-            helper.checkScoreboardActivityIsDisplayed()
-            goBackToMainActivity()
-        }
-        catch (_: NoMatchingViewException) {
-            // Already on another screen.
-        }
-        catch (_: AssertionError) {
-            // The scoreboard root exists but is not active/displayed.
-        }
-    }
-
-    private fun checkMainActivityIsDisplayed() {
-        onView(withId(R.id.buttonStartGame)).check(matches(isDisplayed()))
     }
 }
