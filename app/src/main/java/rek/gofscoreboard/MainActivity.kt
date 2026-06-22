@@ -13,6 +13,7 @@ import rek.gofscoreboard.databinding.ActivityMainBinding
 import java.io.File
 import androidx.core.net.toUri
 
+@GeneratedCoverage
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel

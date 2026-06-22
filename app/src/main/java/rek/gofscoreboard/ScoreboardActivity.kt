@@ -18,6 +18,7 @@ import java.io.File
 import java.lang.Exception
 import java.lang.StringBuilder
 
+@GeneratedCoverage
 class ScoreboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScoreboardBinding
     private lateinit var viewModel: ScoreboardViewModel
